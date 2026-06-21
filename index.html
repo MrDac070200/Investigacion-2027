@@ -39,12 +39,17 @@
 
     /* ── Navigation ── */
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--primary);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 60px;
       box-shadow: 0 2px 12px rgba(0,0,0,.2);
+      transform: translateY(0);
+      transition: transform .35s ease, background .25s;
     }
+    nav.is-hidden { transform: translateY(-100%); }
+    body { padding-top: 60px; }
+    #portada { min-height: calc(100vh - 60px); }
     .nav-logo {
       font-weight: 800; color: var(--text-on-primary);
       font-size: .85rem; letter-spacing: .08em; text-transform: uppercase;
@@ -1246,6 +1251,77 @@ new Chart(aucCtx, {
       if (toggle) toggle.checked = false;
     });
   });
+</script>
+
+<script>
+  (function() {
+    const nav = document.querySelector('nav');
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const hoverZone = 70;
+
+    function updateNav() {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY <= 0) {
+        nav.classList.remove('is-hidden');
+      } else if (currentScrollY > lastScrollY && currentScrollY > hoverZone) {
+        nav.classList.add('is-hidden');
+      } else if (currentScrollY < lastScrollY) {
+        nav.classList.remove('is-hidden');
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateNav);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    document.addEventListener('mousemove', (e) => {
+      if (e.clientY < hoverZone) {
+        nav.classList.remove('is-hidden');
+      } else if (window.scrollY > hoverZone && e.clientY > 60) {
+        nav.classList.add('is-hidden');
+      }
+    });
+  })();
+</script>
+
+<script>
+  (function() {
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const headerOffset = 60;
+
+    function getCurrentSectionIndex() {
+      const scrollPos = window.scrollY + headerOffset + window.innerHeight / 3;
+      let current = 0;
+      sections.forEach((sec, i) => {
+        if (sec.offsetTop <= scrollPos) current = i;
+      });
+      return current;
+    }
+
+    function goToSection(delta) {
+      const idx = getCurrentSectionIndex();
+      const targetIdx = Math.max(0, Math.min(sections.length - 1, idx + delta));
+      const target = sections[targetIdx];
+      const top = target.offsetTop - headerOffset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goToSection(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToSection(-1);
+      }
+    });
+  })();
 </script>
 
 </body>
