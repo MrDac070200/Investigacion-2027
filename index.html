@@ -526,8 +526,10 @@
       background: var(--surface); border-radius: var(--radius);
       border: 1px solid var(--surface-2);
       padding: 1.5rem; box-shadow: var(--shadow);
+      position: relative;
+      height: 360px;
     }
-    canvas { max-height: 320px; }
+    canvas { max-height: 100% !important; }
 
     .results-table-wrap {
       overflow-x: auto; margin-bottom: 2rem;
@@ -676,6 +678,8 @@
 
       .results-highlight { grid-template-columns: 1fr; }
       .result-kpi .kpi-val { font-size: 2rem; }
+
+      .chart-wrapper { height: 420px; padding: 1rem; }
 
       .conclusiones-grid { grid-template-columns: 1fr; }
     }
@@ -1232,41 +1236,71 @@ const CYAN_GLOW = '#00E5FF';
 const BRIGHT = '#109FD3';
 const ACCENT = '#4FA8FF';
 const SURFACE = 'rgba(10,24,36,.7)';
+const isMobile = window.innerWidth < 768;
+
+const commonOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: 'top',
+      labels: {
+        color: '#D6D7D9',
+        font: { size: isMobile ? 11 : 12 },
+        boxWidth: isMobile ? 12 : 14
+      }
+    }
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#8F989C',
+        font: { size: isMobile ? 9 : 11 },
+        maxRotation: isMobile ? 55 : 0,
+        minRotation: isMobile ? 55 : 0,
+        autoSkip: true,
+        maxTicksLimit: isMobile ? 6 : 8
+      },
+      grid: { color: 'rgba(0,201,253,.08)' }
+    },
+    y: {
+      ticks: { color: '#8F989C', font: { size: isMobile ? 10 : 11 } },
+      grid: { color: 'rgba(0,201,253,.08)' }
+    }
+  }
+};
 
 /* ── Chart 1: Reducción de tamaño ── */
 const sizeCtx = document.getElementById('sizeChart').getContext('2d');
 new Chart(sizeCtx, {
   type: 'bar',
   data: {
-    labels: [
-      'YOLO26m\n(Retino.)', 'YOLO26m\n(Oral Cancer)',
-      'YOLO26n\n(Melanoma)', 'EfficientNetV2-S\n(Retino.)',
-      'MobileNetV4-M\n(Melanoma)', 'MobileNetV4-S\n(Melanoma)'
-    ],
+    labels: isMobile
+      ? ['YOLO26m\nRetino.', 'YOLO26m\nOral', 'YOLO26n\nMelan.', 'EffNetV2\nRetino.', 'MobileNetV4\nMelan.', 'MobileNetV4\nMelan.']
+      : ['YOLO26m\n(Retino.)', 'YOLO26m\n(Oral Cancer)', 'YOLO26n\n(Melanoma)', 'EfficientNetV2-S\n(Retino.)', 'MobileNetV4-M\n(Melanoma)', 'MobileNetV4-S\n(Melanoma)'],
     datasets: [
       {
-        label: 'Fase 1 — Modelo Base (MB)',
+        label: 'Fase 1 — Base (MB)',
         data: [41.64, 41.64, 6.28, 81.57, 34.17, 10.17],
         backgroundColor: SURFACE,
         borderColor: 'rgba(0,201,253,.3)',
         borderWidth: 1,
         borderRadius: 4,
+        barPercentage: isMobile ? 0.65 : 0.7
       },
       {
-        label: 'Fase 4 — Modelo Optimizado INT8 (MB)',
+        label: 'Fase 4 — INT8 (MB)',
         data: [10.95, 10.95, 1.98, 22.11, 8.95, 2.78],
         backgroundColor: CYAN,
         borderRadius: 4,
+        barPercentage: isMobile ? 0.65 : 0.7
       }
     ]
   },
   options: {
-    responsive: true,
+    ...commonOptions,
     plugins: {
-      legend: {
-        position: 'top',
-        labels: { color: '#D6D7D9' }
-      },
+      ...commonOptions.plugins,
       tooltip: {
         callbacks: {
           afterBody: (items) => {
@@ -1281,15 +1315,11 @@ new Chart(sizeCtx, {
       }
     },
     scales: {
-      x: {
-        ticks: { color: '#8F989C' },
-        grid: { color: 'rgba(0,201,253,.08)' }
-      },
+      ...commonOptions.scales,
       y: {
+        ...commonOptions.scales.y,
         beginAtZero: true,
-        title: { display: true, text: 'Tamaño (MB)', color: '#8F989C' },
-        ticks: { color: '#8F989C' },
-        grid: { color: 'rgba(0,201,253,.08)' }
+        title: { display: true, text: 'Tamaño (MB)', color: '#8F989C', font: { size: isMobile ? 10 : 11 } }
       }
     }
   }
@@ -1300,11 +1330,9 @@ const aucCtx = document.getElementById('aucChart').getContext('2d');
 new Chart(aucCtx, {
   type: 'bar',
   data: {
-    labels: [
-      'YOLO26m · Retino.', 'YOLO26m · Oral',
-      'YOLO26n · Melanoma', 'EfficientNetV2 · Retino.',
-      'EfficientNetV2 · Oral', 'EfficientNetV2 · Melanoma'
-    ],
+    labels: isMobile
+      ? ['YOLO26m\nRetino.', 'YOLO26m\nOral', 'YOLO26n\nMelan.', 'EffNetV2\nRetino.', 'EffNetV2\nOral', 'EffNetV2\nMelan.']
+      : ['YOLO26m · Retino.', 'YOLO26m · Oral', 'YOLO26n · Melanoma', 'EfficientNetV2 · Retino.', 'EfficientNetV2 · Oral', 'EfficientNetV2 · Melanoma'],
     datasets: [
       {
         label: 'AUC — Fase 1 (Base)',
@@ -1313,33 +1341,25 @@ new Chart(aucCtx, {
         borderColor: 'rgba(0,201,253,.3)',
         borderWidth: 1,
         borderRadius: 4,
+        barPercentage: isMobile ? 0.65 : 0.7
       },
       {
-        label: 'AUC — Fase 4 (Optimizado)',
+        label: 'AUC — Fase 4 (Opt.)',
         data: [0.9873, 0.9323, 0.8974, 0.9575, 0.8375, 0.8425],
         backgroundColor: CYAN,
         borderRadius: 4,
+        barPercentage: isMobile ? 0.65 : 0.7
       }
     ]
   },
   options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-        labels: { color: '#D6D7D9' }
-      },
-    },
+    ...commonOptions,
     scales: {
-      x: {
-        ticks: { color: '#8F989C' },
-        grid: { color: 'rgba(0,201,253,.08)' }
-      },
+      ...commonOptions.scales,
       y: {
+        ...commonOptions.scales.y,
         min: 0.5, max: 1.0,
-        title: { display: true, text: 'AUC (Área bajo la curva ROC)', color: '#8F989C' },
-        ticks: { color: '#8F989C' },
-        grid: { color: 'rgba(0,201,253,.08)' }
+        title: { display: true, text: 'AUC (Área bajo la curva ROC)', color: '#8F989C', font: { size: isMobile ? 10 : 11 } }
       }
     }
   }
