@@ -6,26 +6,23 @@
   <title>Fase 4: Cuantización INT8 — UPeU 2026</title>
   <style>
     /* ════════════════════════════════════════
-       PALETA CYBER-TECH / DARK NEON
+       PALETA INSTITUCIONAL UPeU
     ════════════════════════════════════════ */
     :root {
-      --bg:          #040F16;
-      --surface:     #0A1824;
-      --surface-2:   #1A3847;
-      --petroleo:    #2B4A56;
-      --tech:        #157097;
-      --bright:      #109FD3;
-      --cyan:        #00C9FD;
-      --cyan-glow:   #00E5FF;
-      --text-muted:  #8F989C;
-      --text-light:  #D6D7D9;
-      --white:       #FFFFFF;
-      --border:      #1A3847;
-      --radius:      14px;
-      --shadow:      0 0 20px rgba(0,201,253,.15);
-      --glow:        0 0 10px rgba(0,201,253,.5),
-                     0 0 25px rgba(0,201,253,.35),
-                     0 0 50px rgba(0,201,253,.2);
+      --primary:       #003865;
+      --primary-dark:  #00305F;
+      --secondary:     #F8A900;
+      --secondary-dark:#E39B00;
+      --bg:            #F7F7F7;
+      --surface:       #FFFFFF;
+      --text:          #003865;
+      --text-secondary:#4A4A4A;
+      --text-on-primary: #FFFFFF;
+      --border:        rgba(0,56,101,.12);
+      --info-bg:       #EAF3FB;
+      --warning-bg:    #FFF5DE;
+      --radius:        12px;
+      --shadow:        0 4px 20px rgba(0,56,101,.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,112 +30,74 @@
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
       background: var(--bg);
-      color: var(--white);
       line-height: 1.7;
       overflow-x: hidden;
-    }
-
-    /* Fondo con grid sutil */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: -1;
-      background:
-        linear-gradient(rgba(0,201,253,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,201,253,.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      pointer-events: none;
     }
 
     /* ── Navegación ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(4,15,22,.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      background: var(--primary);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 60px;
-      box-shadow: 0 4px 30px rgba(0,0,0,.4);
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
     }
     .nav-logo {
       font-weight: 800; font-size: .9rem; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--white);
+      text-transform: uppercase; color: var(--text-on-primary);
     }
-    .nav-logo span {
-      background: linear-gradient(90deg, var(--cyan), var(--bright), var(--accent, #4FA8FF));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .nav-logo span { color: var(--secondary); }
     nav ul { list-style: none; display: flex; gap: 1.5rem; }
     nav ul li a {
-      color: var(--text-muted); text-decoration: none;
+      color: rgba(255,255,255,.85); text-decoration: none;
       font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
-      transition: color .2s, text-shadow .2s;
+      transition: color .2s;
       white-space: nowrap;
     }
-    nav ul li a:hover, nav ul li a.active {
-      color: var(--cyan); text-shadow: 0 0 10px rgba(0,201,253,.6);
-    }
+    nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
 
-    /* Menú hamburguesa */
     .menu-toggle { display: none; }
     .menu-icon {
       display: none;
-      color: var(--cyan);
+      color: var(--secondary);
       font-size: 1.6rem;
       cursor: pointer;
-      text-shadow: 0 0 10px rgba(0,201,253,.5);
     }
 
-    /* ── Layout ── */
     section { padding: 5rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
 
     .section-title {
       font-size: 2.2rem; font-weight: 900; margin-bottom: .6rem;
-      background: linear-gradient(90deg, var(--cyan) 0%, var(--bright) 50%, #4FA8FF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 30px rgba(0,201,253,.2);
+      color: var(--primary);
     }
     .section-rule {
       width: 80px; height: 4px;
-      background: linear-gradient(90deg, var(--cyan), var(--bright));
+      background: var(--secondary);
       border-radius: 2px; margin-bottom: 2.5rem;
-      box-shadow: var(--glow);
     }
 
     /* ── Hero ── */
     .hero {
-      min-height: 60vh; padding: 0;
+      min-height: 50vh; padding: 0;
       display: flex; align-items: center; justify-content: center;
       text-align: center; position: relative;
-      background: radial-gradient(circle at 50% 30%, rgba(0,201,253,.12), transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(16,159,211,.08), transparent 40%);
-    }
-    .hero::after {
-      content: '01'; position: absolute;
-      right: 5%; top: 20%;
-      font-size: 12rem; font-weight: 900;
-      color: rgba(0,201,253,.04); pointer-events: none;
-      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
     }
     .hero-content { position: relative; z-index: 1; padding: 4rem 2rem; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: .6rem;
-      border: 1px solid var(--cyan);
-      color: var(--cyan); border-radius: 50px;
+      border: 1px solid var(--secondary);
+      color: var(--secondary); border-radius: 50px;
       padding: .35rem 1rem; font-size: .75rem;
       letter-spacing: .08em; text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(0,201,253,.25);
       margin-bottom: 1.5rem;
     }
     .hero-badge::before {
       content: ''; width: 8px; height: 8px;
-      border-radius: 50%; background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan-glow);
+      border-radius: 50%; background: var(--secondary);
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
@@ -148,33 +107,28 @@
     .hero h1 {
       font-size: clamp(2rem, 5vw, 3.6rem);
       font-weight: 900; line-height: 1.1;
-      background: linear-gradient(90deg, var(--cyan) 0%, var(--bright) 50%, #4FA8FF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text-on-primary);
       margin-bottom: 1rem;
-      text-shadow: 0 0 40px rgba(0,201,253,.25);
     }
     .hero p {
-      color: var(--text-light); font-size: 1.1rem;
+      color: rgba(255,255,255,.85); font-size: 1.1rem;
       max-width: 700px; margin: 0 auto 2rem;
     }
     .hero-stats {
       display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
     }
     .hero-stat {
-      background: rgba(10,24,36,.8);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
       border-radius: var(--radius);
       padding: 1rem 1.5rem;
       min-width: 140px;
-      box-shadow: var(--shadow);
     }
     .hero-stat .num {
-      font-size: 2rem; font-weight: 900; color: var(--cyan);
-      text-shadow: 0 0 15px rgba(0,201,253,.5);
+      font-size: 2rem; font-weight: 900; color: var(--secondary);
+      display: block;
     }
-    .hero-stat .label { font-size: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+    .hero-stat .label { font-size: .75rem; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: .06em; }
 
     /* ── Cards ── */
     .concept-grid {
@@ -189,28 +143,28 @@
       padding: 1.8rem;
       position: relative; overflow: hidden;
       transition: transform .25s, box-shadow .25s, border-color .25s;
+      box-shadow: var(--shadow);
     }
     .concept-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--cyan), var(--bright), #4FA8FF);
-      opacity: .7;
+      background: var(--secondary);
     }
     .concept-card:hover {
       transform: translateY(-6px);
-      border-color: var(--cyan);
-      box-shadow: var(--glow);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
     }
-    .concept-card.glow::before { opacity: 1; box-shadow: 0 0 15px var(--cyan); }
+    .concept-card.glow::before { background: var(--primary); }
     .concept-card h4 {
-      font-size: 1.05rem; color: var(--white);
+      font-size: 1.05rem; color: var(--primary);
       margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
     }
     .concept-card p, .concept-card li {
-      font-size: .92rem; color: var(--text-light); line-height: 1.65;
+      font-size: .92rem; color: var(--text-secondary); line-height: 1.65;
     }
     .concept-card ul { padding-left: 1.2rem; margin-top: .6rem; }
     .concept-card li { margin-bottom: .4rem; }
-    .concept-card strong { color: var(--cyan); }
+    .concept-card strong { color: var(--primary); }
 
     /* ── Tablas ── */
     .compare-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius); }
@@ -219,28 +173,28 @@
       font-size: .9rem; background: var(--surface);
       border: 1px solid var(--border);
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
     .compare-table thead th {
-      background: linear-gradient(90deg, rgba(0,201,253,.15), rgba(16,159,211,.1));
-      color: var(--cyan); padding: .9rem 1rem; text-align: left; font-weight: 800;
+      background: var(--primary); color: var(--text-on-primary);
+      padding: .9rem 1rem; text-align: left; font-weight: 800;
       text-transform: uppercase; letter-spacing: .05em; font-size: .78rem;
       border-bottom: 1px solid var(--border);
     }
     .compare-table tbody td {
       padding: .8rem 1rem; border-bottom: 1px solid var(--border);
-      color: var(--text-light);
+      color: var(--text-secondary);
     }
-    .compare-table tbody tr:nth-child(even) { background: rgba(26,56,71,.35); }
-    .compare-table tbody tr:hover { background: rgba(0,201,253,.06); }
+    .compare-table tbody tr:nth-child(even) { background: var(--bg); }
+    .compare-table tbody tr:hover { background: var(--info-bg); }
     .compare-table .mono {
       font-family: 'Fira Code', 'Courier New', monospace;
-      font-weight: 700; color: var(--cyan);
+      font-weight: 700; color: var(--primary);
     }
 
     /* ── Diagrama de bits ── */
     .bit-diagram {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 2rem;
       margin: 2rem 0; text-align: center;
       box-shadow: var(--shadow);
@@ -254,74 +208,69 @@
       display: flex; align-items: center; justify-content: center;
       font-family: 'Fira Code', 'Courier New', monospace;
       font-weight: 700; font-size: .9rem;
-      border-radius: 5px; border: 1px solid rgba(255,255,255,.1);
+      border-radius: 5px; border: 1px solid #CCC;
     }
-    .bit.sign { background: rgba(255,82,82,.18); color: #FF5252; box-shadow: 0 0 10px rgba(255,82,82,.25); }
-    .bit.exp { background: rgba(0,201,253,.18); color: var(--cyan); box-shadow: 0 0 10px rgba(0,201,253,.25); }
-    .bit.mant { background: rgba(79,168,255,.18); color: #4FA8FF; box-shadow: 0 0 10px rgba(79,168,255,.25); }
-    .bit.int { background: rgba(0,229,255,.18); color: var(--cyan-glow); box-shadow: 0 0 10px rgba(0,229,255,.25); }
+    .bit.sign { background: #FFCDD2; color: #B71C1C; }
+    .bit.exp { background: #E3F2FD; color: #1565C0; }
+    .bit.mant { background: #FFF9C4; color: #F57F17; }
+    .bit.int { background: #E8F5E9; color: #1B5E20; }
     .bit-legend {
       display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;
       font-size: .8rem; margin-top: 1rem;
     }
-    .bit-legend span { display: flex; align-items: center; gap: .4rem; color: var(--text-light); }
+    .bit-legend span { display: flex; align-items: center; gap: .4rem; color: var(--text-secondary); }
     .dot { width: 14px; height: 14px; border-radius: 4px; }
 
     /* ── Fórmulas ── */
     .formula-box {
-      background: linear-gradient(135deg, rgba(0,201,253,.08), rgba(16,159,211,.05));
-      border: 1px solid rgba(0,201,253,.35);
-      border-radius: var(--radius);
+      background: var(--info-bg);
+      border-left: 5px solid var(--secondary);
+      border-radius: 0 var(--radius) var(--radius) 0;
       padding: 1.8rem 2rem; margin: 1.5rem 0;
-      box-shadow: 0 0 25px rgba(0,201,253,.1);
     }
     .formula-title {
       font-size: .78rem; font-weight: 800;
-      color: var(--cyan); text-transform: uppercase;
+      color: var(--primary); text-transform: uppercase;
       letter-spacing: .1em; margin-bottom: 1rem;
     }
     .formula {
       display: inline-flex; align-items: center; gap: .7rem;
-      font-size: 1.45rem; color: var(--white);
+      font-size: 1.3rem; color: var(--text);
       font-family: 'Georgia', serif;
       flex-wrap: wrap;
     }
-    .formula .var { font-style: italic; color: var(--cyan); font-weight: 700; }
+    .formula .var { font-style: italic; color: var(--primary); font-weight: 700; }
     .formula .frac {
       display: inline-flex; flex-direction: column; align-items: center;
       vertical-align: middle; margin: 0 .25rem;
     }
     .formula .frac .num {
-      border-bottom: 2px solid var(--white);
+      border-bottom: 2px solid var(--text);
       padding: 0 .5rem; text-align: center;
     }
     .formula .frac .den { padding: 0 .5rem; text-align: center; }
-    .formula .round { font-family: 'Segoe UI', sans-serif; font-size: .9rem; color: var(--text-muted); }
+    .formula .round { font-family: 'Segoe UI', sans-serif; font-size: .9rem; color: var(--text-secondary); }
 
     /* ── Ejemplo numérico ── */
     .example-box {
-      background: var(--surface);
+      background: var(--surface); border-radius: var(--radius);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
       padding: 1.8rem 2rem; margin: 2rem 0;
       box-shadow: var(--shadow);
     }
     .example-box h4 {
-      color: var(--cyan); font-size: 1.05rem; margin-bottom: 1.2rem;
-      text-shadow: 0 0 10px rgba(0,201,253,.3);
+      color: var(--primary); font-size: 1.05rem; margin-bottom: 1.2rem;
     }
     .example-step {
       display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;
     }
     .example-step .step-num {
-      background: linear-gradient(135deg, var(--cyan), var(--bright));
-      color: var(--bg); width: 30px; height: 30px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--secondary); color: var(--primary);
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
       font-weight: 900; font-size: .85rem; flex-shrink: 0;
-      box-shadow: 0 0 12px rgba(0,201,253,.4);
     }
-    .example-step p { font-size: .92rem; color: var(--text-light); }
-    .example-step strong { color: var(--white); }
+    .example-step p { font-size: .9rem; color: var(--text-secondary); }
 
     /* ── Pipeline ── */
     .pipeline-steps {
@@ -330,23 +279,22 @@
       gap: 1.2rem; margin: 1.5rem 0;
     }
     .pipeline-step {
-      background: var(--surface);
-      border-radius: var(--radius);
+      background: var(--surface); border-radius: var(--radius);
       padding: 1.5rem;
-      border-left: 3px solid var(--cyan);
+      border-left: 4px solid var(--secondary);
       box-shadow: var(--shadow);
       transition: transform .2s, box-shadow .2s;
     }
     .pipeline-step:hover {
       transform: translateY(-4px);
-      box-shadow: var(--glow);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
     }
     .pipeline-step .ps-num {
-      font-size: .72rem; font-weight: 800; color: var(--cyan);
+      font-size: .72rem; font-weight: 800; color: var(--secondary);
       letter-spacing: .08em; margin-bottom: .5rem;
     }
-    .pipeline-step h4 { font-size: .98rem; color: var(--white); margin-bottom: .5rem; }
-    .pipeline-step p { font-size: .84rem; color: var(--text-muted); line-height: 1.55; }
+    .pipeline-step h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
+    .pipeline-step p { font-size: .84rem; color: var(--text-secondary); line-height: 1.55; }
 
     /* ── Analogías ── */
     .analogy-cards {
@@ -355,60 +303,55 @@
       gap: 1.2rem; margin: 1.5rem 0;
     }
     .analogy-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 1.5rem;
       box-shadow: var(--shadow);
       transition: transform .2s, border-color .2s;
     }
     .analogy-card:hover {
       transform: translateY(-5px);
-      border-color: var(--cyan);
-      box-shadow: var(--glow);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
     }
     .analogy-card .a-icon { font-size: 2.2rem; margin-bottom: .7rem; }
-    .analogy-card h4 { font-size: .98rem; color: var(--white); margin-bottom: .5rem; }
-    .analogy-card p { font-size: .86rem; color: var(--text-muted); line-height: 1.55; }
+    .analogy-card h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
+    .analogy-card p { font-size: .86rem; color: var(--text-secondary); line-height: 1.55; }
 
     /* ── Banner de compresión ── */
     .compression-banner {
-      background: linear-gradient(90deg, rgba(0,201,253,.12), rgba(16,159,211,.08), rgba(0,201,253,.12));
-      border: 1px solid rgba(0,201,253,.35);
-      border-radius: var(--radius);
+      background: var(--primary);
+      color: var(--text-on-primary); border-radius: var(--radius);
       padding: 2.2rem; display: flex; flex-wrap: wrap;
       gap: 2rem; align-items: center; justify-content: space-around;
       margin: 2rem 0;
-      box-shadow: var(--glow);
     }
     .compression-item { text-align: center; }
     .compression-item .big {
-      font-size: 2.6rem; font-weight: 900; color: var(--cyan);
-      text-shadow: 0 0 20px rgba(0,201,253,.5);
+      font-size: 2.6rem; font-weight: 900; color: var(--secondary);
       display: block;
     }
-    .compression-item .small { font-size: .85rem; color: var(--text-muted); }
+    .compression-item .small { font-size: .85rem; opacity: .85; }
     .compression-arrow {
-      font-size: 2.8rem; color: var(--cyan);
-      font-weight: 900; text-shadow: 0 0 15px rgba(0,201,253,.6);
+      font-size: 2.8rem; color: var(--secondary);
+      font-weight: 900;
     }
 
     /* ── Nota final ── */
     .note-box {
-      background: rgba(0,201,253,.08);
-      border-left: 4px solid var(--cyan);
+      background: var(--info-bg);
+      border-left: 4px solid var(--primary);
       border-radius: 0 var(--radius) var(--radius) 0;
       padding: 1.1rem 1.3rem;
-      font-size: .88rem; color: var(--text-light); margin-top: 1rem;
+      font-size: .88rem; color: var(--text-secondary); margin-top: 1rem;
     }
-    .note-box strong { color: var(--cyan); }
+    .note-box strong { color: var(--primary); }
 
     /* ── Footer ── */
     footer {
-      background: var(--surface); border-top: 1px solid var(--border);
-      color: var(--text-muted); text-align: center;
-      padding: 2.5rem; font-size: .8rem; line-height: 1.8;
+      background: var(--primary-dark); color: rgba(255,255,255,.6);
+      text-align: center; padding: 2.5rem; font-size: .8rem; line-height: 1.8;
     }
-    footer strong { color: var(--cyan); }
+    footer strong { color: var(--secondary); }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -418,18 +361,18 @@
       nav ul {
         position: absolute; top: 60px; left: 0; right: 0;
         flex-direction: column;
-        background: rgba(4,15,22,.98);
-        border-bottom: 1px solid var(--surface-2);
+        background: var(--primary);
+        border-bottom: 1px solid rgba(255,255,255,.1);
         padding: 1rem 1.5rem 1.5rem;
         gap: .6rem;
         display: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,.5);
+        box-shadow: 0 10px 40px rgba(0,0,0,.3);
       }
       nav ul li a {
         font-size: .9rem;
         display: block;
         padding: .6rem 0;
-        border-bottom: 1px solid rgba(0,201,253,.1);
+        border-bottom: 1px solid rgba(255,255,255,.1);
       }
       .menu-toggle:checked ~ ul { display: flex; }
 
@@ -586,8 +529,8 @@
     </div>
 
     <div class="bit-diagram">
-      <h4 style="color:var(--white);margin-bottom:.5rem;">Estructura de un número FP32: <span class="mono">w = 0.037</span></h4>
-      <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;">Cada color representa una parte diferente del número.</p>
+      <h4 style="color:var(--primary);margin-bottom:.5rem;">Estructura de un número FP32: <span class="mono">w = 0.037</span></h4>
+      <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:1rem;">Cada color representa una parte diferente del número.</p>
       <div class="bit-row">
         <div class="bit sign">0</div>
         <div class="bit exp">0</div>
@@ -619,8 +562,8 @@
         <span><span class="dot exp"></span> Exponente (8 bits)</span>
         <span><span class="dot mant"></span> Mantisa (23 bits)</span>
       </div>
-      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-light);">
-        El mismo peso en <strong>INT8</strong> se vería simplemente como <span class="mono" style="background:rgba(0,229,255,.12);padding:.2rem .5rem;border-radius:4px;">00001010</span> (valor 10), recuperado mediante una escala.
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-secondary);">
+        El mismo peso en <strong>INT8</strong> se vería simplemente como <span class="mono" style="background:#E8F5E9;padding:.2rem .5rem;border-radius:4px;">00001010</span> (valor 10), recuperado mediante una escala.
       </p>
     </div>
   </div>
@@ -629,12 +572,12 @@
 <!-- ══════════════════════════════════════
      2. MATEMÁTICA DE LA CUANTIZACIÓN
 ══════════════════════════════════════ -->
-<section id="matematica" style="background:rgba(10,24,36,.5);">
+<section id="matematica" style="background:var(--surface);">
   <div class="container">
     <h2 class="section-title">2. Matemática de la cuantización</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);font-size:1rem;">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
       Para comprimir un peso real <em>R</em> (en FP32) a un entero <em>Q</em> (en INT8), se calculan dos parámetros por capa durante la calibración:
     </p>
 
@@ -699,7 +642,7 @@
         <div class="step-num">4</div>
         <p>Cuantizamos el peso <span class="mono">w = 0.001738291</span> con punto cero <span class="mono">Z = 128</span>:</p>
       </div>
-      <div class="formula-box" style="margin:1rem 0;background:rgba(4,15,22,.6);">
+      <div class="formula-box" style="margin:1rem 0;background:var(--surface);border:1px solid var(--border);">
         <div class="formula">
           <span class="var">Q</span>
           <span>=</span>
@@ -752,12 +695,12 @@
 <!-- ══════════════════════════════════════
      4. PIPELINE PTQ
 ══════════════════════════════════════ -->
-<section id="pipeline" style="background:rgba(10,24,36,.5);">
+<section id="pipeline" style="background:var(--surface);">
   <div class="container">
     <h2 class="section-title">4. Proceso paso a paso: PTQ Estática</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);font-size:1rem;">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
       Nuestro método implementa <strong>Post-Training Static Quantization (PTQ)</strong>: no se reentrena el modelo, solo se observa y comprime.
     </p>
 
@@ -822,7 +765,7 @@
 <!-- ══════════════════════════════════════
      6. RESULTADOS
 ══════════════════════════════════════ -->
-<section id="resultados" style="background:rgba(10,24,36,.5);">
+<section id="resultados" style="background:var(--surface);">
   <div class="container">
     <h2 class="section-title">6. Resultados de compresión reales</h2>
     <div class="section-rule"></div>
@@ -858,7 +801,7 @@
       </div>
     </div>
 
-    <h3 style="color:var(--white);margin:2.5rem 0 1rem;font-size:1.2rem;">PTQ vs QAT</h3>
+    <h3 style="color:var(--primary);margin:2.5rem 0 1rem;font-size:1.2rem;">PTQ vs QAT</h3>
     <div class="compare-table-wrap">
       <table class="compare-table">
         <thead>
@@ -902,7 +845,6 @@
 </footer>
 
 <script>
-  /* Cierra el menú hamburguesa al hacer clic en un enlace (móvil) */
   document.querySelectorAll('nav ul li a').forEach(link => {
     link.addEventListener('click', () => {
       const toggle = document.getElementById('menu-toggle');

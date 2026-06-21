@@ -6,27 +6,23 @@
   <title>Fase 1: Entrenamiento Baseline — UPeU 2026</title>
   <style>
     /* ════════════════════════════════════════
-       PALETA CYBER-TECH / DARK NEON
+       PALETA INSTITUCIONAL UPeU
     ════════════════════════════════════════ */
     :root {
-      --bg:          #040F16;
-      --surface:     #0A1824;
-      --surface-2:   #1A3847;
-      --petroleo:    #2B4A56;
-      --tech:        #157097;
-      --bright:      #109FD3;
-      --cyan:        #00C9FD;
-      --cyan-glow:   #00E5FF;
-      --accent:      #4FA8FF;
-      --text-muted:  #8F989C;
-      --text-light:  #D6D7D9;
-      --white:       #FFFFFF;
-      --border:      #1A3847;
-      --radius:      14px;
-      --shadow:      0 0 20px rgba(0,201,253,.12);
-      --glow:        0 0 10px rgba(0,201,253,.45),
-                     0 0 25px rgba(0,201,253,.3),
-                     0 0 50px rgba(0,201,253,.15);
+      --primary:       #003865;
+      --primary-dark:  #00305F;
+      --secondary:     #F8A900;
+      --secondary-dark:#E39B00;
+      --bg:            #F7F7F7;
+      --surface:       #FFFFFF;
+      --text:          #003865;
+      --text-secondary:#4A4A4A;
+      --text-on-primary: #FFFFFF;
+      --border:        rgba(0,56,101,.12);
+      --info-bg:       #EAF3FB;
+      --warning-bg:    #FFF5DE;
+      --radius:        12px;
+      --shadow:        0 4px 20px rgba(0,56,101,.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,60 +30,40 @@
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
       background: var(--bg);
-      color: var(--white);
       line-height: 1.7;
       overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: -1;
-      background:
-        linear-gradient(rgba(0,201,253,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,201,253,.025) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
     }
 
     /* ── Navegación ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(4,15,22,.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      background: var(--primary);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 60px;
-      box-shadow: 0 4px 30px rgba(0,0,0,.4);
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
     }
     .nav-logo {
       font-weight: 800; font-size: .9rem; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--white);
+      text-transform: uppercase; color: var(--text-on-primary);
     }
-    .nav-logo span {
-      background: linear-gradient(90deg, var(--cyan), var(--bright), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .nav-logo span { color: var(--secondary); }
     nav ul { list-style: none; display: flex; gap: 1.5rem; }
     nav ul li a {
-      color: var(--text-muted); text-decoration: none;
+      color: rgba(255,255,255,.85); text-decoration: none;
       font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
-      transition: color .2s, text-shadow .2s;
+      transition: color .2s;
       white-space: nowrap;
     }
-    nav ul li a:hover, nav ul li a.active {
-      color: var(--cyan); text-shadow: 0 0 10px rgba(0,201,253,.6);
-    }
+    nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
 
     .menu-toggle { display: none; }
     .menu-icon {
       display: none;
-      color: var(--cyan);
+      color: var(--secondary);
       font-size: 1.6rem;
       cursor: pointer;
-      text-shadow: 0 0 10px rgba(0,201,253,.5);
     }
 
     section { padding: 5rem 2rem; }
@@ -95,48 +71,33 @@
 
     .section-title {
       font-size: 2.2rem; font-weight: 900; margin-bottom: .6rem;
-      background: linear-gradient(90deg, var(--cyan) 0%, var(--bright) 50%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 30px rgba(0,201,253,.2);
+      color: var(--primary);
     }
     .section-rule {
       width: 80px; height: 4px;
-      background: linear-gradient(90deg, var(--cyan), var(--bright));
+      background: var(--secondary);
       border-radius: 2px; margin-bottom: 2.5rem;
-      box-shadow: var(--glow);
     }
 
     /* ── Hero ── */
     .hero {
-      min-height: 60vh; padding: 0;
+      min-height: 50vh; padding: 0;
       display: flex; align-items: center; justify-content: center;
       text-align: center; position: relative;
-      background: radial-gradient(circle at 50% 30%, rgba(0,201,253,.12), transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(16,159,211,.08), transparent 40%);
-    }
-    .hero::after {
-      content: '01'; position: absolute;
-      right: 5%; top: 20%;
-      font-size: 12rem; font-weight: 900;
-      color: rgba(0,201,253,.04); pointer-events: none;
-      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
     }
     .hero-content { position: relative; z-index: 1; padding: 4rem 2rem; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: .6rem;
-      border: 1px solid var(--cyan);
-      color: var(--cyan); border-radius: 50px;
+      border: 1px solid var(--secondary);
+      color: var(--secondary); border-radius: 50px;
       padding: .35rem 1rem; font-size: .75rem;
       letter-spacing: .08em; text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(0,201,253,.25);
       margin-bottom: 1.5rem;
     }
     .hero-badge::before {
       content: ''; width: 8px; height: 8px;
-      border-radius: 50%; background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan-glow);
+      border-radius: 50%; background: var(--secondary);
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
@@ -146,15 +107,11 @@
     .hero h1 {
       font-size: clamp(2rem, 5vw, 3.6rem);
       font-weight: 900; line-height: 1.1;
-      background: linear-gradient(90deg, var(--cyan) 0%, var(--bright) 50%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text-on-primary);
       margin-bottom: 1rem;
-      text-shadow: 0 0 40px rgba(0,201,253,.25);
     }
     .hero p {
-      color: var(--text-light); font-size: 1.1rem;
+      color: rgba(255,255,255,.85); font-size: 1.1rem;
       max-width: 700px; margin: 0 auto 2rem;
     }
 
@@ -171,28 +128,28 @@
       padding: 1.8rem;
       position: relative; overflow: hidden;
       transition: transform .25s, box-shadow .25s, border-color .25s;
+      box-shadow: var(--shadow);
     }
     .concept-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--cyan), var(--bright), var(--accent));
-      opacity: .7;
+      background: var(--secondary);
     }
     .concept-card:hover {
       transform: translateY(-6px);
-      border-color: var(--cyan);
-      box-shadow: var(--glow);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
     }
-    .concept-card.glow::before { opacity: 1; box-shadow: 0 0 15px var(--cyan); }
+    .concept-card.glow::before { background: var(--primary); }
     .concept-card h4 {
-      font-size: 1.05rem; color: var(--white);
+      font-size: 1.05rem; color: var(--primary);
       margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
     }
     .concept-card p, .concept-card li {
-      font-size: .92rem; color: var(--text-light); line-height: 1.65;
+      font-size: .92rem; color: var(--text-secondary); line-height: 1.65;
     }
     .concept-card ul { padding-left: 1.2rem; margin-top: .6rem; }
     .concept-card li { margin-bottom: .4rem; }
-    .concept-card strong { color: var(--cyan); }
+    .concept-card strong { color: var(--primary); }
 
     /* ── Diagrama de arquitectura ── */
     .arch-diagram {
@@ -205,10 +162,9 @@
       overflow-x: auto;
     }
     .arch-title {
-      text-align: center; color: var(--cyan);
+      text-align: center; color: var(--primary);
       font-size: 1.1rem; font-weight: 800;
       margin-bottom: 1.5rem;
-      text-shadow: 0 0 10px rgba(0,201,253,.3);
     }
     .arch-flow {
       display: flex;
@@ -219,8 +175,8 @@
       padding-bottom: 1rem;
     }
     .arch-node {
-      background: rgba(0,201,253,.08);
-      border: 1px solid rgba(0,201,253,.35);
+      background: var(--info-bg);
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: .9rem .7rem;
       text-align: center;
@@ -229,26 +185,26 @@
     }
     .arch-node:hover {
       transform: translateY(-4px);
-      box-shadow: 0 0 18px rgba(0,201,253,.25);
-      border-color: var(--cyan);
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
     }
     .arch-node .n-icon {
       font-size: 1.5rem; margin-bottom: .3rem;
     }
     .arch-node .n-name {
       font-size: .75rem; font-weight: 800;
-      color: var(--white); text-transform: uppercase;
+      color: var(--primary); text-transform: uppercase;
       letter-spacing: .04em;
     }
     .arch-node .n-dim {
-      font-size: .65rem; color: var(--text-muted);
+      font-size: .65rem; color: var(--text-secondary);
       margin-top: .3rem;
       font-family: 'Fira Code', 'Courier New', monospace;
     }
     .arch-arrow {
-      color: var(--cyan);
+      color: var(--secondary);
       font-size: 1.4rem;
-      text-shadow: 0 0 10px rgba(0,201,253,.5);
+      font-weight: 900;
     }
 
     /* Visualización animada de la CNN */
@@ -264,7 +220,7 @@
     .cnn-viz svg { min-width: 820px; display: block; margin: 0 auto; }
     .cnn-viz .layer-label {
       font-size: 11px;
-      fill: var(--cyan);
+      fill: var(--primary);
       font-weight: 800;
       text-anchor: middle;
       text-transform: uppercase;
@@ -272,16 +228,15 @@
     }
     .cnn-viz .node {
       fill: var(--surface);
-      stroke: var(--cyan);
+      stroke: var(--primary);
       stroke-width: 2;
       transition: all .3s;
     }
-    .cnn-viz .node.input-pixel { fill: rgba(0,201,253,.15); stroke-width: 1; }
-    .cnn-viz .node.active { fill: var(--cyan); filter: drop-shadow(0 0 6px var(--cyan)); }
-    .cnn-viz .node.output-melanoma { stroke: #FF6B6B; }
-    .cnn-viz .node.output-benign { stroke: #4ADE80; }
+    .cnn-viz .node.input-pixel { fill: var(--info-bg); stroke-width: 1; }
+    .cnn-viz .node.output-melanoma { stroke: #C62828; }
+    .cnn-viz .node.output-benign { stroke: #2E7D32; }
     .cnn-viz .connection {
-      stroke: rgba(0,201,253,.18);
+      stroke: rgba(0,56,101,.18);
       stroke-width: 1.2;
       fill: none;
     }
@@ -292,8 +247,7 @@
       animation: dashFlow 1.8s linear infinite;
     }
     .cnn-viz .traveler {
-      fill: var(--cyan-glow);
-      filter: drop-shadow(0 0 6px var(--cyan-glow));
+      fill: var(--secondary);
     }
     @keyframes dashFlow {
       to { stroke-dashoffset: -16; }
@@ -314,81 +268,45 @@
     .cnn-viz .layer-4 { animation-delay: 2s; }
     .cnn-viz .layer-5 { animation-delay: 2.5s; }
 
-    /* Mini leyenda */
     .viz-legend {
       display: flex; flex-wrap: wrap; gap: 1.2rem;
       justify-content: center; margin-top: 1rem;
-      font-size: .8rem; color: var(--text-muted);
+      font-size: .8rem; color: var(--text-secondary);
     }
     .viz-legend span { display: flex; align-items: center; gap: .4rem; }
-    .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--cyan); }
-    .legend-dot.melanoma { border-color: #FF6B6B; }
-    .legend-dot.benign { border-color: #4ADE80; }
-
-    /* Diagrama vertical alternativo (fallback) */
-    .cnn-flow {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .6rem;
-      max-width: 400px;
-      margin: 1.5rem auto;
-    }
-    .cnn-node {
-      width: 100%;
-      background: rgba(0,201,253,.08);
-      border: 1px solid rgba(0,201,253,.35);
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
-      transition: all .2s;
-    }
-    .cnn-node:hover {
-      border-color: var(--cyan);
-      box-shadow: 0 0 18px rgba(0,201,253,.25);
-    }
-    .cnn-node .c-name {
-      font-weight: 800; color: var(--white);
-      font-size: .9rem; margin-bottom: .3rem;
-    }
-    .cnn-node .c-desc {
-      font-size: .8rem; color: var(--text-muted);
-    }
-    .cnn-arrow {
-      color: var(--cyan);
-      font-size: 1.5rem;
-      text-shadow: 0 0 10px rgba(0,201,253,.5);
-    }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--primary); }
+    .legend-dot.melanoma { border-color: #C62828; }
+    .legend-dot.benign { border-color: #2E7D32; }
 
     /* ── Fórmulas ── */
     .formula-box {
-      background: linear-gradient(135deg, rgba(0,201,253,.08), rgba(16,159,211,.05));
-      border: 1px solid rgba(0,201,253,.35);
-      border-radius: var(--radius);
+      background: var(--info-bg);
+      border-left: 5px solid var(--secondary);
+      border-radius: 0 var(--radius) var(--radius) 0;
       padding: 1.8rem 2rem; margin: 1.5rem 0;
-      box-shadow: 0 0 25px rgba(0,201,253,.1);
     }
     .formula-title {
       font-size: .78rem; font-weight: 800;
-      color: var(--cyan); text-transform: uppercase;
+      color: var(--primary); text-transform: uppercase;
       letter-spacing: .1em; margin-bottom: 1rem;
     }
     .formula {
       display: inline-flex; align-items: center; gap: .7rem;
-      font-size: 1.3rem; color: var(--white);
+      font-size: 1.3rem; color: var(--text);
       font-family: 'Georgia', serif;
       flex-wrap: wrap;
     }
-    .formula .var { font-style: italic; color: var(--cyan); font-weight: 700; }
+    .formula .var { font-style: italic; color: var(--primary); font-weight: 700; }
     .formula .frac {
       display: inline-flex; flex-direction: column; align-items: center;
       vertical-align: middle; margin: 0 .25rem;
     }
     .formula .frac .num {
-      border-bottom: 2px solid var(--white);
+      border-bottom: 2px solid var(--text);
       padding: 0 .5rem; text-align: center;
     }
     .formula .frac .den { padding: 0 .5rem; text-align: center; }
+    .formula .round { font-family: 'Segoe UI', sans-serif; font-size: .9rem; color: var(--text-secondary); }
 
     /* ── Tablas ── */
     .compare-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius); }
@@ -397,22 +315,23 @@
       font-size: .9rem; background: var(--surface);
       border: 1px solid var(--border);
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
     .compare-table thead th {
-      background: linear-gradient(90deg, rgba(0,201,253,.15), rgba(16,159,211,.1));
-      color: var(--cyan); padding: .9rem 1rem; text-align: left; font-weight: 800;
+      background: var(--primary); color: var(--text-on-primary);
+      padding: .9rem 1rem; text-align: left; font-weight: 800;
       text-transform: uppercase; letter-spacing: .05em; font-size: .78rem;
       border-bottom: 1px solid var(--border);
     }
     .compare-table tbody td {
       padding: .8rem 1rem; border-bottom: 1px solid var(--border);
-      color: var(--text-light);
+      color: var(--text-secondary);
     }
-    .compare-table tbody tr:nth-child(even) { background: rgba(26,56,71,.35); }
-    .compare-table tbody tr:hover { background: rgba(0,201,253,.06); }
+    .compare-table tbody tr:nth-child(even) { background: var(--bg); }
+    .compare-table tbody tr:hover { background: var(--info-bg); }
     .compare-table .mono {
       font-family: 'Fira Code', 'Courier New', monospace;
-      font-weight: 700; color: var(--cyan);
+      font-weight: 700; color: var(--primary);
     }
 
     /* ── Pipeline ── */
@@ -422,40 +341,38 @@
       gap: 1.2rem; margin: 1.5rem 0;
     }
     .pipeline-step {
-      background: var(--surface);
-      border-radius: var(--radius);
+      background: var(--surface); border-radius: var(--radius);
       padding: 1.5rem;
-      border-left: 3px solid var(--cyan);
+      border-left: 4px solid var(--secondary);
       box-shadow: var(--shadow);
       transition: transform .2s, box-shadow .2s;
     }
     .pipeline-step:hover {
       transform: translateY(-4px);
-      box-shadow: var(--glow);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
     }
     .pipeline-step .ps-num {
-      font-size: .72rem; font-weight: 800; color: var(--cyan);
+      font-size: .72rem; font-weight: 800; color: var(--secondary);
       letter-spacing: .08em; margin-bottom: .5rem;
     }
-    .pipeline-step h4 { font-size: .98rem; color: var(--white); margin-bottom: .5rem; }
-    .pipeline-step p { font-size: .84rem; color: var(--text-muted); line-height: 1.55; }
+    .pipeline-step h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
+    .pipeline-step p { font-size: .84rem; color: var(--text-secondary); line-height: 1.55; }
 
     .note-box {
-      background: rgba(0,201,253,.08);
-      border-left: 4px solid var(--cyan);
+      background: var(--info-bg);
+      border-left: 4px solid var(--primary);
       border-radius: 0 var(--radius) var(--radius) 0;
       padding: 1.1rem 1.3rem;
-      font-size: .88rem; color: var(--text-light); margin-top: 1rem;
+      font-size: .88rem; color: var(--text-secondary); margin-top: 1rem;
     }
-    .note-box strong { color: var(--cyan); }
+    .note-box strong { color: var(--primary); }
 
     /* ── Footer ── */
     footer {
-      background: var(--surface); border-top: 1px solid var(--border);
-      color: var(--text-muted); text-align: center;
-      padding: 2.5rem; font-size: .8rem; line-height: 1.8;
+      background: var(--primary-dark); color: rgba(255,255,255,.6);
+      text-align: center; padding: 2.5rem; font-size: .8rem; line-height: 1.8;
     }
-    footer strong { color: var(--cyan); }
+    footer strong { color: var(--secondary); }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
@@ -465,18 +382,18 @@
       nav ul {
         position: absolute; top: 60px; left: 0; right: 0;
         flex-direction: column;
-        background: rgba(4,15,22,.98);
-        border-bottom: 1px solid var(--surface-2);
+        background: var(--primary);
+        border-bottom: 1px solid rgba(255,255,255,.1);
         padding: 1rem 1.5rem 1.5rem;
         gap: .6rem;
         display: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,.5);
+        box-shadow: 0 10px 40px rgba(0,0,0,.3);
       }
       nav ul li a {
         font-size: .9rem;
         display: block;
         padding: .6rem 0;
-        border-bottom: 1px solid rgba(0,201,253,.1);
+        border-bottom: 1px solid rgba(255,255,255,.1);
       }
       .menu-toggle:checked ~ ul { display: flex; }
 
@@ -551,7 +468,7 @@
     <h2 class="section-title">1. Arquitectura YOLOv26-cls</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
       <strong>YOLOv26-cls</strong> no es un detector de objetos; es la rama de clasificación extraída de la familia YOLOv26. La arquitectura se compone de tres bloques funcionales: <strong>Backbone</strong>, <strong>Neck</strong> y <strong>Head</strong>.
     </p>
 
@@ -638,258 +555,258 @@
 <!-- ══════════════════════════════════════
      2. CÓMO FLUYE UNA IMAGEN
 ══════════════════════════════════════ -->
-<section id="forward" style="background:rgba(10,24,36,.5);">
+<section id="forward" style="background:var(--surface);">
   <div class="container">
     <h2 class="section-title">2. Forward Pass: el viaje de una imagen</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
       Tomemos una imagen de entrada <span class="mono">x ∈ R<sup>3×224×224</sup></span>. Así es como la red la transforma paso a paso hasta emitir una decisión.
     </p>
 
     <div class="cnn-viz">
-  <svg viewBox="0 0 880 320" preserveAspectRatio="xMidYMid meet">
-    <defs>
-      <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="rgba(0,201,253,0.05)" />
-        <stop offset="50%" stop-color="#00C9FD" />
-        <stop offset="100%" stop-color="rgba(0,201,253,0.05)" />
-      </linearGradient>
-      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-    <g class="layer-group input-pixel layer-0">
-      <circle cx="50" cy="120" r="5" class="node" />
-      <circle cx="70" cy="120" r="5" class="node" />
-      <circle cx="90" cy="120" r="5" class="node" />
-      <circle cx="110" cy="120" r="5" class="node" />
-      <circle cx="50" cy="140" r="5" class="node" />
-      <circle cx="70" cy="140" r="5" class="node" />
-      <circle cx="90" cy="140" r="5" class="node" />
-      <circle cx="110" cy="140" r="5" class="node" />
-      <circle cx="50" cy="160" r="5" class="node" />
-      <circle cx="70" cy="160" r="5" class="node" />
-      <circle cx="90" cy="160" r="5" class="node" />
-      <circle cx="110" cy="160" r="5" class="node" />
-      <circle cx="50" cy="180" r="5" class="node" />
-      <circle cx="70" cy="180" r="5" class="node" />
-      <circle cx="90" cy="180" r="5" class="node" />
-      <circle cx="110" cy="180" r="5" class="node" />
-    </g>
-    <g class="layer-group layer-1">
-      <circle cx="230" cy="95" r="10" class="node" />
-      <circle cx="230" cy="130" r="10" class="node" />
-      <circle cx="230" cy="165" r="10" class="node" />
-      <circle cx="230" cy="200" r="10" class="node" />
-      <circle cx="230" cy="235" r="10" class="node" />
-    </g>
-    <g class="layer-group layer-2">
-      <circle cx="370" cy="95" r="10" class="node" />
-      <circle cx="370" cy="130" r="10" class="node" />
-      <circle cx="370" cy="165" r="10" class="node" />
-      <circle cx="370" cy="200" r="10" class="node" />
-      <circle cx="370" cy="235" r="10" class="node" />
-    </g>
-    <g class="layer-group layer-3">
-      <circle cx="510" cy="120" r="12" class="node" />
-      <circle cx="510" cy="160" r="12" class="node" />
-      <circle cx="510" cy="200" r="12" class="node" />
-    </g>
-    <g class="layer-group layer-4">
-      <circle cx="650" cy="120" r="12" class="node" />
-      <circle cx="650" cy="160" r="12" class="node" />
-      <circle cx="650" cy="200" r="12" class="node" />
-    </g>
-    <g class="layer-group layer-5">
-      <circle cx="790" cy="130" r="14" class="node output-melanoma" />
-      <circle cx="790" cy="170" r="14" class="node output-benign" />
-    </g>
-    <path class="connection" d="M 50 120 Q 140.0 120 230 95" />
-    <path class="connection" d="M 50 120 Q 140.0 120 230 130" />
-    <path class="connection" d="M 50 120 Q 140.0 120 230 165" />
-    <path class="connection" d="M 50 120 Q 140.0 120 230 200" />
-    <path class="connection" d="M 50 120 Q 140.0 120 230 235" />
-    <path class="connection" d="M 70 120 Q 150.0 120 230 95" />
-    <path class="connection" d="M 70 120 Q 150.0 120 230 130" />
-    <path class="connection" d="M 70 120 Q 150.0 120 230 165" />
-    <path class="connection" d="M 70 120 Q 150.0 120 230 200" />
-    <path class="connection" d="M 70 120 Q 150.0 120 230 235" />
-    <path class="connection" d="M 90 120 Q 160.0 120 230 95" />
-    <path class="connection" d="M 90 120 Q 160.0 120 230 130" />
-    <path class="connection" d="M 90 120 Q 160.0 120 230 165" />
-    <path class="connection" d="M 90 120 Q 160.0 120 230 200" />
-    <path class="connection" d="M 90 120 Q 160.0 120 230 235" />
-    <path class="connection" d="M 110 120 Q 170.0 120 230 95" />
-    <path class="connection" d="M 110 120 Q 170.0 120 230 130" />
-    <path class="connection" d="M 110 120 Q 170.0 120 230 165" />
-    <path class="connection" d="M 110 120 Q 170.0 120 230 200" />
-    <path class="connection" d="M 110 120 Q 170.0 120 230 235" />
-    <path class="connection" d="M 50 140 Q 140.0 140 230 95" />
-    <path class="connection" d="M 50 140 Q 140.0 140 230 130" />
-    <path class="connection" d="M 50 140 Q 140.0 140 230 165" />
-    <path class="connection" d="M 50 140 Q 140.0 140 230 200" />
-    <path class="connection" d="M 50 140 Q 140.0 140 230 235" />
-    <path class="connection" d="M 70 140 Q 150.0 140 230 95" />
-    <path class="connection" d="M 70 140 Q 150.0 140 230 130" />
-    <path class="connection" d="M 70 140 Q 150.0 140 230 165" />
-    <path class="connection" d="M 70 140 Q 150.0 140 230 200" />
-    <path class="connection" d="M 70 140 Q 150.0 140 230 235" />
-    <path class="connection" d="M 90 140 Q 160.0 140 230 95" />
-    <path class="connection" d="M 90 140 Q 160.0 140 230 130" />
-    <path class="connection" d="M 90 140 Q 160.0 140 230 165" />
-    <path class="connection" d="M 90 140 Q 160.0 140 230 200" />
-    <path class="connection" d="M 90 140 Q 160.0 140 230 235" />
-    <path class="connection" d="M 110 140 Q 170.0 140 230 95" />
-    <path class="connection" d="M 110 140 Q 170.0 140 230 130" />
-    <path class="connection" d="M 110 140 Q 170.0 140 230 165" />
-    <path class="connection" d="M 110 140 Q 170.0 140 230 200" />
-    <path class="connection" d="M 110 140 Q 170.0 140 230 235" />
-    <path class="connection" d="M 50 160 Q 140.0 160 230 95" />
-    <path class="connection" d="M 50 160 Q 140.0 160 230 130" />
-    <path class="connection" d="M 50 160 Q 140.0 160 230 165" />
-    <path class="connection" d="M 50 160 Q 140.0 160 230 200" />
-    <path class="connection" d="M 50 160 Q 140.0 160 230 235" />
-    <path class="connection" d="M 70 160 Q 150.0 160 230 95" />
-    <path class="connection" d="M 70 160 Q 150.0 160 230 130" />
-    <path class="connection" d="M 70 160 Q 150.0 160 230 165" />
-    <path class="connection" d="M 70 160 Q 150.0 160 230 200" />
-    <path class="connection" d="M 70 160 Q 150.0 160 230 235" />
-    <path class="connection" d="M 90 160 Q 160.0 160 230 95" />
-    <path class="connection" d="M 90 160 Q 160.0 160 230 130" />
-    <path class="connection" d="M 90 160 Q 160.0 160 230 165" />
-    <path class="connection" d="M 90 160 Q 160.0 160 230 200" />
-    <path class="connection" d="M 90 160 Q 160.0 160 230 235" />
-    <path class="connection" d="M 110 160 Q 170.0 160 230 95" />
-    <path class="connection" d="M 110 160 Q 170.0 160 230 130" />
-    <path class="connection" d="M 110 160 Q 170.0 160 230 165" />
-    <path class="connection" d="M 110 160 Q 170.0 160 230 200" />
-    <path class="connection" d="M 110 160 Q 170.0 160 230 235" />
-    <path class="connection" d="M 50 180 Q 140.0 180 230 95" />
-    <path class="connection" d="M 50 180 Q 140.0 180 230 130" />
-    <path class="connection" d="M 50 180 Q 140.0 180 230 165" />
-    <path class="connection" d="M 50 180 Q 140.0 180 230 200" />
-    <path class="connection" d="M 50 180 Q 140.0 180 230 235" />
-    <path class="connection" d="M 70 180 Q 150.0 180 230 95" />
-    <path class="connection" d="M 70 180 Q 150.0 180 230 130" />
-    <path class="connection" d="M 70 180 Q 150.0 180 230 165" />
-    <path class="connection" d="M 70 180 Q 150.0 180 230 200" />
-    <path class="connection" d="M 70 180 Q 150.0 180 230 235" />
-    <path class="connection" d="M 90 180 Q 160.0 180 230 95" />
-    <path class="connection" d="M 90 180 Q 160.0 180 230 130" />
-    <path class="connection" d="M 90 180 Q 160.0 180 230 165" />
-    <path class="connection" d="M 90 180 Q 160.0 180 230 200" />
-    <path class="connection" d="M 90 180 Q 160.0 180 230 235" />
-    <path class="connection" d="M 110 180 Q 170.0 180 230 95" />
-    <path class="connection" d="M 110 180 Q 170.0 180 230 130" />
-    <path class="connection" d="M 110 180 Q 170.0 180 230 165" />
-    <path class="connection" d="M 110 180 Q 170.0 180 230 200" />
-    <path class="connection" d="M 110 180 Q 170.0 180 230 235" />
-    <path class="connection" d="M 230 95 Q 300.0 95 370 95" />
-    <path class="connection" d="M 230 95 Q 300.0 95 370 130" />
-    <path class="connection" d="M 230 95 Q 300.0 95 370 165" />
-    <path class="connection" d="M 230 95 Q 300.0 95 370 200" />
-    <path class="connection" d="M 230 95 Q 300.0 95 370 235" />
-    <path class="connection" d="M 230 130 Q 300.0 130 370 95" />
-    <path class="connection" d="M 230 130 Q 300.0 130 370 130" />
-    <path class="connection" d="M 230 130 Q 300.0 130 370 165" />
-    <path class="connection" d="M 230 130 Q 300.0 130 370 200" />
-    <path class="connection" d="M 230 130 Q 300.0 130 370 235" />
-    <path class="connection" d="M 230 165 Q 300.0 165 370 95" />
-    <path class="connection" d="M 230 165 Q 300.0 165 370 130" />
-    <path class="connection" d="M 230 165 Q 300.0 165 370 165" />
-    <path class="connection" d="M 230 165 Q 300.0 165 370 200" />
-    <path class="connection" d="M 230 165 Q 300.0 165 370 235" />
-    <path class="connection" d="M 230 200 Q 300.0 200 370 95" />
-    <path class="connection" d="M 230 200 Q 300.0 200 370 130" />
-    <path class="connection" d="M 230 200 Q 300.0 200 370 165" />
-    <path class="connection" d="M 230 200 Q 300.0 200 370 200" />
-    <path class="connection" d="M 230 200 Q 300.0 200 370 235" />
-    <path class="connection" d="M 230 235 Q 300.0 235 370 95" />
-    <path class="connection" d="M 230 235 Q 300.0 235 370 130" />
-    <path class="connection" d="M 230 235 Q 300.0 235 370 165" />
-    <path class="connection" d="M 230 235 Q 300.0 235 370 200" />
-    <path class="connection" d="M 230 235 Q 300.0 235 370 235" />
-    <path class="connection" d="M 370 95 Q 440.0 95 510 120" />
-    <path class="connection" d="M 370 95 Q 440.0 95 510 160" />
-    <path class="connection" d="M 370 95 Q 440.0 95 510 200" />
-    <path class="connection" d="M 370 130 Q 440.0 130 510 120" />
-    <path class="connection" d="M 370 130 Q 440.0 130 510 160" />
-    <path class="connection" d="M 370 130 Q 440.0 130 510 200" />
-    <path class="connection" d="M 370 165 Q 440.0 165 510 120" />
-    <path class="connection" d="M 370 165 Q 440.0 165 510 160" />
-    <path class="connection" d="M 370 165 Q 440.0 165 510 200" />
-    <path class="connection" d="M 370 200 Q 440.0 200 510 120" />
-    <path class="connection" d="M 370 200 Q 440.0 200 510 160" />
-    <path class="connection" d="M 370 200 Q 440.0 200 510 200" />
-    <path class="connection" d="M 370 235 Q 440.0 235 510 120" />
-    <path class="connection" d="M 370 235 Q 440.0 235 510 160" />
-    <path class="connection" d="M 370 235 Q 440.0 235 510 200" />
-    <path class="connection" d="M 510 120 Q 580.0 120 650 120" />
-    <path class="connection" d="M 510 120 Q 580.0 120 650 160" />
-    <path class="connection" d="M 510 120 Q 580.0 120 650 200" />
-    <path class="connection" d="M 510 160 Q 580.0 160 650 120" />
-    <path class="connection" d="M 510 160 Q 580.0 160 650 160" />
-    <path class="connection" d="M 510 160 Q 580.0 160 650 200" />
-    <path class="connection" d="M 510 200 Q 580.0 200 650 120" />
-    <path class="connection" d="M 510 200 Q 580.0 200 650 160" />
-    <path class="connection" d="M 510 200 Q 580.0 200 650 200" />
-    <path class="connection" d="M 650 120 Q 720.0 120 790 130" />
-    <path class="connection" d="M 650 120 Q 720.0 120 790 170" />
-    <path class="connection" d="M 650 160 Q 720.0 160 790 130" />
-    <path class="connection" d="M 650 160 Q 720.0 160 790 170" />
-    <path class="connection" d="M 650 200 Q 720.0 200 790 130" />
-    <path class="connection" d="M 650 200 Q 720.0 200 790 170" />
-    <path id="flow0" class="connection flow" d="M 50 120 Q 140.0 142.5 230 165" style="animation-delay:0.0s" />
-    <path id="flow1" class="connection flow" d="M 50 140 Q 140.0 152.5 230 165" style="animation-delay:0.15s" />
-    <path id="flow2" class="connection flow" d="M 50 160 Q 140.0 162.5 230 165" style="animation-delay:0.3s" />
-    <path id="flow3" class="connection flow" d="M 50 180 Q 140.0 172.5 230 165" style="animation-delay:0.45s" />
-    <path id="flow4" class="connection flow" d="M 230 95 Q 300.0 130.0 370 165" style="animation-delay:0.6s" />
-    <path id="flow5" class="connection flow" d="M 230 165 Q 300.0 165.0 370 165" style="animation-delay:0.75s" />
-    <path id="flow6" class="connection flow" d="M 230 235 Q 300.0 200.0 370 165" style="animation-delay:0.9s" />
-    <path id="flow7" class="connection flow" d="M 370 95 Q 440.0 127.5 510 160" style="animation-delay:1.05s" />
-    <path id="flow8" class="connection flow" d="M 370 165 Q 440.0 162.5 510 160" style="animation-delay:1.2s" />
-    <path id="flow9" class="connection flow" d="M 370 235 Q 440.0 197.5 510 160" style="animation-delay:1.35s" />
-    <path id="flow10" class="connection flow" d="M 510 120 Q 580.0 140.0 650 160" style="animation-delay:1.5s" />
-    <path id="flow11" class="connection flow" d="M 510 160 Q 580.0 160.0 650 160" style="animation-delay:1.65s" />
-    <path id="flow12" class="connection flow" d="M 510 200 Q 580.0 180.0 650 160" style="animation-delay:1.8s" />
-    <path id="flow13" class="connection flow" d="M 650 120 Q 720.0 135.0 790 150" style="animation-delay:1.95s" />
-    <path id="flow14" class="connection flow" d="M 650 160 Q 720.0 155.0 790 150" style="animation-delay:2.1s" />
-    <path id="flow15" class="connection flow" d="M 650 200 Q 720.0 175.0 790 150" style="animation-delay:2.25s" />
-    <circle r="4" class="traveler">
-      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 50 120 Q 140.0 107.5 230 95" />
-    </circle>
-    <circle r="4" class="traveler">
-      <animateMotion dur="2.8s" repeatCount="indefinite" path="M 90 180 Q 160.0 207.5 230 235" />
-    </circle>
-    <circle r="4" class="traveler">
-      <animateMotion dur="3.1s" repeatCount="indefinite" path="M 230 165 Q 300.0 165.0 370 165" />
-    </circle>
-    <circle r="4" class="traveler">
-      <animateMotion dur="3.4s" repeatCount="indefinite" path="M 370 95 Q 440.0 107.5 510 120" />
-    </circle>
-    <circle r="4" class="traveler">
-      <animateMotion dur="3.7s" repeatCount="indefinite" path="M 510 160 Q 580.0 160.0 650 160" />
-    </circle>
-    <circle r="4" class="traveler">
-      <animateMotion dur="4.0s" repeatCount="indefinite" path="M 650 120 Q 720.0 125.0 790 130" />
-    </circle>
-    <text x="80" y="230" class="layer-label">Input RGB</text>
-    <text x="230" y="285" class="layer-label">Conv + BN + SiLU</text>
-    <text x="370" y="285" class="layer-label">C3 Blocks</text>
-    <text x="510" y="285" class="layer-label">SPPF / Pool</text>
-    <text x="650" y="285" class="layer-label">FC 256</text>
-    <text x="790" y="285" class="layer-label">Output</text>
-    <text x="790" y="230" class="layer-label" style="fill:#FF6B6B">Melanoma</text>
-    <text x="790" y="115" class="layer-label" style="fill:#4ADE80">Benigno</text>
-  </svg>
-  <div class="viz-legend">
-    <span><span class="legend-dot"></span> Activación</span>
-    <span><span class="legend-dot melanoma"></span> Melanoma</span>
-    <span><span class="legend-dot benign"></span> No melanoma</span>
-  </div>
-</div>
+      <svg viewBox="0 0 880 320" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(0,56,101,0.05)" />
+            <stop offset="50%" stop-color="#F8A900" />
+            <stop offset="100%" stop-color="rgba(0,56,101,0.05)" />
+          </linearGradient>
+        </defs>
+        <g class="layer-group input-pixel layer-0">
+          <circle cx="50" cy="120" r="5" class="node" />
+          <circle cx="70" cy="120" r="5" class="node" />
+          <circle cx="90" cy="120" r="5" class="node" />
+          <circle cx="110" cy="120" r="5" class="node" />
+          <circle cx="50" cy="140" r="5" class="node" />
+          <circle cx="70" cy="140" r="5" class="node" />
+          <circle cx="90" cy="140" r="5" class="node" />
+          <circle cx="110" cy="140" r="5" class="node" />
+          <circle cx="50" cy="160" r="5" class="node" />
+          <circle cx="70" cy="160" r="5" class="node" />
+          <circle cx="90" cy="160" r="5" class="node" />
+          <circle cx="110" cy="160" r="5" class="node" />
+          <circle cx="50" cy="180" r="5" class="node" />
+          <circle cx="70" cy="180" r="5" class="node" />
+          <circle cx="90" cy="180" r="5" class="node" />
+          <circle cx="110" cy="180" r="5" class="node" />
+        </g>
+        <g class="layer-group layer-1">
+          <circle cx="230" cy="95" r="10" class="node" />
+          <circle cx="230" cy="130" r="10" class="node" />
+          <circle cx="230" cy="165" r="10" class="node" />
+          <circle cx="230" cy="200" r="10" class="node" />
+          <circle cx="230" cy="235" r="10" class="node" />
+        </g>
+        <g class="layer-group layer-2">
+          <circle cx="370" cy="95" r="10" class="node" />
+          <circle cx="370" cy="130" r="10" class="node" />
+          <circle cx="370" cy="165" r="10" class="node" />
+          <circle cx="370" cy="200" r="10" class="node" />
+          <circle cx="370" cy="235" r="10" class="node" />
+        </g>
+        <g class="layer-group layer-3">
+          <circle cx="510" cy="120" r="12" class="node" />
+          <circle cx="510" cy="160" r="12" class="node" />
+          <circle cx="510" cy="200" r="12" class="node" />
+        </g>
+        <g class="layer-group layer-4">
+          <circle cx="650" cy="120" r="12" class="node" />
+          <circle cx="650" cy="160" r="12" class="node" />
+          <circle cx="650" cy="200" r="12" class="node" />
+        </g>
+        <g class="layer-group layer-5">
+          <circle cx="790" cy="130" r="14" class="node output-melanoma" />
+          <circle cx="790" cy="170" r="14" class="node output-benign" />
+        </g>
+        <!-- Conexiones base -->
+        <path class="connection" d="M 50 120 Q 140 120 230 95" />
+        <path class="connection" d="M 50 120 Q 140 120 230 130" />
+        <path class="connection" d="M 50 120 Q 140 120 230 165" />
+        <path class="connection" d="M 50 120 Q 140 120 230 200" />
+        <path class="connection" d="M 50 120 Q 140 120 230 235" />
+        <path class="connection" d="M 70 120 Q 150 120 230 95" />
+        <path class="connection" d="M 70 120 Q 150 120 230 130" />
+        <path class="connection" d="M 70 120 Q 150 120 230 165" />
+        <path class="connection" d="M 70 120 Q 150 120 230 200" />
+        <path class="connection" d="M 70 120 Q 150 120 230 235" />
+        <path class="connection" d="M 90 120 Q 160 120 230 95" />
+        <path class="connection" d="M 90 120 Q 160 120 230 130" />
+        <path class="connection" d="M 90 120 Q 160 120 230 165" />
+        <path class="connection" d="M 90 120 Q 160 120 230 200" />
+        <path class="connection" d="M 90 120 Q 160 120 230 235" />
+        <path class="connection" d="M 110 120 Q 170 120 230 95" />
+        <path class="connection" d="M 110 120 Q 170 120 230 130" />
+        <path class="connection" d="M 110 120 Q 170 120 230 165" />
+        <path class="connection" d="M 110 120 Q 170 120 230 200" />
+        <path class="connection" d="M 110 120 Q 170 120 230 235" />
+        <path class="connection" d="M 50 140 Q 140 140 230 95" />
+        <path class="connection" d="M 50 140 Q 140 140 230 130" />
+        <path class="connection" d="M 50 140 Q 140 140 230 165" />
+        <path class="connection" d="M 50 140 Q 140 140 230 200" />
+        <path class="connection" d="M 50 140 Q 140 140 230 235" />
+        <path class="connection" d="M 70 140 Q 150 140 230 95" />
+        <path class="connection" d="M 70 140 Q 150 140 230 130" />
+        <path class="connection" d="M 70 140 Q 150 140 230 165" />
+        <path class="connection" d="M 70 140 Q 150 140 230 200" />
+        <path class="connection" d="M 70 140 Q 150 140 230 235" />
+        <path class="connection" d="M 90 140 Q 160 140 230 95" />
+        <path class="connection" d="M 90 140 Q 160 140 230 130" />
+        <path class="connection" d="M 90 140 Q 160 140 230 165" />
+        <path class="connection" d="M 90 140 Q 160 140 230 200" />
+        <path class="connection" d="M 90 140 Q 160 140 230 235" />
+        <path class="connection" d="M 110 140 Q 170 140 230 95" />
+        <path class="connection" d="M 110 140 Q 170 140 230 130" />
+        <path class="connection" d="M 110 140 Q 170 140 230 165" />
+        <path class="connection" d="M 110 140 Q 170 140 230 200" />
+        <path class="connection" d="M 110 140 Q 170 140 230 235" />
+        <path class="connection" d="M 50 160 Q 140 160 230 95" />
+        <path class="connection" d="M 50 160 Q 140 160 230 130" />
+        <path class="connection" d="M 50 160 Q 140 160 230 165" />
+        <path class="connection" d="M 50 160 Q 140 160 230 200" />
+        <path class="connection" d="M 50 160 Q 140 160 230 235" />
+        <path class="connection" d="M 70 160 Q 150 160 230 95" />
+        <path class="connection" d="M 70 160 Q 150 160 230 130" />
+        <path class="connection" d="M 70 160 Q 150 160 230 165" />
+        <path class="connection" d="M 70 160 Q 150 160 230 200" />
+        <path class="connection" d="M 70 160 Q 150 160 230 235" />
+        <path class="connection" d="M 90 160 Q 160 160 230 95" />
+        <path class="connection" d="M 90 160 Q 160 160 230 130" />
+        <path class="connection" d="M 90 160 Q 160 160 230 165" />
+        <path class="connection" d="M 90 160 Q 160 160 230 200" />
+        <path class="connection" d="M 90 160 Q 160 160 230 235" />
+        <path class="connection" d="M 110 160 Q 170 160 230 95" />
+        <path class="connection" d="M 110 160 Q 170 160 230 130" />
+        <path class="connection" d="M 110 160 Q 170 160 230 165" />
+        <path class="connection" d="M 110 160 Q 170 160 230 200" />
+        <path class="connection" d="M 110 160 Q 170 160 230 235" />
+        <path class="connection" d="M 50 180 Q 140 180 230 95" />
+        <path class="connection" d="M 50 180 Q 140 180 230 130" />
+        <path class="connection" d="M 50 180 Q 140 180 230 165" />
+        <path class="connection" d="M 50 180 Q 140 180 230 200" />
+        <path class="connection" d="M 50 180 Q 140 180 230 235" />
+        <path class="connection" d="M 70 180 Q 150 180 230 95" />
+        <path class="connection" d="M 70 180 Q 150 180 230 130" />
+        <path class="connection" d="M 70 180 Q 150 180 230 165" />
+        <path class="connection" d="M 70 180 Q 150 180 230 200" />
+        <path class="connection" d="M 70 180 Q 150 180 230 235" />
+        <path class="connection" d="M 90 180 Q 160 180 230 95" />
+        <path class="connection" d="M 90 180 Q 160 180 230 130" />
+        <path class="connection" d="M 90 180 Q 160 180 230 165" />
+        <path class="connection" d="M 90 180 Q 160 180 230 200" />
+        <path class="connection" d="M 90 180 Q 160 180 230 235" />
+        <path class="connection" d="M 110 180 Q 170 180 230 95" />
+        <path class="connection" d="M 110 180 Q 170 180 230 130" />
+        <path class="connection" d="M 110 180 Q 170 180 230 165" />
+        <path class="connection" d="M 110 180 Q 170 180 230 200" />
+        <path class="connection" d="M 110 180 Q 170 180 230 235" />
+        <path class="connection" d="M 230 95 Q 300 95 370 95" />
+        <path class="connection" d="M 230 95 Q 300 95 370 130" />
+        <path class="connection" d="M 230 95 Q 300 95 370 165" />
+        <path class="connection" d="M 230 95 Q 300 95 370 200" />
+        <path class="connection" d="M 230 95 Q 300 95 370 235" />
+        <path class="connection" d="M 230 130 Q 300 130 370 95" />
+        <path class="connection" d="M 230 130 Q 300 130 370 130" />
+        <path class="connection" d="M 230 130 Q 300 130 370 165" />
+        <path class="connection" d="M 230 130 Q 300 130 370 200" />
+        <path class="connection" d="M 230 130 Q 300 130 370 235" />
+        <path class="connection" d="M 230 165 Q 300 165 370 95" />
+        <path class="connection" d="M 230 165 Q 300 165 370 130" />
+        <path class="connection" d="M 230 165 Q 300 165 370 165" />
+        <path class="connection" d="M 230 165 Q 300 165 370 200" />
+        <path class="connection" d="M 230 165 Q 300 165 370 235" />
+        <path class="connection" d="M 230 200 Q 300 200 370 95" />
+        <path class="connection" d="M 230 200 Q 300 200 370 130" />
+        <path class="connection" d="M 230 200 Q 300 200 370 165" />
+        <path class="connection" d="M 230 200 Q 300 200 370 200" />
+        <path class="connection" d="M 230 200 Q 300 200 370 235" />
+        <path class="connection" d="M 230 235 Q 300 235 370 95" />
+        <path class="connection" d="M 230 235 Q 300 235 370 130" />
+        <path class="connection" d="M 230 235 Q 300 235 370 165" />
+        <path class="connection" d="M 230 235 Q 300 235 370 200" />
+        <path class="connection" d="M 230 235 Q 300 235 370 235" />
+        <path class="connection" d="M 370 95 Q 440 95 510 120" />
+        <path class="connection" d="M 370 95 Q 440 95 510 160" />
+        <path class="connection" d="M 370 95 Q 440 95 510 200" />
+        <path class="connection" d="M 370 130 Q 440 130 510 120" />
+        <path class="connection" d="M 370 130 Q 440 130 510 160" />
+        <path class="connection" d="M 370 130 Q 440 130 510 200" />
+        <path class="connection" d="M 370 165 Q 440 165 510 120" />
+        <path class="connection" d="M 370 165 Q 440 165 510 160" />
+        <path class="connection" d="M 370 165 Q 440 165 510 200" />
+        <path class="connection" d="M 370 200 Q 440 200 510 120" />
+        <path class="connection" d="M 370 200 Q 440 200 510 160" />
+        <path class="connection" d="M 370 200 Q 440 200 510 200" />
+        <path class="connection" d="M 370 235 Q 440 235 510 120" />
+        <path class="connection" d="M 370 235 Q 440 235 510 160" />
+        <path class="connection" d="M 370 235 Q 440 235 510 200" />
+        <path class="connection" d="M 510 120 Q 580 120 650 120" />
+        <path class="connection" d="M 510 120 Q 580 120 650 160" />
+        <path class="connection" d="M 510 120 Q 580 120 650 200" />
+        <path class="connection" d="M 510 160 Q 580 160 650 120" />
+        <path class="connection" d="M 510 160 Q 580 160 650 160" />
+        <path class="connection" d="M 510 160 Q 580 160 650 200" />
+        <path class="connection" d="M 510 200 Q 580 200 650 120" />
+        <path class="connection" d="M 510 200 Q 580 200 650 160" />
+        <path class="connection" d="M 510 200 Q 580 200 650 200" />
+        <path class="connection" d="M 650 120 Q 720 120 790 130" />
+        <path class="connection" d="M 650 120 Q 720 120 790 170" />
+        <path class="connection" d="M 650 160 Q 720 160 790 130" />
+        <path class="connection" d="M 650 160 Q 720 160 790 170" />
+        <path class="connection" d="M 650 200 Q 720 200 790 130" />
+        <path class="connection" d="M 650 200 Q 720 200 790 170" />
+        <!-- Conexiones animadas -->
+        <path class="connection flow" d="M 50 120 Q 140 142 230 165" style="animation-delay:0s" />
+        <path class="connection flow" d="M 50 140 Q 140 152 230 165" style="animation-delay:0.15s" />
+        <path class="connection flow" d="M 50 160 Q 140 162 230 165" style="animation-delay:0.3s" />
+        <path class="connection flow" d="M 50 180 Q 140 172 230 165" style="animation-delay:0.45s" />
+        <path class="connection flow" d="M 230 95 Q 300 130 370 165" style="animation-delay:0.6s" />
+        <path class="connection flow" d="M 230 165 Q 300 165 370 165" style="animation-delay:0.75s" />
+        <path class="connection flow" d="M 230 235 Q 300 200 370 165" style="animation-delay:0.9s" />
+        <path class="connection flow" d="M 370 95 Q 440 127 510 160" style="animation-delay:1.05s" />
+        <path class="connection flow" d="M 370 165 Q 440 162 510 160" style="animation-delay:1.2s" />
+        <path class="connection flow" d="M 370 235 Q 440 197 510 160" style="animation-delay:1.35s" />
+        <path class="connection flow" d="M 510 120 Q 580 140 650 160" style="animation-delay:1.5s" />
+        <path class="connection flow" d="M 510 160 Q 580 160 650 160" style="animation-delay:1.65s" />
+        <path class="connection flow" d="M 510 200 Q 580 180 650 160" style="animation-delay:1.8s" />
+        <path class="connection flow" d="M 650 120 Q 720 135 790 150" style="animation-delay:1.95s" />
+        <path class="connection flow" d="M 650 160 Q 720 155 790 150" style="animation-delay:2.1s" />
+        <path class="connection flow" d="M 650 200 Q 720 175 790 150" style="animation-delay:2.25s" />
+        <!-- Travelers -->
+        <circle r="4" class="traveler">
+          <animateMotion dur="2.5s" repeatCount="indefinite" path="M 50 120 Q 140 107 230 95" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="2.8s" repeatCount="indefinite" path="M 90 180 Q 160 207 230 235" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="3.1s" repeatCount="indefinite" path="M 230 165 Q 300 165 370 165" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="3.4s" repeatCount="indefinite" path="M 370 95 Q 440 107 510 120" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="3.7s" repeatCount="indefinite" path="M 510 160 Q 580 160 650 160" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="4.0s" repeatCount="indefinite" path="M 650 120 Q 720 125 790 130" />
+        </circle>
+        <!-- Etiquetas -->
+        <text x="80" y="230" class="layer-label">Input RGB</text>
+        <text x="230" y="285" class="layer-label">Conv + BN + SiLU</text>
+        <text x="370" y="285" class="layer-label">C3 Blocks</text>
+        <text x="510" y="285" class="layer-label">SPPF / Pool</text>
+        <text x="650" y="285" class="layer-label">FC 256</text>
+        <text x="790" y="285" class="layer-label">Output</text>
+        <text x="790" y="230" class="layer-label" style="fill:#C62828">Melanoma</text>
+        <text x="790" y="115" class="layer-label" style="fill:#2E7D32">Benigno</text>
+      </svg>
+      <div class="viz-legend">
+        <span><span class="legend-dot"></span> Activación</span>
+        <span><span class="legend-dot melanoma"></span> Melanoma</span>
+        <span><span class="legend-dot benign"></span> No melanoma</span>
+      </div>
+    </div>
 
     <div class="formula-box">
       <div class="formula-title">Operación de una capa convolucional</div>
@@ -908,7 +825,7 @@
         <span>)</span>
         <span>)</span>
       </div>
-      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-muted);">
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-secondary);">
         Donde <em>W</em> es el kernel aprendible, <em>*</em> es la convolución 2D, BN normaliza por canal y SiLU es la activación Swish.
       </p>
     </div>
@@ -923,7 +840,7 @@
     <h2 class="section-title">3. Pérdida: Cross-Entropy ponderada</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
       En datos médicos las clases suelen estar desbalanceadas. En el dataset binario de ejemplo hay aproximadamente <strong>89% no-melanoma</strong> y <strong>11% melanoma</strong>. Si entrenáramos con Cross-Entropy estándar, el modelo aprendería a decir siempre "no-melanoma" y fallaría en detectar el cáncer.
     </p>
 
@@ -963,7 +880,7 @@
 <!-- ══════════════════════════════════════
      4. OPTIMIZACIÓN
 ══════════════════════════════════════ -->
-<section id="optimizacion" style="background:rgba(10,24,36,.5);">
+<section id="optimizacion" style="background:var(--surface);">
   <div class="container">
     <h2 class="section-title">4. Optimización: AdamW + Cosine Annealing</h2>
     <div class="section-rule"></div>
@@ -1044,7 +961,7 @@
     <h2 class="section-title">5. Augmentations: distorsión controlada</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
       Las augmentations no son decorativas. En dermatología, el modelo nunca debe memorizar el fondo o la iluminación específica. El objetivo es aprender características invariantes: bordes irregulares, colores, texturas.
     </p>
 
@@ -1076,12 +993,12 @@
 <!-- ══════════════════════════════════════
      6. EVALUACIÓN
 ══════════════════════════════════════ -->
-<section id="evaluacion" style="background:rgba(10,24,36,.5);">
+<section id="evaluacion" style="background:var(--surface);">
   <div class="container">
     <h2 class="section-title">6. Evaluación: índice de Youden</h2>
     <div class="section-rule"></div>
 
-    <p style="margin-bottom:1.5rem;color:var(--text-light);">
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
       En clasificación binaria desbalanceada, usar threshold = 0.5 es subóptimo. Usamos el <strong>índice de Youden</strong> para encontrar el punto que maximiza la diferencia entre sensibilidad y falsos positivos.
     </p>
 
@@ -1103,7 +1020,7 @@
     </div>
 
     <div class="note-box">
-      <strong>Protocolo anti data leakage:</strong> el threshold óptimo θ* se calcula solo en el conjunto de validación. Luego se aplica fijo a train y test. Esto garantiza que el test mide generalización real, no sobreajuste al threshold.
+      <strong>Protocolo anti data leakage:</strong> el threshold óptimo θ* se calcula solo en el conjunto de validación. Luego se aplica fijo a train y test. Esto garantiza que el test mida generalización real, no sobreajuste al threshold.
     </div>
   </div>
 </section>
