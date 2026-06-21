@@ -80,9 +80,20 @@
       color: var(--text-muted); text-decoration: none;
       font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
       transition: color .2s, text-shadow .2s;
+      white-space: nowrap;
     }
     nav ul li a:hover {
       color: var(--cyan); text-shadow: 0 0 10px rgba(0,201,253,.6);
+    }
+
+    /* Menú hamburguesa */
+    .menu-toggle { display: none; }
+    .menu-icon {
+      display: none;
+      color: var(--cyan);
+      font-size: 1.6rem;
+      cursor: pointer;
+      text-shadow: 0 0 10px rgba(0,201,253,.5);
     }
 
     /* ── Sections ── */
@@ -613,13 +624,68 @@
     }
     footer strong { color: var(--cyan); }
 
-    @media (max-width: 700px) {
-      nav ul { gap: .9rem; }
-      nav ul li a { font-size: .65rem; }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-logo { font-size: .75rem; }
+      .menu-icon { display: block; }
+      nav ul {
+        position: absolute; top: 60px; left: 0; right: 0;
+        flex-direction: column;
+        background: rgba(4,15,22,.98);
+        border-bottom: 1px solid var(--surface-2);
+        padding: 1rem 1.5rem 1.5rem;
+        gap: .6rem;
+        display: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,.5);
+      }
+      nav ul li a {
+        font-size: .9rem;
+        display: block;
+        padding: .6rem 0;
+        border-bottom: 1px solid rgba(0,201,253,.1);
+      }
+      .menu-toggle:checked ~ ul { display: flex; }
+
       section { padding: 3.5rem 1rem; }
+      .container { padding: 0; }
+      h2.section-title { font-size: 1.6rem; }
+
+      .upeu-badge { font-size: .6rem; padding: .3rem .8rem; }
+      #portada h1 { font-size: 1.5rem; }
+      .portada-icon { font-size: 2.5rem; }
+      .portada-chips { gap: .5rem; }
+      .chip { font-size: .7rem; padding: .25rem .7rem; }
+      .portada-team .names { gap: .6rem; }
+      .portada-team .name-card { font-size: .75rem; padding: .4rem .8rem; }
+
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-number { font-size: 2rem; }
+
+      .objetivo-general { flex-direction: column; }
+      .obj-icon { font-size: 1.6rem; }
+      .obj-especifico { flex-direction: column; gap: .8rem; }
+
+      .fases-pipeline { flex-direction: column; gap: 1rem; }
+      .fase-step { min-width: auto; }
+      .fase-step:not(:last-child)::after {
+        content: '↓'; right: 50%; top: auto;
+        bottom: -22px; transform: translateX(50%);
+      }
+      .cuant-header { flex-direction: column; align-items: flex-start; gap: .8rem; }
       .cuant-grid { grid-template-columns: 1fr; }
-      .fases-pipeline { flex-direction: column; }
-      .fase-step:not(:last-child)::after { content: '↓'; right: 50%; top: auto; bottom: -18px; transform: translateX(50%); }
+
+      .results-highlight { grid-template-columns: 1fr; }
+      .result-kpi .kpi-val { font-size: 2rem; }
+
+      .conclusiones-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      h2.section-title { font-size: 1.35rem; }
+      .section-rule { width: 50px; }
+      .problem-intro { padding: 1.5rem; }
+      .problem-intro::after { display: none; }
+      .btn-fase4 { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -630,6 +696,8 @@
   <div class="nav-logo">
     UPeU <span>Investigación 2026</span>
   </div>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú">☰</label>
   <ul>
     <li><a href="#portada">Inicio</a></li>
     <li><a href="#problematica">Problema</a></li>
@@ -1276,6 +1344,16 @@ new Chart(aucCtx, {
     }
   }
 });
+</script>
+
+<script>
+  /* Cierra el menú hamburguesa al hacer clic en un enlace (móvil) */
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const toggle = document.getElementById('menu-toggle');
+      if (toggle) toggle.checked = false;
+    });
+  });
 </script>
 
 </body>

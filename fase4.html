@@ -75,9 +75,20 @@
       color: var(--text-muted); text-decoration: none;
       font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
       transition: color .2s, text-shadow .2s;
+      white-space: nowrap;
     }
     nav ul li a:hover, nav ul li a.active {
       color: var(--cyan); text-shadow: 0 0 10px rgba(0,201,253,.6);
+    }
+
+    /* Menú hamburguesa */
+    .menu-toggle { display: none; }
+    .menu-icon {
+      display: none;
+      color: var(--cyan);
+      font-size: 1.6rem;
+      cursor: pointer;
+      text-shadow: 0 0 10px rgba(0,201,253,.5);
     }
 
     /* ── Layout ── */
@@ -400,15 +411,71 @@
     footer strong { color: var(--cyan); }
 
     /* ── Responsive ── */
-    @media (max-width: 700px) {
-      nav { padding: 0 1rem; }
-      nav ul { gap: .9rem; }
-      nav ul li a { font-size: .7rem; }
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-logo { font-size: .75rem; }
+      .menu-icon { display: block; }
+      nav ul {
+        position: absolute; top: 60px; left: 0; right: 0;
+        flex-direction: column;
+        background: rgba(4,15,22,.98);
+        border-bottom: 1px solid var(--surface-2);
+        padding: 1rem 1.5rem 1.5rem;
+        gap: .6rem;
+        display: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,.5);
+      }
+      nav ul li a {
+        font-size: .9rem;
+        display: block;
+        padding: .6rem 0;
+        border-bottom: 1px solid rgba(0,201,253,.1);
+      }
+      .menu-toggle:checked ~ ul { display: flex; }
+
       section { padding: 3.5rem 1rem; }
-      .hero::after { display: none; }
-      .formula { font-size: 1.1rem; }
-      .compression-arrow { transform: rotate(90deg); }
+      .container { padding: 0; }
+      h2.section-title { font-size: 1.6rem; }
+
+      .hero { min-height: auto; padding: 4rem 1rem; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
       .hero-stats { gap: 1rem; }
+      .hero-stat { min-width: 110px; padding: .8rem 1rem; }
+      .hero-stat .num { font-size: 1.6rem; }
+
+      .concept-grid { grid-template-columns: 1fr; }
+      .concept-card { padding: 1.3rem; }
+
+      .formula { font-size: 1.05rem; }
+      .formula-box { padding: 1.2rem; }
+      .formula .frac { margin: 0 .15rem; }
+
+      .example-box { padding: 1.2rem; }
+      .example-step { gap: .7rem; }
+
+      .pipeline-steps { grid-template-columns: 1fr; }
+      .analogy-cards { grid-template-columns: 1fr; }
+
+      .compression-banner {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1.8rem 1rem;
+      }
+      .compression-arrow { transform: rotate(90deg); }
+      .compression-item .big { font-size: 2rem; }
+
+      .bit-row { gap: 3px; }
+      .bit { width: 28px; height: 38px; font-size: .75rem; }
+    }
+
+    @media (max-width: 480px) {
+      h2.section-title { font-size: 1.35rem; }
+      .section-rule { width: 50px; }
+      .hero h1 { font-size: 1.6rem; }
+      .formula { font-size: .95rem; }
+      .formula-box { padding: 1rem; overflow-x: auto; }
+      .bit { width: 24px; height: 34px; font-size: .7rem; }
     }
   </style>
 </head>
@@ -419,6 +486,8 @@
   <div class="nav-logo">
     UPeU <span>Investigación 2026</span>
   </div>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú">☰</label>
   <ul>
     <li><a href="index.html">Inicio</a></li>
     <li><a href="index.html#metodologia">Metodología</a></li>
@@ -830,6 +899,16 @@
     Asesor: Ferdinand Pineda Ancco · Co-Asesor: Nemias Saboya Rios
   </p>
 </footer>
+
+<script>
+  /* Cierra el menú hamburguesa al hacer clic en un enlace (móvil) */
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const toggle = document.getElementById('menu-toggle');
+      if (toggle) toggle.checked = false;
+    });
+  });
+</script>
 
 </body>
 </html>
