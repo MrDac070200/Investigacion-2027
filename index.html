@@ -355,7 +355,8 @@
       display: flex; gap: 0; margin-bottom: 3rem;
       overflow-x: auto; padding-bottom: 1rem;
     }
-    .fase-step {
+    .fase-step, a.fase-step-link {
+      display: block;
       background: var(--surface);
       border: 1px solid var(--surface-2);
       border-radius: var(--radius);
@@ -364,8 +365,10 @@
       position: relative; text-align: center;
       transition: all .25s;
       box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
     }
-    .fase-step:not(:last-child)::after {
+    .fases-pipeline > *:not(:last-child)::after {
       content: '→';
       position: absolute; right: -18px; top: 50%;
       transform: translateY(-50%);
@@ -373,12 +376,14 @@
       font-weight: 900;
       text-shadow: 0 0 10px rgba(0,201,253,.5);
     }
-    .fase-step:hover {
+    .fase-step:hover,
+    a.fase-step-link:hover {
       border-color: rgba(0,201,253,.4);
       box-shadow: var(--glow);
       transform: translateY(-4px);
     }
-    .fase-step.active {
+    .fase-step.active,
+    a.fase-step-link.active {
       border-color: var(--cyan);
       background: linear-gradient(135deg, rgba(0,201,253,.1), rgba(16,159,211,.05));
       transform: translateY(-4px);
@@ -389,11 +394,12 @@
       letter-spacing: .08em; text-transform: uppercase;
       color: var(--text-muted); margin-bottom: .3rem;
     }
-    .fase-step.active .fase-num { color: var(--cyan); }
+    .fase-step.active .fase-num,
+    a.fase-step-link.active .fase-num { color: var(--cyan); }
     .fase-icon { font-size: 2rem; margin-bottom: .5rem; }
-    .fase-step h4 { font-size: .9rem; color: var(--white); margin-bottom: .3rem; }
-    .fase-step p { font-size: .75rem; color: var(--text-muted); line-height: 1.4; }
-    .fase-step .output-pill {
+    .fase-step h4, a.fase-step-link h4 { font-size: .9rem; color: var(--white); margin-bottom: .3rem; }
+    .fase-step p, a.fase-step-link p { font-size: .75rem; color: var(--text-muted); line-height: 1.4; }
+    .fase-step .output-pill, a.fase-step-link .output-pill {
       display: inline-block; margin-top: .6rem;
       background: rgba(0,201,253,.1); color: var(--cyan);
       border-radius: 50px; padding: .2rem .7rem; font-size: .7rem;
@@ -668,8 +674,8 @@
       .obj-especifico { flex-direction: column; gap: .8rem; }
 
       .fases-pipeline { flex-direction: column; gap: 1rem; }
-      .fase-step { min-width: auto; }
-      .fase-step:not(:last-child)::after {
+      .fase-step, a.fase-step-link { min-width: auto; }
+      .fases-pipeline > *:not(:last-child)::after {
         content: '↓'; right: 50%; top: auto;
         bottom: -22px; transform: translateX(50%);
       }
@@ -707,6 +713,7 @@
     <li><a href="#problematica">Problema</a></li>
     <li><a href="#objetivos">Objetivos</a></li>
     <li><a href="#metodologia">Metodología</a></li>
+    <li><a href="fase1.html">Fase 1</a></li>
     <li><a href="fase4.html">Fase 4</a></li>
     <li><a href="#resultados">Resultados</a></li>
     <li><a href="#conclusiones">Conclusiones</a></li>
@@ -903,13 +910,13 @@
 
     <div class="fases-pipeline">
 
-      <div class="fase-step">
+      <a href="fase1.html" class="fase-step-link">
         <div class="fase-num">Fase 1</div>
         <div class="fase-icon">🏋️</div>
         <h4>Entrenamiento Base</h4>
         <p>Entrenamiento con Transfer Learning y AdamW. Se registran métricas "techo" y "suelo" en MLflow.</p>
         <div class="output-pill">modelo_base.pt</div>
-      </div>
+      </a>
 
       <div class="fase-step">
         <div class="fase-num">Fase 2</div>
@@ -999,7 +1006,7 @@
               <div style="font-size:.7rem;color:var(--text-muted);text-align:left;margin-bottom:1rem;">EfficientNetV2 después de pruning + cuantización: <strong style="color:var(--cyan);">22 MB</strong></div>
               <div style="background:rgba(0,201,253,.1);border-radius:8px;padding:.8rem;text-align:center;border:1px solid rgba(0,201,253,.25);">
                 <span style="font-size:1.6rem;font-weight:900;color:var(--cyan);text-shadow:0 0 10px rgba(0,201,253,.4);">−73%</span>
-                <br><span style="font-size:.75rem;color:var(--text-muted);">reducción de tamaño en YOLO26m</span>
+                <br><span style="font-size:.75rem;color:var(--text-muted);">reducción de tamaño en YOLOv26m</span>
               </div>
             </div>
           </div>
@@ -1023,22 +1030,22 @@
       <div class="result-kpi gold">
         <div class="kpi-val">~73%</div>
         <div class="kpi-label">Reducción promedio en tamaño de modelo</div>
-        <div class="kpi-sub">41.6 MB → 10.9 MB (YOLO26m)</div>
+        <div class="kpi-sub">41.6 MB → 10.9 MB (YOLOv26m)</div>
       </div>
       <div class="result-kpi">
         <div class="kpi-val">98.7%</div>
         <div class="kpi-label">AUC en detección de retinopatía</div>
-        <div class="kpi-sub">YOLO26m · post-optimización</div>
+        <div class="kpi-sub">YOLOv26m · post-optimización</div>
       </div>
       <div class="result-kpi">
         <div class="kpi-val">1.98 MB</div>
         <div class="kpi-label">Modelo más ligero logrado</div>
-        <div class="kpi-sub">YOLO26n · melanoma de piel</div>
+        <div class="kpi-sub">YOLOv26n · melanoma de piel</div>
       </div>
       <div class="result-kpi gold">
         <div class="kpi-val">+1.4%</div>
         <div class="kpi-label">Mejora real en AUC post-cuantización</div>
-        <div class="kpi-sub">YOLO26n en skin melanoma: 0.8837→0.8974</div>
+        <div class="kpi-sub">YOLOv26n en skin melanoma: 0.8837→0.8974</div>
       </div>
     </div>
 
@@ -1071,7 +1078,7 @@
           <tbody>
             <tr>
               <td><span class="tag-dataset tag-ojo">Retino. Diabética</span></td>
-              <td>YOLO26m</td>
+              <td>YOLOv26m</td>
               <td>41.64 MB</td>
               <td>10.95 MB</td>
               <td><span class="size-reduction">↓ 73.7%</span></td>
@@ -1084,7 +1091,7 @@
             </tr>
             <tr>
               <td><span class="tag-dataset tag-oral">Cáncer Oral</span></td>
-              <td>YOLO26m</td>
+              <td>YOLOv26m</td>
               <td>41.64 MB</td>
               <td>10.95 MB</td>
               <td><span class="size-reduction">↓ 73.7%</span></td>
@@ -1097,7 +1104,7 @@
             </tr>
             <tr>
               <td><span class="tag-dataset tag-skin">Melanoma Piel</span></td>
-              <td>YOLO26n</td>
+              <td>YOLOv26n</td>
               <td>6.28 MB</td>
               <td>1.98 MB</td>
               <td><span class="size-reduction">↓ 68.5%</span></td>
@@ -1138,9 +1145,9 @@
         </table>
       </div>
       <div class="note-box">
-        <strong>Lectura de los resultados:</strong> El modelo YOLO26m logra la mejor combinación de tamaño y precisión diagnóstica.
+        <strong>Lectura de los resultados:</strong> El modelo YOLOv26m logra la mejor combinación de tamaño y precisión diagnóstica.
         En retinopatía diabética, el modelo cuantizado de <strong>10.95 MB</strong> mantiene un AUC de <strong>0.987</strong>
-        — virtualmente idéntico al modelo original de 41 MB. En melanoma de piel, el modelo más pequeño (YOLO26n, 1.98 MB)
+        — virtualmente idéntico al modelo original de 41 MB. En melanoma de piel, el modelo más pequeño (YOLOv26n, 1.98 MB)
         incluso <strong>mejoró</strong> el AUC (+1.4%) tras la optimización. El delta negativo mayor de EfficientNetV2 y MobileNetV4
         sugiere que la arquitectura YOLO es más robusta al proceso de compresión para datos médicos desbalanceados.
       </div>
@@ -1177,15 +1184,15 @@
       <div class="conclusion-card">
         <div class="c-icon">🏆</div>
         <h4>YOLO es la arquitectura más robusta al proceso de compresión</h4>
-        <p>La familia YOLO26 (n/m) mostró la menor degradación de métricas tras el pipeline completo de optimización,
+        <p>La familia YOLOv26 (n/m) mostró la menor degradación de métricas tras el pipeline completo de optimización,
         siendo el candidato ideal para despliegue en hardware limitado en entornos de salud rural.</p>
       </div>
 
       <div class="conclusion-card">
         <div class="c-icon">📱</div>
         <h4>Modelos de menos de 15 MB son alcanzables</h4>
-        <p>Se lograron modelos de hasta 1.98 MB (YOLO26n) con AUC 0.897 en detección de melanoma, y 10.95 MB
-        (YOLO26m) con AUC 0.987 en retinopatía diabética — ambos ejecutables en smartphones de gama media.</p>
+        <p>Se lograron modelos de hasta 1.98 MB (YOLOv26n) con AUC 0.897 en detección de melanoma, y 10.95 MB
+        (YOLOv26m) con AUC 0.987 en retinopatía diabética — ambos ejecutables en smartphones de gama media.</p>
       </div>
 
       <div class="conclusion-card gold">
@@ -1276,8 +1283,8 @@ new Chart(sizeCtx, {
   type: 'bar',
   data: {
     labels: isMobile
-      ? ['YOLO26m\nRetino.', 'YOLO26m\nOral', 'YOLO26n\nMelan.', 'EffNetV2\nRetino.', 'MobileNetV4\nMelan.', 'MobileNetV4\nMelan.']
-      : ['YOLO26m\n(Retino.)', 'YOLO26m\n(Oral Cancer)', 'YOLO26n\n(Melanoma)', 'EfficientNetV2-S\n(Retino.)', 'MobileNetV4-M\n(Melanoma)', 'MobileNetV4-S\n(Melanoma)'],
+      ? ['YOLOv26m\nRetino.', 'YOLOv26m\nOral', 'YOLOv26n\nMelan.', 'EffNetV2\nRetino.', 'MobileNetV4\nMelan.', 'MobileNetV4\nMelan.']
+      : ['YOLOv26m\n(Retino.)', 'YOLOv26m\n(Oral Cancer)', 'YOLOv26n\n(Melanoma)', 'EfficientNetV2-S\n(Retino.)', 'MobileNetV4-M\n(Melanoma)', 'MobileNetV4-S\n(Melanoma)'],
     datasets: [
       {
         label: 'Fase 1 — Base (MB)',
@@ -1331,8 +1338,8 @@ new Chart(aucCtx, {
   type: 'bar',
   data: {
     labels: isMobile
-      ? ['YOLO26m\nRetino.', 'YOLO26m\nOral', 'YOLO26n\nMelan.', 'EffNetV2\nRetino.', 'EffNetV2\nOral', 'EffNetV2\nMelan.']
-      : ['YOLO26m · Retino.', 'YOLO26m · Oral', 'YOLO26n · Melanoma', 'EfficientNetV2 · Retino.', 'EfficientNetV2 · Oral', 'EfficientNetV2 · Melanoma'],
+      ? ['YOLOv26m\nRetino.', 'YOLOv26m\nOral', 'YOLOv26n\nMelan.', 'EffNetV2\nRetino.', 'EffNetV2\nOral', 'EffNetV2\nMelan.']
+      : ['YOLOv26m · Retino.', 'YOLOv26m · Oral', 'YOLOv26n · Melanoma', 'EfficientNetV2 · Retino.', 'EfficientNetV2 · Oral', 'EfficientNetV2 · Melanoma'],
     datasets: [
       {
         label: 'AUC — Fase 1 (Base)',
