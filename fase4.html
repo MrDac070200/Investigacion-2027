@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fase 4: Cuantización INT8 — UPeU 2026</title>
+  <style>
+    /* ════════════════════════════════════════
+       PALETA INSTITUCIONAL UPeU
+    ════════════════════════════════════════ */
+    :root {
+      --primary:       #003865;
+      --primary-dark:  #00305F;
+      --secondary:     #F8A900;
+      --secondary-dark:#E39B00;
+      --bg:            #F7F7F7;
+      --surface:       #FFFFFF;
+      --text:          #003865;
+      --text-secondary:#4A4A4A;
+      --text-on-primary: #FFFFFF;
+      --border:        rgba(0,56,101,.12);
+      --info-bg:       #EAF3FB;
+      --warning-bg:    #FFF5DE;
+      --radius:        12px;
+      --shadow:        0 4px 20px rgba(0,56,101,.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Navegación ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .nav-logo {
+      font-weight: 800; font-size: .9rem; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-on-primary);
+    }
+    .nav-logo span { color: var(--secondary); }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul li a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+    nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
+
+    .menu-toggle { display: none; }
+    .menu-icon {
+      display: none;
+      color: var(--secondary);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-title {
+      font-size: 2.2rem; font-weight: 900; margin-bottom: .6rem;
+      color: var(--primary);
+    }
+    .section-rule {
+      width: 80px; height: 4px;
+      background: var(--secondary);
+      border-radius: 2px; margin-bottom: 2.5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 50vh; padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 4rem 2rem; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      border: 1px solid var(--secondary);
+      color: var(--secondary); border-radius: 50px;
+      padding: .35rem 1rem; font-size: .75rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--secondary);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--text-on-primary);
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      color: rgba(255,255,255,.85); font-size: 1.1rem;
+      max-width: 700px; margin: 0 auto 2rem;
+    }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      min-width: 140px;
+    }
+    .hero-stat .num {
+      font-size: 2rem; font-weight: 900; color: var(--secondary);
+      display: block;
+    }
+    .hero-stat .label { font-size: .75rem; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── Cards ── */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-bottom: 3rem;
+    }
+    .concept-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      box-shadow: var(--shadow);
+    }
+    .concept-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--secondary);
+    }
+    .concept-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
+    }
+    .concept-card.glow::before { background: var(--primary); }
+    .concept-card h4 {
+      font-size: 1.05rem; color: var(--primary);
+      margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .concept-card p, .concept-card li {
+      font-size: .92rem; color: var(--text-secondary); line-height: 1.65;
+    }
+    .concept-card ul { padding-left: 1.2rem; margin-top: .6rem; }
+    .concept-card li { margin-bottom: .4rem; }
+    .concept-card strong { color: var(--primary); }
+
+    /* ── Tablas ── */
+    .compare-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius); }
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      font-size: .9rem; background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .compare-table thead th {
+      background: var(--primary); color: var(--text-on-primary);
+      padding: .9rem 1rem; text-align: left; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .05em; font-size: .78rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table tbody td {
+      padding: .8rem 1rem; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .compare-table tbody tr:nth-child(even) { background: var(--bg); }
+    .compare-table tbody tr:hover { background: var(--info-bg); }
+    .compare-table .mono {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-weight: 700; color: var(--primary);
+    }
+
+    /* ── Diagrama de bits ── */
+    .bit-diagram {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      margin: 2rem 0; text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .bit-row {
+      display: inline-flex; gap: 5px; margin: 1.2rem 0;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .bit {
+      width: 38px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-weight: 700; font-size: .9rem;
+      border-radius: 5px; border: 1px solid #CCC;
+    }
+    .bit.sign { background: #FFCDD2; color: #B71C1C; }
+    .bit.exp { background: #E3F2FD; color: #1565C0; }
+    .bit.mant { background: #FFF9C4; color: #F57F17; }
+    .bit.int { background: #E8F5E9; color: #1B5E20; }
+    .bit-legend {
+      display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;
+      font-size: .8rem; margin-top: 1rem;
+    }
+    .bit-legend span { display: flex; align-items: center; gap: .4rem; color: var(--text-secondary); }
+    .dot { width: 14px; height: 14px; border-radius: 4px; }
+
+    /* ── Fórmulas ── */
+    .formula-box {
+      background: var(--info-bg);
+      border-left: 5px solid var(--secondary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.8rem 2rem; margin: 1.5rem 0;
+    }
+    .formula-title {
+      font-size: .78rem; font-weight: 800;
+      color: var(--primary); text-transform: uppercase;
+      letter-spacing: .1em; margin-bottom: 1rem;
+    }
+    .formula {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-size: 1.3rem; color: var(--text);
+      font-family: 'Georgia', serif;
+      flex-wrap: wrap;
+    }
+    .formula .var { font-style: italic; color: var(--primary); font-weight: 700; }
+    .formula .frac {
+      display: inline-flex; flex-direction: column; align-items: center;
+      vertical-align: middle; margin: 0 .25rem;
+    }
+    .formula .frac .num {
+      border-bottom: 2px solid var(--text);
+      padding: 0 .5rem; text-align: center;
+    }
+    .formula .frac .den { padding: 0 .5rem; text-align: center; }
+    .formula .round { font-family: 'Segoe UI', sans-serif; font-size: .9rem; color: var(--text-secondary); }
+
+    /* ── Ejemplo numérico ── */
+    .example-box {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.8rem 2rem; margin: 2rem 0;
+      box-shadow: var(--shadow);
+    }
+    .example-box h4 {
+      color: var(--primary); font-size: 1.05rem; margin-bottom: 1.2rem;
+    }
+    .example-step {
+      display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;
+    }
+    .example-step .step-num {
+      background: var(--secondary); color: var(--primary);
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: .85rem; flex-shrink: 0;
+    }
+    .example-step p { font-size: .9rem; color: var(--text-secondary); }
+
+    /* ── Pipeline ── */
+    .pipeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem; margin: 1.5rem 0;
+    }
+    .pipeline-step {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.5rem;
+      border-left: 4px solid var(--secondary);
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .pipeline-step:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
+    }
+    .pipeline-step .ps-num {
+      font-size: .72rem; font-weight: 800; color: var(--secondary);
+      letter-spacing: .08em; margin-bottom: .5rem;
+    }
+    .pipeline-step h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
+    .pipeline-step p { font-size: .84rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* ── Analogías ── */
+    .analogy-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem; margin: 1.5rem 0;
+    }
+    .analogy-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform .2s, border-color .2s;
+    }
+    .analogy-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
+    }
+    .analogy-card .a-icon { font-size: 2.2rem; margin-bottom: .7rem; }
+    .analogy-card h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
+    .analogy-card p { font-size: .86rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* ── Banner de compresión ── */
+    .compression-banner {
+      background: var(--primary);
+      color: var(--text-on-primary); border-radius: var(--radius);
+      padding: 2.2rem; display: flex; flex-wrap: wrap;
+      gap: 2rem; align-items: center; justify-content: space-around;
+      margin: 2rem 0;
+    }
+    .compression-item { text-align: center; }
+    .compression-item .big {
+      font-size: 2.6rem; font-weight: 900; color: var(--secondary);
+      display: block;
+    }
+    .compression-item .small { font-size: .85rem; opacity: .85; }
+    .compression-arrow {
+      font-size: 2.8rem; color: var(--secondary);
+      font-weight: 900;
+    }
+
+    /* ── Nota final ── */
+    .note-box {
+      background: var(--info-bg);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.3rem;
+      font-size: .88rem; color: var(--text-secondary); margin-top: 1rem;
+    }
+    .note-box strong { color: var(--primary); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--primary-dark); color: rgba(255,255,255,.6);
+      text-align: center; padding: 2.5rem; font-size: .8rem; line-height: 1.8;
+    }
+    footer strong { color: var(--secondary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-logo { font-size: .75rem; }
+      .menu-icon { display: block; }
+      nav ul {
+        position: absolute; top: 60px; left: 0; right: 0;
+        flex-direction: column;
+        background: var(--primary);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        padding: 1rem 1.5rem 1.5rem;
+        gap: .6rem;
+        display: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,.3);
+      }
+      nav ul li a {
+        font-size: .9rem;
+        display: block;
+        padding: .6rem 0;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+      }
+      .menu-toggle:checked ~ ul { display: flex; }
+
+      section { padding: 3.5rem 1rem; }
+      .container { padding: 0; }
+      h2.section-title { font-size: 1.6rem; }
+
+      .hero { min-height: auto; padding: 4rem 1rem; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .hero-stats { gap: 1rem; }
+      .hero-stat { min-width: 110px; padding: .8rem 1rem; }
+      .hero-stat .num { font-size: 1.6rem; }
+
+      .concept-grid { grid-template-columns: 1fr; }
+      .concept-card { padding: 1.3rem; }
+
+      .formula { font-size: 1.05rem; }
+      .formula-box { padding: 1.2rem; }
+      .formula .frac { margin: 0 .15rem; }
+
+      .example-box { padding: 1.2rem; }
+      .example-step { gap: .7rem; }
+
+      .pipeline-steps { grid-template-columns: 1fr; }
+      .analogy-cards { grid-template-columns: 1fr; }
+
+      .compression-banner {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1.8rem 1rem;
+      }
+      .compression-arrow { transform: rotate(90deg); }
+      .compression-item .big { font-size: 2rem; }
+
+      .bit-row { gap: 3px; }
+      .bit { width: 28px; height: 38px; font-size: .75rem; }
+    }
+
+    @media (max-width: 480px) {
+      h2.section-title { font-size: 1.35rem; }
+      .section-rule { width: 50px; }
+      .hero h1 { font-size: 1.6rem; }
+      .formula { font-size: .95rem; }
+      .formula-box { padding: 1rem; overflow-x: auto; }
+      .bit { width: 24px; height: 34px; font-size: .7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    UPeU <span>Investigación 2026</span>
+  </div>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú">☰</label>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="fase1.html">Fase 1</a></li>
+    <li><a href="index.html#metodologia">Metodología</a></li>
+    <li><a href="fase4.html" class="active">Fase 4</a></li>
+    <li><a href="index.html#resultados">Resultados</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Fase 4 — Post-Training Quantization</div>
+    <h1>Cuantización INT8</h1>
+    <p>
+      De 32 bits a 8 bits sin perder el diagnóstico. La técnica que permite llevar modelos de inteligencia artificial entrenados en servidores a smartphones de gama media.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">32</div>
+        <div class="label">bits FP32</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">8</div>
+        <div class="label">bits INT8</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">~3.9×</div>
+        <div class="label">compresión</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     1. CONCEPTOS FUNDAMENTALES
+══════════════════════════════════════ -->
+<section id="conceptos">
+  <div class="container">
+    <h2 class="section-title">1. Conceptos fundamentales</h2>
+    <div class="section-rule"></div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h4>🔌 ¿Qué es un bit?</h4>
+        <p>
+          Una computadora solo entiende dos estados: encendido (1) y apagado (0). Eso es un <strong>bit</strong>. Con <em>n</em> bits se pueden representar 2<sup>n</sup> valores distintos:
+        </p>
+        <ul>
+          <li>8 bits → 256 valores</li>
+          <li>32 bits → ~4,300 millones de valores</li>
+        </ul>
+      </div>
+
+      <div class="concept-card glow">
+        <h4>🔢 ¿Qué es FP32?</h4>
+        <p>
+          <strong>Floating Point de 32 bits</strong> es el formato estándar para entrenar redes neuronales. Divide los 32 bits en:
+        </p>
+        <ul>
+          <li>1 bit de signo</li>
+          <li>8 bits de exponente</li>
+          <li>23 bits de mantisa</li>
+        </ul>
+        <p>Ocupa 4 bytes por número y alcanza ~7 decimales de precisión.</p>
+      </div>
+
+      <div class="concept-card">
+        <h4>🚀 ¿Qué es INT8?</h4>
+        <p>
+          <strong>Integer de 8 bits</strong> solo puede almacenar 256 valores enteros, típicamente de <strong>−128 a +127</strong>. No tiene decimales, pero ocupa solo 1 byte y permite operaciones matemáticas mucho más rápidas en hardware móvil.
+        </p>
+      </div>
+    </div>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>FP32</th>
+            <th>INT8</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Bits usados</td><td class="mono">32</td><td class="mono">8</td></tr>
+          <tr><td>Bytes por número</td><td class="mono">4</td><td class="mono">1</td></tr>
+          <tr><td>Valores distintos</td><td>~4,300 millones</td><td>256</td></tr>
+          <tr><td>Rango típico</td><td>10<sup>−38</sup> a 10<sup>38</sup></td><td>−128 a +127</td></tr>
+          <tr><td>Decimales</td><td>Sí (~7 dígitos)</td><td>No</td></tr>
+          <tr><td>Velocidad en CPU/NPU</td><td>Lento</td><td>Muy rápido</td></tr>
+          <tr><td>Consumo energético</td><td>Alto</td><td>Bajo</td></tr>
+          <tr><td>Uso típico</td><td>Entrenamiento de IA</td><td>Inferencia en móvil</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bit-diagram">
+      <h4 style="color:var(--primary);margin-bottom:.5rem;">Estructura de un número FP32: <span class="mono">w = 0.037</span></h4>
+      <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:1rem;">Cada color representa una parte diferente del número.</p>
+      <div class="bit-row">
+        <div class="bit sign">0</div>
+        <div class="bit exp">0</div>
+        <div class="bit exp">1</div>
+        <div class="bit exp">1</div>
+        <div class="bit exp">1</div>
+        <div class="bit exp">0</div>
+        <div class="bit exp">1</div>
+        <div class="bit exp">0</div>
+        <div class="bit exp">0</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">0</div>
+        <div class="bit mant">0</div>
+        <div class="bit mant">0</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">0</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">0</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">1</div>
+        <div class="bit mant">...</div>
+      </div>
+      <div class="bit-legend">
+        <span><span class="dot sign"></span> Signo (1 bit)</span>
+        <span><span class="dot exp"></span> Exponente (8 bits)</span>
+        <span><span class="dot mant"></span> Mantisa (23 bits)</span>
+      </div>
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-secondary);">
+        El mismo peso en <strong>INT8</strong> se vería simplemente como <span class="mono" style="background:#E8F5E9;padding:.2rem .5rem;border-radius:4px;">00001010</span> (valor 10), recuperado mediante una escala.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     2. MATEMÁTICA DE LA CUANTIZACIÓN
+══════════════════════════════════════ -->
+<section id="matematica" style="background:var(--surface);">
+  <div class="container">
+    <h2 class="section-title">2. Matemática de la cuantización</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
+      Para comprimir un peso real <em>R</em> (en FP32) a un entero <em>Q</em> (en INT8), se calculan dos parámetros por capa durante la calibración:
+    </p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h4>📏 Escala (<em>S</em>)</h4>
+        <p>Qué "salto" representa cada nivel entero. Se calcula a partir del rango real de valores observados.</p>
+      </div>
+      <div class="concept-card glow">
+        <h4>🎯 Punto cero (<em>Z</em>)</h4>
+        <p>Qué valor entero corresponde al 0.0 real. Permite representar valores positivos y negativos de forma balanceada.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">Fórmula de cuantización</div>
+      <div class="formula">
+        <span class="var">Q</span>
+        <span>=</span>
+        <span class="round">round</span>
+        <span>(</span>
+        <span class="frac">
+          <span class="num var">R</span>
+          <span class="den var">S</span>
+        </span>
+        <span>+</span>
+        <span class="var">Z</span>
+        <span>)</span>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">Fórmula de recuperación</div>
+      <div class="formula">
+        <span class="var">R′</span>
+        <span>=</span>
+        <span class="var">S</span>
+        <span>·</span>
+        <span>(</span>
+        <span class="var">Q</span>
+        <span>−</span>
+        <span class="var">Z</span>
+        <span>)</span>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo numérico concreto</h4>
+      <div class="example-step">
+        <div class="step-num">1</div>
+        <p>En una capa convolucional los pesos reales varían entre <strong>−1.2</strong> y <strong>+2.8</strong>.</p>
+      </div>
+      <div class="example-step">
+        <div class="step-num">2</div>
+        <p>Rango total: <span class="mono">2.8 − (−1.2) = 4.0</span>. Casillas disponibles: <span class="mono">256</span>.</p>
+      </div>
+      <div class="example-step">
+        <div class="step-num">3</div>
+        <p>Escala: <span class="mono">S = 4.0 / 256 = 0.015625</span>.</p>
+      </div>
+      <div class="example-step">
+        <div class="step-num">4</div>
+        <p>Cuantizamos el peso <span class="mono">w = 0.001738291</span> con punto cero <span class="mono">Z = 128</span>:</p>
+      </div>
+      <div class="formula-box" style="margin:1rem 0;background:var(--surface);border:1px solid var(--border);">
+        <div class="formula">
+          <span class="var">Q</span>
+          <span>=</span>
+          <span class="round">round</span>
+          <span>(</span>
+          <span class="frac">
+            <span class="num">0.001738291</span>
+            <span class="den">0.015625</span>
+          </span>
+          <span>+</span>
+          <span class="var">128</span>
+          <span>)</span>
+          <span>=</span>
+          <span class="var">128</span>
+        </div>
+      </div>
+      <div class="example-step">
+        <div class="step-num">5</div>
+        <p>Recuperamos: <span class="mono">R′ = 0.015625 × (128 − 128) = 0.0</span>. El error de redondeo es insignificante frente a millones de conexiones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     3. ¿POR QUÉ NO SE DESTRUYE?
+══════════════════════════════════════ -->
+<section id="robustez">
+  <div class="container">
+    <h2 class="section-title">3. ¿Por qué no se destruye el modelo?</h2>
+    <div class="section-rule"></div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h4>🧠 La información está en la configuración</h4>
+        <p>Una red neuronal "sabe" que una lesión es melanoma porque miles de pesos están configurados de cierta manera. No importa si un peso es 0.037 o 0.031; importa que sea positivo y pequeño en lugar de negativo y grande.</p>
+      </div>
+      <div class="concept-card glow">
+        <h4>🎲 El entrenamiento ya fue ruidoso</h4>
+        <p>Durante el entrenamiento el modelo toleró dropout, augmentations y gradientes ruidosos. Aprendió a ignorar pequeñas perturbaciones. La cuantización es solo otra perturbación más.</p>
+      </div>
+      <div class="concept-card">
+        <h4>✅ La decisión final es discreta</h4>
+        <p>Al final el modelo no dice "la probabilidad es 0.8473291", sino <span class="mono">≥ 0.5 → melanoma</span>. Si FP32 dice 0.8473 e INT8 dice 0.8451, ambos dan la misma decisión.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     4. PIPELINE PTQ
+══════════════════════════════════════ -->
+<section id="pipeline" style="background:var(--surface);">
+  <div class="container">
+    <h2 class="section-title">4. Proceso paso a paso: PTQ Estática</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
+      Nuestro método implementa <strong>Post-Training Static Quantization (PTQ)</strong>: no se reentrena el modelo, solo se observa y comprime.
+    </p>
+
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="ps-num">Paso 1</div>
+        <h4>Exportar a ONNX FP32</h4>
+        <p>El modelo PyTorch se convierte al formato ONNX, un estándar intercambiable que no requiere PyTorch para ejecutarse.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">Paso 2</div>
+        <h4>Calibración con datos reales</h4>
+        <p>Se pasan 15 batches de 32 imágenes (480 imágenes) por el modelo FP32 para medir rangos de activaciones y calcular <em>S</em> y <em>Z</em> por capa.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">Paso 3</div>
+        <h4>Quantizar a INT8</h4>
+        <p>Con los parámetros calculados, se reemplazan pesos FP32 por INT8 y las operaciones se aceleran con aritmética entera.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">Paso 4</div>
+        <h4>Formato QDQ</h4>
+        <p>El grafo inserta nodos Quantize-Dequantize (Q → Conv → DQ) que ONNX Runtime ejecuta con instrucciones vectoriales en CPU ARM o Intel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     5. ANALOGÍAS
+══════════════════════════════════════ -->
+<section id="analogias">
+  <div class="container">
+    <h2 class="section-title">5. Analogías para entender la cuantización</h2>
+    <div class="section-rule"></div>
+
+    <div class="analogy-cards">
+      <div class="analogy-card">
+        <div class="a-icon">🗺️</div>
+        <h4>El mapa de la ciudad</h4>
+        <p>FP32 es un mapa topográfico con curvas cada 1 mm: precisísimo, pero pesa 4 kg. INT8 es el mismo mapa con curvas cada 10 m: no sabes si el bache mide 2 o 3 cm, pero llegas al mismo destino con un mapa de 1 kg.</p>
+      </div>
+      <div class="analogy-card">
+        <div class="a-icon">🍲</div>
+        <h4>La receta de cocina</h4>
+        <p>FP32 dice: "Agrega 250.000000 ml de agua". INT8 dice: "Un vaso de agua". La sopa sale igual de rica porque la receta no depende del miligramo exacto.</p>
+      </div>
+      <div class="analogy-card">
+        <div class="a-icon">🎹</div>
+        <h4>El piano</h4>
+        <p>FP32 es un piano digital con 1,000 niveles de presión por tecla. INT8 tiene 256 niveles. Para el oído humano sigue siendo música; para una red neuronal que clasifica imágenes, no nota la diferencia.</p>
+      </div>
+      <div class="analogy-card">
+        <div class="a-icon">👵</div>
+        <h4>La báscula de la abuela</h4>
+        <p>La abuela no necesita una báscula de laboratorio que diga 23.472891 kg. Con saber ~23 kg le basta para comprar la ropa. La red neuronal entrenada ya es experta; no necesita 6 decimales para decidir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     6. RESULTADOS
+══════════════════════════════════════ -->
+<section id="resultados" style="background:var(--surface);">
+  <div class="container">
+    <h2 class="section-title">6. Resultados de compresión reales</h2>
+    <div class="section-rule"></div>
+
+    <div class="compression-banner">
+      <div class="compression-item">
+        <span class="big">41.62 MB</span>
+        <span class="small">FP32 PyTorch</span>
+      </div>
+      <div class="compression-arrow">→</div>
+      <div class="compression-item">
+        <span class="big">10.61 MB</span>
+        <span class="small">INT8 ONNX</span>
+      </div>
+      <div class="compression-item" style="min-width:180px;">
+        <span class="big">~3.9×</span>
+        <span class="small">ratio de compresión</span>
+      </div>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card glow">
+        <h4>📉 Preservación de calidad</h4>
+        <p>
+          AUC valid: <strong>0.8777</strong> (FP32) → <strong>0.8781</strong> (INT8). Diferencia de solo +0.0004. La cuantización no degrada la capacidad diagnóstica del modelo.
+        </p>
+      </div>
+      <div class="concept-card">
+        <h4>⚡ Velocidad en hardware objetivo</h4>
+        <p>
+          En dispositivos móviles ARM con NPU/DSP, INT8 es el formato nativo. Un Snapdragon 8 Gen 3 ejecuta INT8 5-10× más rápido que FP32, con menor consumo de batería.
+        </p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin:2.5rem 0 1rem;font-size:1.2rem;">PTQ vs QAT</h3>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Enfoque</th>
+            <th>Descripción</th>
+            <th>Ventaja</th>
+            <th>Desventaja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">QAT</td>
+            <td>Reentrena el modelo simulando INT8 durante el forward.</td>
+            <td>Más preciso</td>
+            <td>Requiere días de computación adicional</td>
+          </tr>
+          <tr>
+            <td class="mono">PTQ</td>
+            <td>Toma el modelo entrenado, lo calibra en minutos y lo comprime.</td>
+            <td>Rápido y simple</td>
+            <td>Pérdida mínima de precisión (&lt;0.5% AUC)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">
+      <strong>Justificación de ingeniería:</strong> Dado que el objetivo es desplegar en móviles con recursos limitados y el dataset de calibración es representativo, PTQ estático ofrece el punto óptimo entre simplicidad de implementación, tiempo de desarrollo y preservación de métricas clínicas.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Universidad Peruana Unión</strong> · Facultad de Ingeniería y Arquitectura</p>
+  <p>Escuela Profesional de Ingeniería de Sistemas · Lima, octubre 2025</p>
+  <p style="margin-top:.5rem;">
+    Alexis Del Castillo Yunca · Luis Keny Lucero Balvin · May Attilano Cango<br>
+    Asesor: Ferdinand Pineda Ancco · Co-Asesor: Nemias Saboya Rios
+  </p>
+</footer>
+
+<script>
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const toggle = document.getElementById('menu-toggle');
+      if (toggle) toggle.checked = false;
+    });
+  });
+</script>
+
+</body>
+</html>

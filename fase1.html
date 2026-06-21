@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fase 1: Entrenamiento Baseline — UPeU 2026</title>
+  <style>
+    /* ════════════════════════════════════════
+       PALETA INSTITUCIONAL UPeU
+    ════════════════════════════════════════ */
+    :root {
+      --primary:       #003865;
+      --primary-dark:  #00305F;
+      --secondary:     #F8A900;
+      --secondary-dark:#E39B00;
+      --bg:            #F7F7F7;
+      --surface:       #FFFFFF;
+      --text:          #003865;
+      --text-secondary:#4A4A4A;
+      --text-on-primary: #FFFFFF;
+      --border:        rgba(0,56,101,.12);
+      --info-bg:       #EAF3FB;
+      --warning-bg:    #FFF5DE;
+      --radius:        12px;
+      --shadow:        0 4px 20px rgba(0,56,101,.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Navegación ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .nav-logo {
+      font-weight: 800; font-size: .9rem; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-on-primary);
+    }
+    .nav-logo span { color: var(--secondary); }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul li a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+    nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
+
+    .menu-toggle { display: none; }
+    .menu-icon {
+      display: none;
+      color: var(--secondary);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-title {
+      font-size: 2.2rem; font-weight: 900; margin-bottom: .6rem;
+      color: var(--primary);
+    }
+    .section-rule {
+      width: 80px; height: 4px;
+      background: var(--secondary);
+      border-radius: 2px; margin-bottom: 2.5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 50vh; padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 4rem 2rem; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      border: 1px solid var(--secondary);
+      color: var(--secondary); border-radius: 50px;
+      padding: .35rem 1rem; font-size: .75rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--secondary);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--text-on-primary);
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      color: rgba(255,255,255,.85); font-size: 1.1rem;
+      max-width: 700px; margin: 0 auto 2rem;
+    }
+
+    /* ── Cards ── */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-bottom: 3rem;
+    }
+    .concept-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      box-shadow: var(--shadow);
+    }
+    .concept-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--secondary);
+    }
+    .concept-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
+    }
+    .concept-card.glow::before { background: var(--primary); }
+    .concept-card h4 {
+      font-size: 1.05rem; color: var(--primary);
+      margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .concept-card p, .concept-card li {
+      font-size: .92rem; color: var(--text-secondary); line-height: 1.65;
+    }
+    .concept-card ul { padding-left: 1.2rem; margin-top: .6rem; }
+    .concept-card li { margin-bottom: .4rem; }
+    .concept-card strong { color: var(--primary); }
+
+    /* ── Diagrama de arquitectura ── */
+    .arch-diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .arch-title {
+      text-align: center; color: var(--primary);
+      font-size: 1.1rem; font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: .8rem;
+      min-width: 900px;
+      padding-bottom: 1rem;
+    }
+    .arch-node {
+      background: var(--info-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .9rem .7rem;
+      text-align: center;
+      min-width: 90px;
+      transition: all .2s;
+    }
+    .arch-node:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+    }
+    .arch-node .n-icon {
+      font-size: 1.5rem; margin-bottom: .3rem;
+    }
+    .arch-node .n-name {
+      font-size: .75rem; font-weight: 800;
+      color: var(--primary); text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .arch-node .n-dim {
+      font-size: .65rem; color: var(--text-secondary);
+      margin-top: .3rem;
+      font-family: 'Fira Code', 'Courier New', monospace;
+    }
+    .arch-arrow {
+      color: var(--secondary);
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+
+    /* Visualización animada de la CNN */
+    .cnn-viz {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .cnn-viz svg { min-width: 820px; display: block; margin: 0 auto; }
+    .cnn-viz .layer-label {
+      font-size: 11px;
+      fill: var(--primary);
+      font-weight: 800;
+      text-anchor: middle;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .cnn-viz .node {
+      fill: var(--surface);
+      stroke: var(--primary);
+      stroke-width: 2;
+      transition: all .3s;
+    }
+    .cnn-viz .node.input-pixel { fill: var(--info-bg); stroke-width: 1; }
+    .cnn-viz .node.output-melanoma { stroke: #C62828; }
+    .cnn-viz .node.output-benign { stroke: #2E7D32; }
+    .cnn-viz .connection {
+      stroke: rgba(0,56,101,.18);
+      stroke-width: 1.2;
+      fill: none;
+    }
+    .cnn-viz .connection.flow {
+      stroke: url(#connGradient);
+      stroke-width: 1.8;
+      stroke-dasharray: 8 8;
+      animation: dashFlow 1.8s linear infinite;
+    }
+    .cnn-viz .traveler {
+      fill: var(--secondary);
+    }
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -16; }
+    }
+    @keyframes pulseLayer {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: .85; }
+    }
+    .cnn-viz .layer-group {
+      animation: pulseLayer 3s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+    .cnn-viz .layer-0 { animation-delay: 0s; }
+    .cnn-viz .layer-1 { animation-delay: .5s; }
+    .cnn-viz .layer-2 { animation-delay: 1s; }
+    .cnn-viz .layer-3 { animation-delay: 1.5s; }
+    .cnn-viz .layer-4 { animation-delay: 2s; }
+    .cnn-viz .layer-5 { animation-delay: 2.5s; }
+
+    .viz-legend {
+      display: flex; flex-wrap: wrap; gap: 1.2rem;
+      justify-content: center; margin-top: 1rem;
+      font-size: .8rem; color: var(--text-secondary);
+    }
+    .viz-legend span { display: flex; align-items: center; gap: .4rem; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--primary); }
+    .legend-dot.melanoma { border-color: #C62828; }
+    .legend-dot.benign { border-color: #2E7D32; }
+
+    /* ── Fórmulas ── */
+    .formula-box {
+      background: var(--info-bg);
+      border-left: 5px solid var(--secondary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.8rem 2rem; margin: 1.5rem 0;
+    }
+    .formula-title {
+      font-size: .78rem; font-weight: 800;
+      color: var(--primary); text-transform: uppercase;
+      letter-spacing: .1em; margin-bottom: 1rem;
+    }
+    .formula {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-size: 1.3rem; color: var(--text);
+      font-family: 'Georgia', serif;
+      flex-wrap: wrap;
+    }
+    .formula .var { font-style: italic; color: var(--primary); font-weight: 700; }
+    .formula .frac {
+      display: inline-flex; flex-direction: column; align-items: center;
+      vertical-align: middle; margin: 0 .25rem;
+    }
+    .formula .frac .num {
+      border-bottom: 2px solid var(--text);
+      padding: 0 .5rem; text-align: center;
+    }
+    .formula .frac .den { padding: 0 .5rem; text-align: center; }
+    .formula .round { font-family: 'Segoe UI', sans-serif; font-size: .9rem; color: var(--text-secondary); }
+
+    /* ── Tablas ── */
+    .compare-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius); }
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      font-size: .9rem; background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .compare-table thead th {
+      background: var(--primary); color: var(--text-on-primary);
+      padding: .9rem 1rem; text-align: left; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .05em; font-size: .78rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table tbody td {
+      padding: .8rem 1rem; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .compare-table tbody tr:nth-child(even) { background: var(--bg); }
+    .compare-table tbody tr:hover { background: var(--info-bg); }
+    .compare-table .mono {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-weight: 700; color: var(--primary);
+    }
+
+    /* ── Pipeline ── */
+    .pipeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem; margin: 1.5rem 0;
+    }
+    .pipeline-step {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.5rem;
+      border-left: 4px solid var(--secondary);
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .pipeline-step:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,56,101,.15);
+    }
+    .pipeline-step .ps-num {
+      font-size: .72rem; font-weight: 800; color: var(--secondary);
+      letter-spacing: .08em; margin-bottom: .5rem;
+    }
+    .pipeline-step h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
+    .pipeline-step p { font-size: .84rem; color: var(--text-secondary); line-height: 1.55; }
+
+    .note-box {
+      background: var(--info-bg);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.3rem;
+      font-size: .88rem; color: var(--text-secondary); margin-top: 1rem;
+    }
+    .note-box strong { color: var(--primary); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--primary-dark); color: rgba(255,255,255,.6);
+      text-align: center; padding: 2.5rem; font-size: .8rem; line-height: 1.8;
+    }
+    footer strong { color: var(--secondary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
+      .nav-logo { font-size: .75rem; }
+      .menu-icon { display: block; }
+      nav ul {
+        position: absolute; top: 60px; left: 0; right: 0;
+        flex-direction: column;
+        background: var(--primary);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        padding: 1rem 1.5rem 1.5rem;
+        gap: .6rem;
+        display: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,.3);
+      }
+      nav ul li a {
+        font-size: .9rem;
+        display: block;
+        padding: .6rem 0;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+      }
+      .menu-toggle:checked ~ ul { display: flex; }
+
+      section { padding: 3.5rem 1rem; }
+      .container { padding: 0; }
+      h2.section-title { font-size: 1.6rem; }
+
+      .hero { min-height: auto; padding: 4rem 1rem; }
+      .hero h1 { font-size: 1.8rem; }
+      .hero p { font-size: 1rem; }
+
+      .concept-grid { grid-template-columns: 1fr; }
+      .concept-card { padding: 1.3rem; }
+
+      .arch-diagram { padding: 1.2rem; }
+      .arch-flow { min-width: 700px; gap: .5rem; }
+      .arch-node { padding: .7rem .5rem; min-width: 75px; }
+      .arch-node .n-icon { font-size: 1.2rem; }
+      .arch-node .n-name { font-size: .65rem; }
+      .arch-node .n-dim { font-size: .58rem; }
+      .arch-arrow { font-size: 1.1rem; }
+
+      .formula { font-size: 1.05rem; }
+      .formula-box { padding: 1.2rem; }
+
+      .pipeline-steps { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      h2.section-title { font-size: 1.35rem; }
+      .section-rule { width: 50px; }
+      .hero h1 { font-size: 1.5rem; }
+      .formula { font-size: .95rem; }
+      .formula-box { padding: 1rem; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    UPeU <span>Investigación 2026</span>
+  </div>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú">☰</label>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="fase1.html" class="active">Fase 1</a></li>
+    <li><a href="index.html#metodologia">Metodología</a></li>
+    <li><a href="fase4.html">Fase 4</a></li>
+    <li><a href="index.html#resultados">Resultados</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Fase 1 — Entrenamiento Baseline</div>
+    <h1>Entrenamiento Base</h1>
+    <p>
+      Cómo se entrena un modelo <strong>YOLOv26-cls</strong> desde cero para clasificar imágenes médicas. Desde la arquitectura CNN hasta el ajuste fino con AdamW y Cosine Annealing.
+    </p>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     1. ARQUITECTURA YOLOv26-cls
+══════════════════════════════════════ -->
+<section id="arquitectura">
+  <div class="container">
+    <h2 class="section-title">1. Arquitectura YOLOv26-cls</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
+      <strong>YOLOv26-cls</strong> no es un detector de objetos; es la rama de clasificación extraída de la familia YOLOv26. La arquitectura se compone de tres bloques funcionales: <strong>Backbone</strong>, <strong>Neck</strong> y <strong>Head</strong>.
+    </p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h4>🏗️ Backbone</h4>
+        <p>Serie de capas convolucionales que transforman la imagen de entrada en un mapa de características de alto nivel.</p>
+        <ul>
+          <li>Conv + BatchNorm + SiLU</li>
+          <li>Bloques C3 (Bottleneck)</li>
+          <li>SPPF (Spatial Pyramid Pooling Fast)</li>
+        </ul>
+      </div>
+      <div class="concept-card glow">
+        <h4>🎯 Neck</h4>
+        <p>En YOLOv26-cls el neck es mínimo. Aplica <strong>Global Average Pooling (GAP)</strong> que aplana el mapa espacial, haciendo la red invariante a la posición de la lesión.</p>
+      </div>
+      <div class="concept-card">
+        <h4>🧠 Head</h4>
+        <p>Capa lineal (fully connected) que proyecta el vector de 256 características a 2 clases: <strong>melanoma</strong> y <strong>no melanoma</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Diagrama de arquitectura -->
+    <div class="arch-diagram">
+      <div class="arch-title">🏗️ Arquitectura completa YOLOv26-cls</div>
+      <div class="arch-flow">
+        <div class="arch-node">
+          <div class="n-icon">🖼️</div>
+          <div class="n-name">Input</div>
+          <div class="n-dim">[B,3,224,224]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">🔲</div>
+          <div class="n-name">Conv</div>
+          <div class="n-dim">[B,32,112,112]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">🧱</div>
+          <div class="n-name">C3 × N</div>
+          <div class="n-dim">[B,64,56,56]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">🧱</div>
+          <div class="n-name">C3 × N</div>
+          <div class="n-dim">[B,128,28,28]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">🧱</div>
+          <div class="n-name">C3 × N</div>
+          <div class="n-dim">[B,256,14,14]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">🔺</div>
+          <div class="n-name">SPPF</div>
+          <div class="n-dim">[B,256,14,14]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">📊</div>
+          <div class="n-name">GAP</div>
+          <div class="n-dim">[B,256]</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="n-icon">⚡</div>
+          <div class="n-name">Linear</div>
+          <div class="n-dim">[B,2]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>Nota:</strong> C3 es un bloque residual con convoluciones 1×1 y 3×3. SPPF concatena el mismo mapa con max-poolings de distinto tamaño para capturar contexto multi-escala. No hay softmax en la salida: la función de pérdida CrossEntropyLoss aplica softmax internamente por estabilidad numérica.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     2. CÓMO FLUYE UNA IMAGEN
+══════════════════════════════════════ -->
+<section id="forward" style="background:var(--surface);">
+  <div class="container">
+    <h2 class="section-title">2. Forward Pass: el viaje de una imagen</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
+      Tomemos una imagen de entrada <span class="mono">x ∈ R<sup>3×224×224</sup></span>. Así es como la red la transforma paso a paso hasta emitir una decisión.
+    </p>
+
+    <div class="cnn-viz">
+      <svg viewBox="0 0 880 320" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(0,56,101,0.05)" />
+            <stop offset="50%" stop-color="#F8A900" />
+            <stop offset="100%" stop-color="rgba(0,56,101,0.05)" />
+          </linearGradient>
+        </defs>
+        <g class="layer-group input-pixel layer-0">
+          <circle cx="50" cy="120" r="5" class="node" />
+          <circle cx="70" cy="120" r="5" class="node" />
+          <circle cx="90" cy="120" r="5" class="node" />
+          <circle cx="110" cy="120" r="5" class="node" />
+          <circle cx="50" cy="140" r="5" class="node" />
+          <circle cx="70" cy="140" r="5" class="node" />
+          <circle cx="90" cy="140" r="5" class="node" />
+          <circle cx="110" cy="140" r="5" class="node" />
+          <circle cx="50" cy="160" r="5" class="node" />
+          <circle cx="70" cy="160" r="5" class="node" />
+          <circle cx="90" cy="160" r="5" class="node" />
+          <circle cx="110" cy="160" r="5" class="node" />
+          <circle cx="50" cy="180" r="5" class="node" />
+          <circle cx="70" cy="180" r="5" class="node" />
+          <circle cx="90" cy="180" r="5" class="node" />
+          <circle cx="110" cy="180" r="5" class="node" />
+        </g>
+        <g class="layer-group layer-1">
+          <circle cx="230" cy="95" r="10" class="node" />
+          <circle cx="230" cy="130" r="10" class="node" />
+          <circle cx="230" cy="165" r="10" class="node" />
+          <circle cx="230" cy="200" r="10" class="node" />
+          <circle cx="230" cy="235" r="10" class="node" />
+        </g>
+        <g class="layer-group layer-2">
+          <circle cx="370" cy="95" r="10" class="node" />
+          <circle cx="370" cy="130" r="10" class="node" />
+          <circle cx="370" cy="165" r="10" class="node" />
+          <circle cx="370" cy="200" r="10" class="node" />
+          <circle cx="370" cy="235" r="10" class="node" />
+        </g>
+        <g class="layer-group layer-3">
+          <circle cx="510" cy="120" r="12" class="node" />
+          <circle cx="510" cy="160" r="12" class="node" />
+          <circle cx="510" cy="200" r="12" class="node" />
+        </g>
+        <g class="layer-group layer-4">
+          <circle cx="650" cy="120" r="12" class="node" />
+          <circle cx="650" cy="160" r="12" class="node" />
+          <circle cx="650" cy="200" r="12" class="node" />
+        </g>
+        <g class="layer-group layer-5">
+          <circle cx="790" cy="130" r="14" class="node output-melanoma" />
+          <circle cx="790" cy="170" r="14" class="node output-benign" />
+        </g>
+        <!-- Conexiones base -->
+        <path class="connection" d="M 50 120 Q 140 120 230 95" />
+        <path class="connection" d="M 50 120 Q 140 120 230 130" />
+        <path class="connection" d="M 50 120 Q 140 120 230 165" />
+        <path class="connection" d="M 50 120 Q 140 120 230 200" />
+        <path class="connection" d="M 50 120 Q 140 120 230 235" />
+        <path class="connection" d="M 70 120 Q 150 120 230 95" />
+        <path class="connection" d="M 70 120 Q 150 120 230 130" />
+        <path class="connection" d="M 70 120 Q 150 120 230 165" />
+        <path class="connection" d="M 70 120 Q 150 120 230 200" />
+        <path class="connection" d="M 70 120 Q 150 120 230 235" />
+        <path class="connection" d="M 90 120 Q 160 120 230 95" />
+        <path class="connection" d="M 90 120 Q 160 120 230 130" />
+        <path class="connection" d="M 90 120 Q 160 120 230 165" />
+        <path class="connection" d="M 90 120 Q 160 120 230 200" />
+        <path class="connection" d="M 90 120 Q 160 120 230 235" />
+        <path class="connection" d="M 110 120 Q 170 120 230 95" />
+        <path class="connection" d="M 110 120 Q 170 120 230 130" />
+        <path class="connection" d="M 110 120 Q 170 120 230 165" />
+        <path class="connection" d="M 110 120 Q 170 120 230 200" />
+        <path class="connection" d="M 110 120 Q 170 120 230 235" />
+        <path class="connection" d="M 50 140 Q 140 140 230 95" />
+        <path class="connection" d="M 50 140 Q 140 140 230 130" />
+        <path class="connection" d="M 50 140 Q 140 140 230 165" />
+        <path class="connection" d="M 50 140 Q 140 140 230 200" />
+        <path class="connection" d="M 50 140 Q 140 140 230 235" />
+        <path class="connection" d="M 70 140 Q 150 140 230 95" />
+        <path class="connection" d="M 70 140 Q 150 140 230 130" />
+        <path class="connection" d="M 70 140 Q 150 140 230 165" />
+        <path class="connection" d="M 70 140 Q 150 140 230 200" />
+        <path class="connection" d="M 70 140 Q 150 140 230 235" />
+        <path class="connection" d="M 90 140 Q 160 140 230 95" />
+        <path class="connection" d="M 90 140 Q 160 140 230 130" />
+        <path class="connection" d="M 90 140 Q 160 140 230 165" />
+        <path class="connection" d="M 90 140 Q 160 140 230 200" />
+        <path class="connection" d="M 90 140 Q 160 140 230 235" />
+        <path class="connection" d="M 110 140 Q 170 140 230 95" />
+        <path class="connection" d="M 110 140 Q 170 140 230 130" />
+        <path class="connection" d="M 110 140 Q 170 140 230 165" />
+        <path class="connection" d="M 110 140 Q 170 140 230 200" />
+        <path class="connection" d="M 110 140 Q 170 140 230 235" />
+        <path class="connection" d="M 50 160 Q 140 160 230 95" />
+        <path class="connection" d="M 50 160 Q 140 160 230 130" />
+        <path class="connection" d="M 50 160 Q 140 160 230 165" />
+        <path class="connection" d="M 50 160 Q 140 160 230 200" />
+        <path class="connection" d="M 50 160 Q 140 160 230 235" />
+        <path class="connection" d="M 70 160 Q 150 160 230 95" />
+        <path class="connection" d="M 70 160 Q 150 160 230 130" />
+        <path class="connection" d="M 70 160 Q 150 160 230 165" />
+        <path class="connection" d="M 70 160 Q 150 160 230 200" />
+        <path class="connection" d="M 70 160 Q 150 160 230 235" />
+        <path class="connection" d="M 90 160 Q 160 160 230 95" />
+        <path class="connection" d="M 90 160 Q 160 160 230 130" />
+        <path class="connection" d="M 90 160 Q 160 160 230 165" />
+        <path class="connection" d="M 90 160 Q 160 160 230 200" />
+        <path class="connection" d="M 90 160 Q 160 160 230 235" />
+        <path class="connection" d="M 110 160 Q 170 160 230 95" />
+        <path class="connection" d="M 110 160 Q 170 160 230 130" />
+        <path class="connection" d="M 110 160 Q 170 160 230 165" />
+        <path class="connection" d="M 110 160 Q 170 160 230 200" />
+        <path class="connection" d="M 110 160 Q 170 160 230 235" />
+        <path class="connection" d="M 50 180 Q 140 180 230 95" />
+        <path class="connection" d="M 50 180 Q 140 180 230 130" />
+        <path class="connection" d="M 50 180 Q 140 180 230 165" />
+        <path class="connection" d="M 50 180 Q 140 180 230 200" />
+        <path class="connection" d="M 50 180 Q 140 180 230 235" />
+        <path class="connection" d="M 70 180 Q 150 180 230 95" />
+        <path class="connection" d="M 70 180 Q 150 180 230 130" />
+        <path class="connection" d="M 70 180 Q 150 180 230 165" />
+        <path class="connection" d="M 70 180 Q 150 180 230 200" />
+        <path class="connection" d="M 70 180 Q 150 180 230 235" />
+        <path class="connection" d="M 90 180 Q 160 180 230 95" />
+        <path class="connection" d="M 90 180 Q 160 180 230 130" />
+        <path class="connection" d="M 90 180 Q 160 180 230 165" />
+        <path class="connection" d="M 90 180 Q 160 180 230 200" />
+        <path class="connection" d="M 90 180 Q 160 180 230 235" />
+        <path class="connection" d="M 110 180 Q 170 180 230 95" />
+        <path class="connection" d="M 110 180 Q 170 180 230 130" />
+        <path class="connection" d="M 110 180 Q 170 180 230 165" />
+        <path class="connection" d="M 110 180 Q 170 180 230 200" />
+        <path class="connection" d="M 110 180 Q 170 180 230 235" />
+        <path class="connection" d="M 230 95 Q 300 95 370 95" />
+        <path class="connection" d="M 230 95 Q 300 95 370 130" />
+        <path class="connection" d="M 230 95 Q 300 95 370 165" />
+        <path class="connection" d="M 230 95 Q 300 95 370 200" />
+        <path class="connection" d="M 230 95 Q 300 95 370 235" />
+        <path class="connection" d="M 230 130 Q 300 130 370 95" />
+        <path class="connection" d="M 230 130 Q 300 130 370 130" />
+        <path class="connection" d="M 230 130 Q 300 130 370 165" />
+        <path class="connection" d="M 230 130 Q 300 130 370 200" />
+        <path class="connection" d="M 230 130 Q 300 130 370 235" />
+        <path class="connection" d="M 230 165 Q 300 165 370 95" />
+        <path class="connection" d="M 230 165 Q 300 165 370 130" />
+        <path class="connection" d="M 230 165 Q 300 165 370 165" />
+        <path class="connection" d="M 230 165 Q 300 165 370 200" />
+        <path class="connection" d="M 230 165 Q 300 165 370 235" />
+        <path class="connection" d="M 230 200 Q 300 200 370 95" />
+        <path class="connection" d="M 230 200 Q 300 200 370 130" />
+        <path class="connection" d="M 230 200 Q 300 200 370 165" />
+        <path class="connection" d="M 230 200 Q 300 200 370 200" />
+        <path class="connection" d="M 230 200 Q 300 200 370 235" />
+        <path class="connection" d="M 230 235 Q 300 235 370 95" />
+        <path class="connection" d="M 230 235 Q 300 235 370 130" />
+        <path class="connection" d="M 230 235 Q 300 235 370 165" />
+        <path class="connection" d="M 230 235 Q 300 235 370 200" />
+        <path class="connection" d="M 230 235 Q 300 235 370 235" />
+        <path class="connection" d="M 370 95 Q 440 95 510 120" />
+        <path class="connection" d="M 370 95 Q 440 95 510 160" />
+        <path class="connection" d="M 370 95 Q 440 95 510 200" />
+        <path class="connection" d="M 370 130 Q 440 130 510 120" />
+        <path class="connection" d="M 370 130 Q 440 130 510 160" />
+        <path class="connection" d="M 370 130 Q 440 130 510 200" />
+        <path class="connection" d="M 370 165 Q 440 165 510 120" />
+        <path class="connection" d="M 370 165 Q 440 165 510 160" />
+        <path class="connection" d="M 370 165 Q 440 165 510 200" />
+        <path class="connection" d="M 370 200 Q 440 200 510 120" />
+        <path class="connection" d="M 370 200 Q 440 200 510 160" />
+        <path class="connection" d="M 370 200 Q 440 200 510 200" />
+        <path class="connection" d="M 370 235 Q 440 235 510 120" />
+        <path class="connection" d="M 370 235 Q 440 235 510 160" />
+        <path class="connection" d="M 370 235 Q 440 235 510 200" />
+        <path class="connection" d="M 510 120 Q 580 120 650 120" />
+        <path class="connection" d="M 510 120 Q 580 120 650 160" />
+        <path class="connection" d="M 510 120 Q 580 120 650 200" />
+        <path class="connection" d="M 510 160 Q 580 160 650 120" />
+        <path class="connection" d="M 510 160 Q 580 160 650 160" />
+        <path class="connection" d="M 510 160 Q 580 160 650 200" />
+        <path class="connection" d="M 510 200 Q 580 200 650 120" />
+        <path class="connection" d="M 510 200 Q 580 200 650 160" />
+        <path class="connection" d="M 510 200 Q 580 200 650 200" />
+        <path class="connection" d="M 650 120 Q 720 120 790 130" />
+        <path class="connection" d="M 650 120 Q 720 120 790 170" />
+        <path class="connection" d="M 650 160 Q 720 160 790 130" />
+        <path class="connection" d="M 650 160 Q 720 160 790 170" />
+        <path class="connection" d="M 650 200 Q 720 200 790 130" />
+        <path class="connection" d="M 650 200 Q 720 200 790 170" />
+        <!-- Conexiones animadas -->
+        <path class="connection flow" d="M 50 120 Q 140 142 230 165" style="animation-delay:0s" />
+        <path class="connection flow" d="M 50 140 Q 140 152 230 165" style="animation-delay:0.15s" />
+        <path class="connection flow" d="M 50 160 Q 140 162 230 165" style="animation-delay:0.3s" />
+        <path class="connection flow" d="M 50 180 Q 140 172 230 165" style="animation-delay:0.45s" />
+        <path class="connection flow" d="M 230 95 Q 300 130 370 165" style="animation-delay:0.6s" />
+        <path class="connection flow" d="M 230 165 Q 300 165 370 165" style="animation-delay:0.75s" />
+        <path class="connection flow" d="M 230 235 Q 300 200 370 165" style="animation-delay:0.9s" />
+        <path class="connection flow" d="M 370 95 Q 440 127 510 160" style="animation-delay:1.05s" />
+        <path class="connection flow" d="M 370 165 Q 440 162 510 160" style="animation-delay:1.2s" />
+        <path class="connection flow" d="M 370 235 Q 440 197 510 160" style="animation-delay:1.35s" />
+        <path class="connection flow" d="M 510 120 Q 580 140 650 160" style="animation-delay:1.5s" />
+        <path class="connection flow" d="M 510 160 Q 580 160 650 160" style="animation-delay:1.65s" />
+        <path class="connection flow" d="M 510 200 Q 580 180 650 160" style="animation-delay:1.8s" />
+        <path class="connection flow" d="M 650 120 Q 720 135 790 150" style="animation-delay:1.95s" />
+        <path class="connection flow" d="M 650 160 Q 720 155 790 150" style="animation-delay:2.1s" />
+        <path class="connection flow" d="M 650 200 Q 720 175 790 150" style="animation-delay:2.25s" />
+        <!-- Travelers -->
+        <circle r="4" class="traveler">
+          <animateMotion dur="2.5s" repeatCount="indefinite" path="M 50 120 Q 140 107 230 95" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="2.8s" repeatCount="indefinite" path="M 90 180 Q 160 207 230 235" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="3.1s" repeatCount="indefinite" path="M 230 165 Q 300 165 370 165" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="3.4s" repeatCount="indefinite" path="M 370 95 Q 440 107 510 120" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="3.7s" repeatCount="indefinite" path="M 510 160 Q 580 160 650 160" />
+        </circle>
+        <circle r="4" class="traveler">
+          <animateMotion dur="4.0s" repeatCount="indefinite" path="M 650 120 Q 720 125 790 130" />
+        </circle>
+        <!-- Etiquetas -->
+        <text x="80" y="230" class="layer-label">Input RGB</text>
+        <text x="230" y="285" class="layer-label">Conv + BN + SiLU</text>
+        <text x="370" y="285" class="layer-label">C3 Blocks</text>
+        <text x="510" y="285" class="layer-label">SPPF / Pool</text>
+        <text x="650" y="285" class="layer-label">FC 256</text>
+        <text x="790" y="285" class="layer-label">Output</text>
+        <text x="790" y="230" class="layer-label" style="fill:#C62828">Melanoma</text>
+        <text x="790" y="115" class="layer-label" style="fill:#2E7D32">Benigno</text>
+      </svg>
+      <div class="viz-legend">
+        <span><span class="legend-dot"></span> Activación</span>
+        <span><span class="legend-dot melanoma"></span> Melanoma</span>
+        <span><span class="legend-dot benign"></span> No melanoma</span>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">Operación de una capa convolucional</div>
+      <div class="formula">
+        <span class="var">y</span>
+        <span>=</span>
+        <span>SiLU</span>
+        <span>(</span>
+        <span>BN</span>
+        <span>(</span>
+        <span class="var">W</span>
+        <span>*</span>
+        <span class="var">x</span>
+        <span>+</span>
+        <span class="var">b</span>
+        <span>)</span>
+        <span>)</span>
+      </div>
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-secondary);">
+        Donde <em>W</em> es el kernel aprendible, <em>*</em> es la convolución 2D, BN normaliza por canal y SiLU es la activación Swish.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     3. PÉRDIDA Y DESBALANCEO
+══════════════════════════════════════ -->
+<section id="perdida">
+  <div class="container">
+    <h2 class="section-title">3. Pérdida: Cross-Entropy ponderada</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
+      En datos médicos las clases suelen estar desbalanceadas. En el dataset binario de ejemplo hay aproximadamente <strong>89% no-melanoma</strong> y <strong>11% melanoma</strong>. Si entrenáramos con Cross-Entropy estándar, el modelo aprendería a decir siempre "no-melanoma" y fallaría en detectar el cáncer.
+    </p>
+
+    <div class="concept-grid">
+      <div class="concept-card glow">
+        <h4>⚖️ Solución: pesos de clase</h4>
+        <p>Se asigna un peso mayor a la clase minoritaria (melanoma) para forzar al modelo a prestarle atención. Con un factor de suavizado α = 0.3, el peso de melanoma es aproximadamente <strong>2×</strong> el de no-melanoma.</p>
+      </div>
+      <div class="concept-card">
+        <h4>🔥 ¿Por qué no pesar 8×?</h4>
+        <p>Sin suavizado, el peso sería ~8× y generaría gradientes explosivos, haciendo el modelo inestable. El factor 0.3 corrige el sesgo sin destruir la convergencia.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">Cross-Entropy ponderada</div>
+      <div class="formula">
+        <span class="var">L</span>
+        <span>=</span>
+        <span>−</span>
+        <span>∑</span>
+        <span class="var">w</span>
+        <sub class="var" style="font-size:.8rem;">yᵢ</sub>
+        <span>·</span>
+        <span>log</span>
+        <span>(</span>
+        <span class="frac">
+          <span class="num">e<sup style="font-size:.7rem;">z<sub style="font-size:.5rem;">yᵢ</sub></sup></span>
+          <span class="den">∑ e<sup style="font-size:.7rem;">z<sub style="font-size:.5rem;">j</sub></sup></span>
+        </span>
+        <span>)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     4. OPTIMIZACIÓN
+══════════════════════════════════════ -->
+<section id="optimizacion" style="background:var(--surface);">
+  <div class="container">
+    <h2 class="section-title">4. Optimización: AdamW + Cosine Annealing</h2>
+    <div class="section-rule"></div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h4>⚡ AdamW</h4>
+        <p>Variante de Adam donde el <strong>weight decay</strong> (regularización L2) se aplica directamente a los pesos, no al gradiente. Adapta la tasa de aprendizaje por parámetro.</p>
+      </div>
+      <div class="concept-card glow">
+        <h4>📉 Cosine Annealing</h4>
+        <p>El learning rate comienza alto para explorar rápido, baja suavemente siguiendo una curva coseno, y termina muy bajo para ajuste fino. Evita oscilaciones cerca del óptimo.</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-title">Learning rate con Cosine Annealing</div>
+      <div class="formula">
+        <span class="var">η</span>
+        <sub class="var" style="font-size:.8rem;">t</sub>
+        <span>=</span>
+        <span class="var">η</span>
+        <sub class="var" style="font-size:.8rem;">min</sub>
+        <span>+</span>
+        <span class="frac">
+          <span class="num">1</span>
+          <span class="den">2</span>
+        </span>
+        <span>(</span>
+        <span class="var">η</span>
+        <sub class="var" style="font-size:.8rem;">max</sub>
+        <span>−</span>
+        <span class="var">η</span>
+        <sub class="var" style="font-size:.8rem;">min</sub>
+        <span>)</span>
+        <span>(</span>
+        <span>1</span>
+        <span>+</span>
+        <span>cos</span>
+        <span>(</span>
+        <span class="frac">
+          <span class="num var">t</span>
+          <span class="den var">T<sub style="font-size:.6rem;">max</sub></span>
+        </span>
+        <span>π</span>
+        <span>)</span>
+        <span>)</span>
+      </div>
+    </div>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Hiperparámetro</th>
+            <th>Valor</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Batch size</td><td class="mono">64</td><td>64 imágenes por paso de actualización</td></tr>
+          <tr><td>Learning rate inicial</td><td class="mono">0.001</td><td>lr0: exploración rápida al inicio</td></tr>
+          <tr><td>Learning rate final</td><td class="mono">1e-5</td><td>lrf = 0.01 del lr inicial</td></tr>
+          <tr><td>Épocas</td><td class="mono">150</td><td>T<sub>max</sub> para el coseno</td></tr>
+          <tr><td>Weight decay</td><td class="mono">0.001</td><td>Regularización L2 para evitar sobreajuste</td></tr>
+          <tr><td>AMP</td><td class="mono">false</td><td>FP32 puro por estabilidad numérica</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     5. AUGMENTATIONS
+══════════════════════════════════════ -->
+<section id="augmentations">
+  <div class="container">
+    <h2 class="section-title">5. Augmentations: distorsión controlada</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
+      Las augmentations no son decorativas. En dermatología, el modelo nunca debe memorizar el fondo o la iluminación específica. El objetivo es aprender características invariantes: bordes irregulares, colores, texturas.
+    </p>
+
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="ps-num">Geométricas</div>
+        <h4>fliplr, flipud, rotación 45°</h4>
+        <p>Traslación 10%, escalado 20%. Simulan diferentes posiciones y zoom de la cámara.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">Fotométricas</div>
+        <h4>HSV + brillo + contraste</h4>
+        <p>hue=0.02, saturación=0.30, valor=0.25, brillo=0.35, contraste=0.3.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">Erasing</div>
+        <h4>RandomErasing (p=0.3)</h4>
+        <p>Oculta regiones aleatorias para forzar al modelo a no depender de una sola zona.</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">Evitadas</div>
+        <h4>Mosaic y Perspective</h4>
+        <p>Mosaic mezcla 4 imágenes (imposible biológicamente). Perspective distorsiona la piel de forma no fisiológica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     6. EVALUACIÓN
+══════════════════════════════════════ -->
+<section id="evaluacion" style="background:var(--surface);">
+  <div class="container">
+    <h2 class="section-title">6. Evaluación: índice de Youden</h2>
+    <div class="section-rule"></div>
+
+    <p style="margin-bottom:1.5rem;color:var(--text-secondary);">
+      En clasificación binaria desbalanceada, usar threshold = 0.5 es subóptimo. Usamos el <strong>índice de Youden</strong> para encontrar el punto que maximiza la diferencia entre sensibilidad y falsos positivos.
+    </p>
+
+    <div class="formula-box">
+      <div class="formula-title">Índice de Youden</div>
+      <div class="formula">
+        <span class="var">J</span>
+        <span>=</span>
+        <span>Sensibilidad</span>
+        <span>+</span>
+        <span>Especificidad</span>
+        <span>−</span>
+        <span>1</span>
+        <span>=</span>
+        <span>TPR</span>
+        <span>−</span>
+        <span>FPR</span>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>Protocolo anti data leakage:</strong> el threshold óptimo θ* se calcula solo en el conjunto de validación. Luego se aplica fijo a train y test. Esto garantiza que el test mida generalización real, no sobreajuste al threshold.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Universidad Peruana Unión</strong> · Facultad de Ingeniería y Arquitectura</p>
+  <p>Escuela Profesional de Ingeniería de Sistemas · Lima, octubre 2025</p>
+  <p style="margin-top:.5rem;">
+    Alexis Del Castillo Yunca · Luis Keny Lucero Balvin · May Attilano Cango<br>
+    Asesor: Ferdinand Pineda Ancco · Co-Asesor: Nemias Saboya Rios
+  </p>
+</footer>
+
+<script>
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const toggle = document.getElementById('menu-toggle');
+      if (toggle) toggle.checked = false;
+    });
+  });
+</script>
+
+</body>
+</html>
