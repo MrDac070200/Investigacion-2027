@@ -131,7 +131,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-    #slide-21 .slide-footer {
+    #slide-22 .slide-footer {
       color: #fff;
     }
 
@@ -153,7 +153,7 @@
       border-radius: 50px;
       box-shadow: 0 4px 14px rgba(0,56,101,.1);
     }
-    #slide-21::after {
+    #slide-22::after {
       color: #fff;
       background: rgba(255,255,255,.15);
     }
@@ -389,6 +389,53 @@
 
     .advisors-box {
       display: none;
+    }
+
+    /* ════════════════════════════════════════
+       SLIDE 7 · DATASETS
+    ════════════════════════════════════════ */
+    .datasets-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .dataset-card {
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(6px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,56,101,.08);
+      border: 1px solid rgba(0,56,101,.08);
+      text-align: center;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .dataset-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px rgba(0,56,101,.14);
+    }
+    .dataset-img-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      position: relative;
+    }
+    .dataset-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .dataset-card:hover .dataset-img-wrap img {
+      transform: scale(1.05);
+    }
+    .dataset-card h3 {
+      padding: 1rem;
+      font-size: 1rem;
+      color: var(--blue-dark);
+      margin: 0;
     }
 
     /* ════════════════════════════════════════
@@ -1051,26 +1098,26 @@
     /* ════════════════════════════════════════
        SLIDE 11 · CIERRE
     ════════════════════════════════════════ */
-    #slide-21 {
+    #slide-22 {
       background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-corp) 50%, #245C8A 100%);
       color: var(--white);
       text-align: center;
     }
-    #slide-21 .bg-shapes .shape-circle-tl {
+    #slide-22 .bg-shapes .shape-circle-tl {
       background: var(--gold);
       width: 380px;
       height: 380px;
       top: -150px;
       left: -150px;
     }
-    #slide-21 .bg-shapes .shape-triangle-br {
+    #slide-22 .bg-shapes .shape-triangle-br {
       border-bottom-color: rgba(255,255,255,.12);
       border-left-width: 320px;
       border-bottom-width: 320px;
       bottom: -30px;
       right: -30px;
     }
-    #slide-21 .bg-shapes .shape-diamond-tr {
+    #slide-22 .bg-shapes .shape-diamond-tr {
       background: rgba(255,255,255,.1);
       width: 400px;
       height: 400px;
@@ -1078,7 +1125,7 @@
       right: -120px;
       border-radius: 42px;
     }
-    #slide-21 p { color: rgba(255,255,255,.82); }
+    #slide-22 p { color: rgba(255,255,255,.82); }
 
     /* ════════════════════════════════════════
        PUNTERO LÁSER
@@ -1119,19 +1166,20 @@
       text-align: center;
     }
     #slide-6 .fase-subtitle,
-    #slide-7 .fase-subtitle,
+    #slide-6 .fase-subtitle,
     #slide-8 .fase-subtitle,
     #slide-9 .fase-subtitle,
     #slide-10 .fase-subtitle,
-    #slide-12 .fase-subtitle,
+    #slide-11 .fase-subtitle,
     #slide-13 .fase-subtitle,
     #slide-14 .fase-subtitle,
-    #slide-15 .fase-subtitle {
+    #slide-15 .fase-subtitle,
+    #slide-16 .fase-subtitle {
       display: none;
     }
-    #slide-7 h2,
     #slide-8 h2,
-    #slide-9 h2 {
+    #slide-9 h2,
+    #slide-10 h2 {
       background: rgba(255,255,255,.78);
       backdrop-filter: blur(6px);
       padding: .4rem 1.6rem;
@@ -1511,6 +1559,7 @@
 
     /* Responsive para fases */
     @media (max-width: 900px) {
+      .datasets-row { grid-template-columns: 1fr; }
       .tech-grid-ppt { grid-template-columns: repeat(2, 1fr); }
       .concept-grid-ppt { grid-template-columns: 1fr; }
       .quant-grid-ppt { grid-template-columns: 1fr; }
@@ -1867,8 +1916,44 @@
       </div>
     </section>
 
-    <!-- SLIDE 7: FASE 1 — YOLOv26-cls -->
-    <section class="slide fase-slide" id="slide-7">
+    <!-- SLIDE 7: DATASETS -->
+    <section class="slide" id="slide-7">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Datasets · Imágenes médicas utilizadas</div>
+        <h2>Datasets médicos binarios</h2>
+        <div class="datasets-row">
+          <div class="dataset-card">
+            <div class="dataset-img-wrap">
+              <img src="img/presentacion/retinopatia.jpg" alt="Retinopatía diabética">
+            </div>
+            <h3>Retinopatía diabética</h3>
+          </div>
+          <div class="dataset-card">
+            <div class="dataset-img-wrap">
+              <img src="img/presentacion/cancer-oral.png" alt="Cáncer oral">
+            </div>
+            <h3>Cáncer oral</h3>
+          </div>
+          <div class="dataset-card">
+            <div class="dataset-img-wrap">
+              <img src="img/presentacion/melanoma.jpg" alt="Melanoma de piel">
+            </div>
+            <h3>Melanoma de piel</h3>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 8: FASE 1 — YOLOv26-cls -->
+    <section class="slide fase-slide" id="slide-8">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1903,8 +1988,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 8: FASE 1 — EfficientNetV2-S -->
-    <section class="slide fase-slide" id="slide-8">
+    <!-- SLIDE 9: FASE 1 — EfficientNetV2-S -->
+    <section class="slide fase-slide" id="slide-9">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1940,8 +2025,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 9: FASE 1 — MobileNetV4-Conv-Medium -->
-    <section class="slide fase-slide" id="slide-9">
+    <!-- SLIDE 10: FASE 1 — MobileNetV4-Conv-Medium -->
+    <section class="slide fase-slide" id="slide-10">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1977,8 +2062,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 10: FASE 2 — PRUNING NO ESTRUCTURAL -->
-    <section class="slide fase-slide" id="slide-10">
+    <!-- SLIDE 11: FASE 2 — PRUNING NO ESTRUCTURAL -->
+    <section class="slide fase-slide" id="slide-11">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2013,8 +2098,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 11: FASE 2 — PRUNING EN ACCIÓN -->
-    <section class="slide fase-slide" id="slide-11">
+    <!-- SLIDE 12: FASE 2 — PRUNING EN ACCIÓN -->
+    <section class="slide fase-slide" id="slide-12">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2063,8 +2148,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 12: FASE 3 — KNOWLEDGE DISTILLATION -->
-    <section class="slide fase-slide" id="slide-12">
+    <!-- SLIDE 13: FASE 3 — KNOWLEDGE DISTILLATION -->
+    <section class="slide fase-slide" id="slide-13">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2093,8 +2178,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 13: FASE 3 — CÓMO FUNCIONA EL KD -->
-    <section class="slide fase-slide" id="slide-13">
+    <!-- SLIDE 14: FASE 3 — CÓMO FUNCIONA EL KD -->
+    <section class="slide fase-slide" id="slide-14">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2123,8 +2208,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 14: FASE 4 — CUANTIZACIÓN INT8 -->
-    <section class="slide fase-slide" id="slide-14">
+    <!-- SLIDE 15: FASE 4 — CUANTIZACIÓN INT8 -->
+    <section class="slide fase-slide" id="slide-15">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2164,8 +2249,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 15: FASE 4 — DE FP32 A INT8 -->
-    <section class="slide fase-slide" id="slide-15">
+    <!-- SLIDE 16: FASE 4 — DE FP32 A INT8 -->
+    <section class="slide fase-slide" id="slide-16">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2227,8 +2312,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 16: RESULTADOS — MÉTRICAS Y COMPARACIÓN DIRECTA -->
-    <section class="slide slide-results-1" id="slide-16">
+    <!-- SLIDE 17: RESULTADOS — MÉTRICAS Y COMPARACIÓN DIRECTA -->
+    <section class="slide slide-results-1" id="slide-17">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2362,8 +2447,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 7: RESULTADOS — BENCHMARK DE RENDIMIENTO -->
-    <section class="slide slide-results-2" id="slide-17">
+    <!-- SLIDE 18: RESULTADOS — BENCHMARK DE RENDIMIENTO -->
+    <section class="slide slide-results-2" id="slide-18">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2475,8 +2560,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 8: RESULTADOS — DESGLOSE POR DATASET -->
-    <section class="slide slide-results-3" id="slide-18">
+    <!-- SLIDE 19: RESULTADOS — DESGLOSE POR DATASET -->
+    <section class="slide slide-results-3" id="slide-19">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2516,8 +2601,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 9: RESULTADOS — VEREDICTO POR MODELO -->
-    <section class="slide slide-results-4" id="slide-19">
+    <!-- SLIDE 20: RESULTADOS — MEJOR MODELO -->
+    <section class="slide slide-results-4" id="slide-20">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2577,8 +2662,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 10: CONCLUSIONES -->
-    <section class="slide" id="slide-20">
+    <!-- SLIDE 21: CONCLUSIONES -->
+    <section class="slide" id="slide-21">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2624,8 +2709,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 11: CIERRE -->
-    <section class="slide" id="slide-21">
+    <!-- SLIDE 22: CIERRE -->
+    <section class="slide" id="slide-22">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2862,8 +2947,8 @@
     function initChartsForSlide(index) {
       const slide = slides[index];
       if (!slide) return;
-      if (slide.id === 'slide-16') initSizeChart();
-      if (slide.id === 'slide-17') {
+      if (slide.id === 'slide-17') initSizeChart();
+      if (slide.id === 'slide-18') {
         initLatencyChart();
         initThroughputChart();
       }
