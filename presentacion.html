@@ -201,42 +201,18 @@
       display: none;
     }
 
-    /* Cluster de rombos en el primer slide */
-    .diamond-cluster {
+    /* Imagen de carátula */
+    .bg-caratula {
       position: absolute;
-      inset: 0;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      object-position: right center;
       pointer-events: none;
-      z-index: 0;
     }
-    .diamond-center {
-      position: absolute;
-      right: -100px;
-      top: 60%;
-      width: calc(100vh - 200px);
-      height: calc(100vh - 200px);
-      background: var(--blue-corp);
-      border-radius: 48px;
-      transform: translateY(-50%) rotate(45deg);
-      z-index: 0;
-    }
-    .diamond-small {
-      position: absolute;
-      width: 340px;
-      height: 340px;
-      border-radius: 42px;
-      transform: rotate(45deg);
-      z-index: 1;
-    }
-    .diamond-small.diamond-blue { background: var(--blue-corp); }
-    .diamond-small.diamond-gold { background: var(--gold); }
-    .diamond-top-sm {
-      top: -130px;
-      right: 380px;
-    }
-    .diamond-bottom-sm {
-      bottom: -190px;
-      right: 500px;
-    }
+
     #slide-1 h1 { color: var(--blue-dark); }
     #slide-1 h1 em { color: var(--gold); }
     #slide-1 .subtitle {
@@ -784,11 +760,7 @@
     <!-- SLIDE 1: PORTADA -->
     <section class="slide active" id="slide-1">
       <div class="bg-shapes">
-        <div class="diamond-cluster">
-          <div class="diamond-center"></div>
-          <div class="diamond-small diamond-top-sm diamond-gold"></div>
-          <div class="diamond-small diamond-bottom-sm diamond-gold"></div>
-        </div>
+        <img src="img/presentacion/bg-caratula.png" alt="" class="bg-caratula">
       </div>
       <div class="slide-inner slide-inner-left">
         <h1>Método de Optimización en <em>modelos CNN</em> para clasificación de imágenes médicas en dispositivos de recursos limitados</h1>
