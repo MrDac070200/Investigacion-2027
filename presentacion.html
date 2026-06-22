@@ -542,63 +542,143 @@
     ════════════════════════════════════════ */
     .fases-row {
       display: flex;
-      gap: 1rem;
+      gap: 1.8rem;
       margin-top: 2rem;
-      overflow-x: auto;
-      padding-bottom: .5rem;
+      align-items: stretch;
+      justify-content: center;
     }
     .fase-card {
       flex: 1;
-      min-width: 160px;
+      min-width: 150px;
+      max-width: 210px;
       background: rgba(255,255,255,.75);
       backdrop-filter: blur(6px);
       border: 1px solid rgba(0,56,101,.08);
       border-radius: var(--radius);
-      padding: 1.4rem 1.1rem;
-      text-align: center;
+      padding: 1.1rem;
       position: relative;
       box-shadow: 0 6px 24px rgba(0,56,101,.05);
       transition: transform .2s, border-color .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .fase-card:hover { transform: translateY(-5px); border-color: rgba(0,56,101,.18); }
-    .fase-card.active {
-      border-color: var(--gold);
-      background: var(--gold-soft);
-      box-shadow: 0 8px 30px rgba(248,169,0,.12);
-    }
-    .fase-card:not(:last-child)::after {
-      content: '→';
-      position: absolute;
-      right: -18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.3rem;
-      color: var(--blue-corp);
-      font-weight: 900;
-      z-index: 1;
+    .fase-header {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      width: 100%;
+      margin-bottom: .8rem;
     }
     .fase-num {
-      font-size: .68rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--blue-dark);
+      color: #fff;
+      font-size: .85rem;
       font-weight: 800;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      margin-bottom: .4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .fase-card.active .fase-num { color: var(--gold); }
-    .fase-icon { font-size: 2rem; margin-bottom: .5rem; }
-    .fase-card h4 { font-size: .95rem; color: var(--blue-dark); margin-bottom: .35rem; }
-    .fase-card p { font-size: .78rem; color: var(--text-secondary); line-height: 1.4; }
-    .output-pill {
-      display: inline-block;
-      margin-top: .7rem;
-      background: var(--blue-light);
+    .fase-card h4 {
+      font-size: .9rem;
       color: var(--blue-dark);
-      border-radius: 50px;
-      padding: .25rem .7rem;
-      font-size: .68rem;
-      font-family: monospace;
-      font-weight: 600;
+      line-height: 1.25;
+      text-align: left;
+    }
+    .fase-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .fase-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .fase-placeholder {
+      position: absolute;
+      font-size: 2rem;
+      opacity: .35;
+      pointer-events: none;
+    }
+    .fase-img img[src]:not([src=""]) ~ .fase-placeholder { display: none; }
+    .fase-card { cursor: pointer; }
+
+    /* ════════════════════════════════════════
+       MODAL DE FASES
+    ════════════════════════════════════════ */
+    .fase-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .fase-modal.active { display: flex; }
+    .fase-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,56,101,.78);
+      backdrop-filter: blur(5px);
+    }
+    .fase-modal-content {
+      position: relative;
+      width: 92vw;
+      height: 90vh;
+      max-width: 1200px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+    .fase-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: var(--blue-dark);
+      color: #fff;
+      font-size: 1.8rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, color .2s;
+    }
+    .fase-modal-close:hover { background: var(--gold); color: var(--blue-dark); }
+    .fase-modal-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    @media (max-width: 900px) {
+      .fase-modal { padding: 1rem; }
+      .fase-modal-content { width: 96vw; height: 92vh; }
+      .fase-modal-close { width: 38px; height: 38px; font-size: 1.5rem; }
     }
 
     /* ════════════════════════════════════════
@@ -822,9 +902,8 @@
       .problem-card { --diag-offset: 0px !important; }
       .problem-card img { height: 160px; }
       .objetivos-list { grid-template-columns: 1fr; }
-      .fases-row { flex-direction: column; }
-      .fase-card { min-width: auto; }
-      .fase-card:not(:last-child)::after { content: '↓'; right: 50%; top: auto; bottom: -18px; transform: translateX(50%); }
+      .fases-row { flex-direction: column; align-items: center; gap: 2rem; }
+      .fase-card { min-width: auto; max-width: 320px; width: 100%; }
       .cuant-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .kpis-row { grid-template-columns: repeat(2, 1fr); }
       .conclusiones-row { grid-template-columns: 1fr; }
@@ -1027,44 +1106,56 @@
       </div>
       <div class="slide-inner">
         <div class="section-kicker">Metodología · Pipeline de 5 fases</div>
-        <p style="max-width:800px;">
-          Secuencia completa: entrenamiento base → pruning → fine-tuning → cuantización → evaluación.
-        </p>
         <div class="fases-row">
           <div class="fase-card">
-            <div class="fase-num">Fase 1</div>
-            <div class="fase-icon">🏋️</div>
-            <h4>Entrenamiento Base</h4>
-            <p>Transfer Learning + AdamW. Registro de métricas en MLflow.</p>
-            <div class="output-pill">modelo_base.pt</div>
+            <div class="fase-header">
+              <div class="fase-num">1</div>
+              <h4>Modelo base</h4>
+            </div>
+            <div class="fase-img">
+              <img src="img/presentacion/modelo-base.png" alt="Modelo base">
+              <span class="fase-placeholder">🖼️</span>
+            </div>
           </div>
           <div class="fase-card">
-            <div class="fase-num">Fase 2</div>
-            <div class="fase-icon">✂️</div>
-            <h4>Pruning</h4>
-            <p>Método Taylor. Reduce parámetros con pérdida controlada.</p>
-            <div class="output-pill">modelo_podado.pt</div>
+            <div class="fase-header">
+              <div class="fase-num">2</div>
+              <h4>Pruning estructurado</h4>
+            </div>
+            <div class="fase-img">
+              <img src="img/presentacion/pruning.png" alt="Pruning estructurado">
+              <span class="fase-placeholder">🖼️</span>
+            </div>
           </div>
           <div class="fase-card">
-            <div class="fase-num">Fase 3</div>
-            <div class="fase-icon">🔄</div>
-            <h4>Fine-Tuning</h4>
-            <p>Reentrenamiento con Knowledge Distillation.</p>
-            <div class="output-pill">modelo_ft.pt</div>
-          </div>
-          <div class="fase-card active">
-            <div class="fase-num">Fase 4 — Clave</div>
-            <div class="fase-icon">⚡</div>
-            <h4>Cuantización INT8</h4>
-            <p>FP32 → INT8 con SmoothQuant. Reduce tamaño hasta 4×.</p>
-            <div class="output-pill">modelo_int8.onnx</div>
+            <div class="fase-header">
+              <div class="fase-num">3</div>
+              <h4>Fine-tuning de recuperación</h4>
+            </div>
+            <div class="fase-img">
+              <img src="img/presentacion/fine-tuning.png" alt="Fine-tuning de recuperación">
+              <span class="fase-placeholder">🖼️</span>
+            </div>
           </div>
           <div class="fase-card">
-            <div class="fase-num">Fase 5</div>
-            <div class="fase-icon">📊</div>
-            <h4>Evaluación</h4>
-            <p>Comparación precisión vs. costo computacional.</p>
-            <div class="output-pill">reporte.xlsx</div>
+            <div class="fase-header">
+              <div class="fase-num">4</div>
+              <h4>Cuantización</h4>
+            </div>
+            <div class="fase-img">
+              <img src="img/presentacion/cuantizacion.png" alt="Cuantización">
+              <span class="fase-placeholder">🖼️</span>
+            </div>
+          </div>
+          <div class="fase-card">
+            <div class="fase-header">
+              <div class="fase-num">5</div>
+              <h4>Validación estadística</h4>
+            </div>
+            <div class="fase-img">
+              <img src="img/presentacion/validacion-tecnica.png" alt="Validación estadística">
+              <span class="fase-placeholder">🖼️</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1320,6 +1411,15 @@
 
   </div>
 
+  <!-- MODAL DE FASES -->
+  <div class="fase-modal" id="faseModal">
+    <div class="fase-modal-backdrop"></div>
+    <div class="fase-modal-content">
+      <button class="fase-modal-close" aria-label="Cerrar">&times;</button>
+      <iframe src="" id="faseModalFrame" title="Detalle de fase"></iframe>
+    </div>
+  </div>
+
   <script>
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
@@ -1346,6 +1446,11 @@
     }
 
     document.addEventListener('keydown', (e) => {
+      if (faseModal.classList.contains('active') && e.key === 'Escape') {
+        e.preventDefault();
+        closeFaseModal();
+        return;
+      }
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault();
         nextSlide();
@@ -1363,6 +1468,41 @@
         window.location.href = 'index.html';
       }
     });
+
+    // Modal de fases
+    const faseModal = document.getElementById('faseModal');
+    const faseModalFrame = document.getElementById('faseModalFrame');
+    const faseModalClose = document.querySelector('.fase-modal-close');
+    const faseModalBackdrop = document.querySelector('.fase-modal-backdrop');
+
+    const fasePages = {
+      1: 'fase1.html',
+      2: 'fase2.html',
+      3: 'fase3.html',
+      4: 'fase4.html'
+    };
+
+    function openFaseModal(num) {
+      if (fasePages[num]) {
+        faseModalFrame.src = fasePages[num];
+        faseModal.classList.add('active');
+      }
+    }
+
+    function closeFaseModal() {
+      faseModal.classList.remove('active');
+      faseModalFrame.src = '';
+    }
+
+    document.querySelectorAll('.fase-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const num = card.querySelector('.fase-num').textContent.trim();
+        openFaseModal(num);
+      });
+    });
+
+    faseModalClose.addEventListener('click', closeFaseModal);
+    faseModalBackdrop.addEventListener('click', closeFaseModal);
 
   </script>
 
