@@ -131,7 +131,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-    #slide-11 .slide-footer {
+    #slide-21 .slide-footer {
       color: #fff;
     }
 
@@ -153,7 +153,7 @@
       border-radius: 50px;
       box-shadow: 0 4px 14px rgba(0,56,101,.1);
     }
-    #slide-11::after {
+    #slide-21::after {
       color: #fff;
       background: rgba(255,255,255,.15);
     }
@@ -934,6 +934,27 @@
     }
     .results-table tr:nth-child(even) { background: var(--blue-soft); }
     .results-table tr:hover { background: var(--blue-light); }
+    .results-table tr.best-model {
+      background: var(--gold-soft) !important;
+      box-shadow: inset 0 0 0 2px var(--gold);
+    }
+    .results-table tr.best-model td {
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+    .results-table tr.best-model:hover { background: var(--gold-soft) !important; }
+    .best-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--blue-dark);
+      font-size: .65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: .15rem .5rem;
+      border-radius: 50px;
+      margin-left: .5rem;
+    }
     .delta-pos { color: #2E7D32; font-weight: 700; }
     .delta-neg { color: #C62828; font-weight: 700; }
     .delta-neutral { color: var(--text-secondary); font-weight: 700; }
@@ -1030,26 +1051,26 @@
     /* ════════════════════════════════════════
        SLIDE 11 · CIERRE
     ════════════════════════════════════════ */
-    #slide-11 {
+    #slide-21 {
       background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-corp) 50%, #245C8A 100%);
       color: var(--white);
       text-align: center;
     }
-    #slide-11 .bg-shapes .shape-circle-tl {
+    #slide-21 .bg-shapes .shape-circle-tl {
       background: var(--gold);
       width: 380px;
       height: 380px;
       top: -150px;
       left: -150px;
     }
-    #slide-11 .bg-shapes .shape-triangle-br {
+    #slide-21 .bg-shapes .shape-triangle-br {
       border-bottom-color: rgba(255,255,255,.12);
       border-left-width: 320px;
       border-bottom-width: 320px;
       bottom: -30px;
       right: -30px;
     }
-    #slide-11 .bg-shapes .shape-diamond-tr {
+    #slide-21 .bg-shapes .shape-diamond-tr {
       background: rgba(255,255,255,.1);
       width: 400px;
       height: 400px;
@@ -1057,7 +1078,7 @@
       right: -120px;
       border-radius: 42px;
     }
-    #slide-11 p { color: rgba(255,255,255,.82); }
+    #slide-21 p { color: rgba(255,255,255,.82); }
 
     /* ════════════════════════════════════════
        PUNTERO LÁSER
@@ -1086,6 +1107,422 @@
     body.laser-active button,
     body.laser-active a,
     body.laser-active .fase-card { cursor: none; }
+
+    /* ════════════════════════════════════════
+       SLIDES DE FASES DETALLADAS (6-15)
+    ════════════════════════════════════════ */
+    .fase-slide .fase-subtitle {
+      color: var(--text-secondary);
+      font-size: clamp(.95rem, 1.5vw, 1.15rem);
+      max-width: 850px;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    #slide-6 .fase-subtitle,
+    #slide-7 .fase-subtitle,
+    #slide-8 .fase-subtitle,
+    #slide-9 .fase-subtitle,
+    #slide-10 .fase-subtitle,
+    #slide-12 .fase-subtitle,
+    #slide-13 .fase-subtitle,
+    #slide-14 .fase-subtitle,
+    #slide-15 .fase-subtitle {
+      display: none;
+    }
+    #slide-7 h2,
+    #slide-8 h2,
+    #slide-9 h2 {
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
+      padding: .4rem 1.6rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 14px rgba(0,56,101,.1);
+    }
+
+    /* --- Fase 1: Portada --- */
+    .fase1-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.2rem; flex-wrap: wrap; margin: 1rem 0 1.5rem;
+    }
+    .fase1-card {
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(0,56,101,.1);
+      border-radius: var(--radius);
+      padding: 1.2rem 1rem;
+      min-width: 170px; max-width: 240px;
+      text-align: center;
+      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+    }
+    .fase1-card .fase1-icon { font-size: 2.2rem; margin-bottom: .5rem; }
+    .fase1-card h4 { color: var(--blue-dark); font-size: .95rem; margin-bottom: .3rem; }
+    .fase1-card p { color: var(--text-secondary); font-size: .78rem; line-height: 1.4; }
+    .fase1-arrow { font-size: 2rem; color: var(--gold); font-weight: 900; }
+    .model-minis {
+      display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap;
+      margin-bottom: 1.2rem; width: 100%;
+    }
+    .model-mini-fase {
+      background: var(--blue-dark); color: #fff;
+      border-radius: 12px; padding: .8rem 1rem;
+      min-width: 150px; text-align: left;
+    }
+    .model-mini-fase .m-name { font-weight: 800; font-size: .85rem; color: var(--gold); margin-bottom: .2rem; }
+    .model-mini-fase .m-desc { font-size: .72rem; color: rgba(255,255,255,.85); line-height: 1.35; }
+    .fase-bullets {
+      list-style: none; max-width: 900px; text-align: left;
+      display: flex; flex-direction: column; gap: .6rem;
+      padding: 0; margin: 0;
+    }
+    .fase-bullets li {
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(0,56,101,.08);
+      border-radius: 12px; padding: .75rem 1rem;
+      color: var(--text-secondary); font-size: .88rem;
+    }
+    .fase-bullets li strong { color: var(--blue-dark); }
+
+    /* --- Diagramas de arquitectura --- */
+    .arch-flow-ppt {
+      display: flex; align-items: center; gap: .5rem;
+      justify-content: center; flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .arch-node-ppt {
+      background: var(--blue-light); border: 1px solid rgba(0,56,101,.12);
+      border-radius: 10px; padding: .6rem .5rem; text-align: center;
+      min-width: 72px;
+    }
+    .arch-node-ppt .n-icon { font-size: 1.3rem; margin-bottom: .15rem; }
+    .arch-node-ppt .n-name { font-size: .68rem; font-weight: 800; color: var(--blue-dark); text-transform: uppercase; }
+    .arch-node-ppt .n-dim { font-size: .6rem; color: var(--text-secondary); margin-top: .15rem; font-family: monospace; }
+    .arch-arrow-ppt { font-size: 1.2rem; color: var(--gold); font-weight: 900; }
+
+    .stack-diagram-ppt {
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(6px);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      width: 100%; max-width: 760px;
+      display: flex; flex-direction: column; gap: .6rem;
+      margin-bottom: 1rem;
+    }
+    .stack-row-ppt {
+      display: flex; align-items: center; gap: .8rem; text-align: left;
+    }
+    .stack-row-ppt .stage-label {
+      width: 100px; flex-shrink: 0;
+      font-size: .65rem; font-weight: 800; color: var(--blue-dark);
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+    .stack-row-ppt .stage-bar {
+      flex: 1; border-radius: 8px; padding: .55rem .8rem;
+      color: var(--blue-dark); font-size: .78rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,.05);
+    }
+    .stack-row-ppt .stage-bar strong { display: block; font-size: .82rem; margin-bottom: .1rem; }
+    .stack-row-ppt .stage-bar small { display: block; font-size: .62rem; opacity: .85; margin-top: .1rem; }
+    .stage-bar.eff-fused { background: #74b9ff; }
+    .stage-bar.eff-mbconv { background: #55efc4; }
+    .stage-bar.eff-se { background: #fab1a0; }
+    .stage-bar.eff-head { background: #ffeaa7; }
+    .stage-bar.mb-uib { background: #74b9ff; }
+    .stage-bar.mb-mqa { background: #a29bfe; color: #fff; }
+    .stage-bar.mb-mqa strong { color: #fff; }
+    .stage-bar.mb-mqa small { color: rgba(255,255,255,.9); }
+    .stage-bar.input-bar { background: #dfe6e9; }
+
+    .legend-row-ppt {
+      display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap;
+      margin-bottom: .8rem; font-size: .72rem;
+    }
+    .legend-item-ppt { display: flex; align-items: center; gap: .3rem; }
+    .legend-color-ppt {
+      width: 12px; height: 12px; border-radius: 3px;
+      border: 1px solid rgba(0,0,0,.1);
+    }
+
+    .tech-grid-ppt {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: .8rem; width: 100%;
+    }
+    .fase-layout {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 1.5rem;
+      width: 100%;
+      align-items: stretch;
+    }
+    .fase-layout .stack-diagram-ppt { margin-bottom: 0; }
+    .tech-grid-ppt.vertical {
+      grid-template-columns: 1fr;
+      height: 100%;
+    }
+    .tech-grid-ppt.vertical .tech-card-ppt {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tech-card-ppt {
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,56,101,.08);
+      border-radius: 12px; padding: .8rem;
+      text-align: left;
+    }
+    .tech-card-ppt h4 { color: var(--blue-dark); font-size: .78rem; margin-bottom: .3rem; }
+    .tech-card-ppt p { color: var(--text-secondary); font-size: .72rem; line-height: 1.45; }
+    .tech-card-ppt code {
+      background: var(--blue-light); color: var(--blue-dark);
+      padding: .1rem .25rem; border-radius: 3px; font-size: .68rem;
+    }
+
+    /* --- Fase 2: Pruning --- */
+    .prune-context-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: .8rem; flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .prune-context-card {
+      background: rgba(255,255,255,.78);
+      border-radius: var(--radius);
+      padding: 1rem .8rem; min-width: 140px; max-width: 190px;
+      text-align: center;
+      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+    }
+    .prune-context-card .pc-icon { font-size: 2rem; margin-bottom: .4rem; }
+    .prune-context-card h4 { color: var(--blue-dark); font-size: .85rem; margin-bottom: .2rem; }
+    .prune-context-card p { color: var(--text-secondary); font-size: .72rem; line-height: 1.4; }
+    .prune-context-arrow { font-size: 1.8rem; color: var(--gold); font-weight: 900; }
+
+    .prune-viz-ppt {
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,56,101,.1);
+      border-radius: var(--radius);
+      padding: 1rem;
+      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      text-align: center;
+      width: 100%;
+    }
+    .prune-controls-ppt {
+      display: flex; flex-wrap: wrap; gap: .4rem;
+      justify-content: center; margin-bottom: .6rem;
+    }
+    .prune-btn-ppt {
+      background: var(--blue-light); color: var(--blue-dark);
+      border: 2px solid var(--blue-dark); border-radius: 50px;
+      padding: .35rem .9rem; font-weight: 800; font-size: .75rem;
+      cursor: pointer; transition: all .2s;
+    }
+    .prune-btn-ppt:hover, .prune-btn-ppt.active { background: var(--blue-dark); color: #fff; }
+    .prune-stats-ppt {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      justify-content: center; margin-bottom: .6rem;
+    }
+    .prune-stat-ppt {
+      background: var(--blue-light); border-radius: 8px;
+      padding: .4rem .8rem; min-width: 90px;
+    }
+    .prune-stat-ppt .num { font-size: 1.2rem; font-weight: 900; color: var(--blue-dark); }
+    .prune-stat-ppt .lbl { font-size: .65rem; color: var(--text-secondary); }
+    .prune-viz-ppt svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+    .prune-viz-ppt .node {
+      fill: #fff; stroke: var(--blue-dark); stroke-width: 2.5;
+      transition: all .45s cubic-bezier(.4,0,.2,1);
+    }
+    .prune-viz-ppt .node.pruned {
+      fill: #ECEFF1; stroke: #B0BEC5; opacity: .22; filter: grayscale(100%);
+    }
+    .prune-viz-ppt .connection {
+      fill: none; stroke: rgba(0,56,101,.13); stroke-width: 1.2;
+      transition: all .45s cubic-bezier(.4,0,.2,1);
+    }
+    .prune-viz-ppt .connection.pruned { stroke: rgba(176,190,197,.12); stroke-width: .6; }
+    .prune-viz-ppt .connection.flow {
+      stroke: url(#pruneFlowGradient); stroke-width: 2;
+      stroke-dasharray: 7 7; animation: pruneDashFlow 2.2s linear infinite;
+      opacity: .85; pointer-events: none;
+    }
+    .prune-viz-ppt .connection.flow.pruned { opacity: 0; }
+    .prune-viz-ppt .traveler {
+      fill: var(--gold); filter: drop-shadow(0 0 3px var(--gold));
+      opacity: .9; pointer-events: none;
+    }
+    .prune-viz-ppt .traveler.pruned { opacity: 0; }
+    @keyframes pruneDashFlow { to { stroke-dashoffset: -14; } }
+    .prune-viz-ppt .layer-label {
+      font-size: 10px; fill: var(--blue-dark); font-weight: 800;
+      text-anchor: middle; text-transform: uppercase;
+    }
+
+    /* --- Fase 3: KD --- */
+    .kd-flow-ppt {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap; margin: 1rem 0;
+    }
+    .kd-box-ppt {
+      background: var(--blue-light); border: 2px solid var(--blue-dark);
+      border-radius: var(--radius); padding: 1rem;
+      min-width: 150px; text-align: center;
+    }
+    .kd-box-ppt.teacher { border-color: var(--gold); background: var(--gold-soft); }
+    .kd-box-ppt .kd-icon { font-size: 2rem; margin-bottom: .3rem; }
+    .kd-box-ppt h4 { color: var(--blue-dark); font-size: .9rem; margin-bottom: .2rem; }
+    .kd-box-ppt p { font-size: .72rem; color: var(--text-secondary); line-height: 1.35; }
+    .kd-arrow-ppt { font-size: 1.8rem; color: var(--gold); font-weight: 900; }
+    .kd-loss-ppt {
+      background: var(--blue-dark); color: #fff;
+      border-radius: var(--radius); padding: .8rem 1.2rem;
+      display: inline-block; margin-top: .6rem;
+    }
+    .kd-loss-ppt h5 { color: var(--gold); font-size: .8rem; margin-bottom: .2rem; }
+    .kd-loss-ppt p { font-size: .75rem; opacity: .9; color: #fff; }
+
+    .formula-box-ppt {
+      background: var(--blue-light); border-left: 4px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1rem 1.2rem; margin: .8rem 0;
+    }
+    .formula-title-ppt {
+      font-size: .7rem; font-weight: 800; color: var(--blue-dark);
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem;
+    }
+    .formula-ppt {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: 1.1rem; color: var(--text);
+      font-family: 'Georgia', serif; flex-wrap: wrap;
+    }
+    .formula-ppt .var { font-style: italic; color: var(--blue-dark); font-weight: 700; }
+
+    .concept-grid-ppt {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: .8rem; margin: .8rem 0; width: 100%;
+    }
+    .concept-card-ppt {
+      background: rgba(255,255,255,.75); border: 1px solid rgba(0,56,101,.08);
+      border-radius: 12px; padding: .9rem;
+      text-align: left;
+    }
+    .concept-card-ppt::before {
+      content: ''; display: block; height: 3px;
+      background: var(--gold); border-radius: 2px;
+      margin: -.9rem -.9rem .6rem -.9rem;
+      width: calc(100% + 1.8rem);
+    }
+    .concept-card-ppt.glow::before { background: var(--blue-dark); }
+    .concept-card-ppt h4 { font-size: .85rem; color: var(--blue-dark); margin-bottom: .3rem; }
+    .concept-card-ppt p { font-size: .75rem; color: var(--text-secondary); line-height: 1.45; }
+
+    .step-list-ppt {
+      display: flex; flex-direction: column; gap: .5rem;
+      margin: .6rem 0; width: 100%;
+    }
+    .step-item-ppt {
+      display: flex; gap: .7rem; align-items: flex-start;
+      background: rgba(255,255,255,.75);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      padding: .6rem .8rem;
+    }
+    .step-num-ppt {
+      background: var(--gold); color: var(--blue-dark);
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: .75rem; flex-shrink: 0;
+    }
+    .step-item-ppt h4 { color: var(--blue-dark); font-size: .8rem; margin-bottom: .15rem; }
+    .step-item-ppt p { font-size: .72rem; color: var(--text-secondary); line-height: 1.4; }
+
+    /* --- Fase 4: Quantization --- */
+    .quant-grid-ppt {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.2rem; width: 100%; margin: .8rem 0;
+    }
+    .quant-card-ppt {
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,56,101,.08);
+      border-radius: var(--radius); padding: 1rem;
+      text-align: left;
+    }
+    .quant-card-ppt h4 { font-size: .9rem; color: var(--blue-dark); margin-bottom: .4rem; }
+    .quant-card-ppt p { font-size: .78rem; color: var(--text-secondary); line-height: 1.5; }
+    .quant-card-ppt ul { padding-left: 1rem; margin-top: .3rem; }
+    .quant-card-ppt li { font-size: .75rem; margin-bottom: .2rem; }
+
+    .bit-row-ppt {
+      display: inline-flex; gap: 3px; margin: .6rem 0;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .bit-ppt {
+      width: 28px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700; font-size: .75rem;
+      border-radius: 4px; border: 1px solid #CCC;
+    }
+    .bit-ppt.sign { background: #FFCDD2; color: #B71C1C; }
+    .bit-ppt.exp { background: #E3F2FD; color: #1565C0; }
+    .bit-ppt.mant { background: #FFF9C4; color: #F57F17; }
+    .bit-ppt.int { background: #E8F5E9; color: #1B5E20; }
+
+    .quant-anim-ppt {
+      background: rgba(255,255,255,.75);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      width: 100%;
+    }
+    .quant-step-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: .8rem; flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .quant-step-box {
+      background: var(--blue-light); border: 2px solid var(--blue-dark);
+      border-radius: 12px; padding: .8rem 1rem; text-align: center;
+      min-width: 130px;
+    }
+    .quant-step-box .qs-icon { font-size: 1.8rem; margin-bottom: .2rem; }
+    .quant-step-box h5 { color: var(--blue-dark); font-size: .8rem; margin-bottom: .1rem; }
+    .quant-step-box p { font-size: .68rem; color: var(--text-secondary); }
+    .quant-step-arrow { font-size: 1.8rem; color: var(--gold); font-weight: 900; }
+
+    .weight-anim-box {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap; margin: 1rem 0;
+    }
+    .weight-card {
+      background: #fff; border: 1px solid rgba(0,56,101,.12);
+      border-radius: 12px; padding: 1rem; text-align: center;
+      min-width: 140px;
+    }
+    .weight-card h5 { font-size: .75rem; color: var(--blue-dark); margin-bottom: .4rem; }
+    .weight-value {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--blue-dark);
+    }
+    .weight-value.int { color: #1B5E20; }
+    .anim-arrow { font-size: 1.5rem; color: var(--gold); }
+
+    @keyframes quantPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(248,169,0,.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(248,169,0,0); }
+    }
+    .weight-card.active { animation: quantPulse 2s infinite; border-color: var(--gold); }
+
+    /* Responsive para fases */
+    @media (max-width: 900px) {
+      .tech-grid-ppt { grid-template-columns: repeat(2, 1fr); }
+      .concept-grid-ppt { grid-template-columns: 1fr; }
+      .quant-grid-ppt { grid-template-columns: 1fr; }
+      .stack-row-ppt { flex-direction: column; align-items: flex-start; gap: .2rem; }
+      .stack-row-ppt .stage-label { width: auto; }
+      .arch-flow-ppt { flex-direction: column; gap: .3rem; }
+      .arch-arrow-ppt { transform: rotate(90deg); }
+      .fase1-flow, .prune-context-flow, .kd-flow-ppt { flex-direction: column; }
+      .fase1-arrow, .prune-context-arrow, .kd-arrow-ppt { transform: rotate(90deg); }
+      .fase-layout { grid-template-columns: 1fr; }
+      .tech-grid-ppt.vertical { height: auto; }
+    }
 
     /* ════════════════════════════════════════
        RESPONSIVE
@@ -1394,8 +1831,404 @@
       </div>
     </section>
 
-    <!-- SLIDE 6: RESULTADOS — MÉTRICAS Y COMPARACIÓN DIRECTA -->
-    <section class="slide slide-results-1" id="slide-6">
+    <!-- SLIDE 6: FASE 1 — ENTRENAMIENTO BASELINE -->
+    <section class="slide fase-slide" id="slide-6">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Fase 1 — Entrenamiento Baseline</div>
+        <h2>Fase 1: Entrenamiento desde cero sobre imágenes médicas</h2>
+        <p class="fase-subtitle">Entrenamos tres familias de modelos de clasificación durante 150 épocas. Sus checkpoints sirven como referencia y como teachers para la Fase 3.</p>
+        <div class="fase1-flow">
+          <div class="fase1-card">
+            <div class="fase1-icon">📁</div>
+            <h4>Dataset</h4>
+            <p>Imágenes médicas binarias de tres patologías</p>
+          </div>
+          <div class="fase1-arrow">→</div>
+          <div class="fase1-card">
+            <div class="fase1-icon">⚙️</div>
+            <h4>Entrenamiento</h4>
+            <p>3 familias de modelos · 150 épocas · class weights</p>
+          </div>
+          <div class="fase1-arrow">→</div>
+          <div class="fase1-card">
+            <div class="fase1-icon">💾</div>
+            <h4>9 best.pt</h4>
+            <p>Checkpoints base · Teachers para Fase 3</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 7: FASE 1 — YOLOv26-cls -->
+    <section class="slide fase-slide" id="slide-7">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Arquitectura 1 / 3 · YOLOv26-cls</div>
+        <h2>YOLOv26-cls</h2>
+        <p class="fase-subtitle">Rama de clasificación de YOLOv26: backbone de detección reutilizado como extractor de características.</p>
+        <div class="arch-flow-ppt">
+          <div class="arch-node-ppt"><div class="n-icon">🖼️</div><div class="n-name">Input</div><div class="n-dim">[B,3,224,224]</div></div>
+          <div class="arch-arrow-ppt">→</div>
+          <div class="arch-node-ppt"><div class="n-icon">🔲</div><div class="n-name">Conv</div><div class="n-dim">[B,32,112,112]</div></div>
+          <div class="arch-arrow-ppt">→</div>
+          <div class="arch-node-ppt"><div class="n-icon">🧱</div><div class="n-name">C3 × N</div><div class="n-dim">[B,256,14,14]</div></div>
+          <div class="arch-arrow-ppt">→</div>
+          <div class="arch-node-ppt"><div class="n-icon">🔺</div><div class="n-name">SPPF</div><div class="n-dim">[B,256,14,14]</div></div>
+          <div class="arch-arrow-ppt">→</div>
+          <div class="arch-node-ppt"><div class="n-icon">📊</div><div class="n-name">GAP</div><div class="n-dim">[B,256]</div></div>
+          <div class="arch-arrow-ppt">→</div>
+          <div class="arch-node-ppt"><div class="n-icon">⚡</div><div class="n-name">Linear</div><div class="n-dim">[B,2]</div></div>
+        </div>
+        <div class="tech-grid-ppt">
+          <div class="tech-card-ppt"><h4>⚖️ Pérdida ponderada</h4><p>Cross-Entropy con <code>class weights</code> para desbalanceo.</p></div>
+          <div class="tech-card-ppt"><h4>⚡ Optimización</h4><p><code>AdamW</code> + <code>Cosine Annealing</code>, 150 épocas.</p></div>
+          <div class="tech-card-ppt"><h4>🔄 Augmentations</h4><p>Rotaciones, flips, HSV y brillo controlados.</p></div>
+          <div class="tech-card-ppt"><h4>📐 Índice de Youden</h4><p>Threshold calibrado para Sensibilidad + Especificidad.</p></div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 8: FASE 1 — EfficientNetV2-S -->
+    <section class="slide fase-slide" id="slide-8">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Arquitectura 2 / 3 · EfficientNetV2-S</div>
+        <h2>EfficientNetV2-S</h2>
+        <p class="fase-subtitle">Diseñado para clasificación con Fused-MBConv en etapas tempranas, SE Attention y Compound Scaling.</p>
+        <div class="legend-row-ppt">
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#74b9ff"></span> Fused-MBConv</div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#55efc4"></span> MBConv + SE</div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#ffeaa7"></span> GAP + Head</div>
+        </div>
+        <div class="fase-layout">
+          <div class="stack-diagram-ppt">
+            <div class="stack-row-ppt"><div class="stage-label">Input</div><div class="stage-bar input-bar"><strong>RGB 224 × 224</strong><small>Tensor [B, 3, 224, 224]</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Stem</div><div class="stage-bar eff-fused"><strong>Conv 3×3 + SiLU</strong><small>24 canales · stride 2</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Stage 1-2</div><div class="stage-bar eff-fused"><strong>Fused-MBConv ×3</strong><small>48 canales · más rápido en CPU</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Stage 3-6</div><div class="stage-bar eff-mbconv"><strong>MBConv + SE Attention</strong><small>64 → 256 canales · recalibra filtros por canal</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Head</div><div class="stage-bar eff-head"><strong>GAP + Dropout → Linear(256 → 2)</strong><small>Softmax · salida binaria</small></div></div>
+          </div>
+          <div class="tech-grid-ppt vertical">
+            <div class="tech-card-ppt"><h4>🔷 Fused-MBConv</h4><p>Conv 3×3 estándar en etapas tempranas, acelera CPU.</p></div>
+            <div class="tech-card-ppt"><h4>🟠 SE Attention</h4><p>Squeeze-and-Excitation recalibra canales relevantes.</p></div>
+            <div class="tech-card-ppt"><h4>📏 Compound Scaling</h4><p>Escala ancho, profundidad y resolución juntos.</p></div>
+            <div class="tech-card-ppt"><h4>🎯 Cabeza</h4><p>GAP reduce a vector 256, dropout y FC a 2 salidas.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 9: FASE 1 — MobileNetV4-Conv-Medium -->
+    <section class="slide fase-slide" id="slide-9">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Arquitectura 3 / 3 · MobileNetV4-Conv-Medium</div>
+        <h2>MobileNetV4-Conv-Medium</h2>
+        <p class="fase-subtitle">Evolución de MobileNet optimizada para edge: UIB unificado + Mobile MQA ligero.</p>
+        <div class="legend-row-ppt">
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#74b9ff"></span> UIB Block</div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#a29bfe"></span> Mobile MQA</div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#ffeaa7"></span> GAP + Head</div>
+        </div>
+        <div class="fase-layout">
+          <div class="stack-diagram-ppt">
+            <div class="stack-row-ppt"><div class="stage-label">Input</div><div class="stage-bar input-bar"><strong>RGB 224 × 224</strong><small>Tensor [B, 3, 224, 224]</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Stem</div><div class="stage-bar mb-uib"><strong>Conv 3×3 + BN + ReLU</strong><small>32 canales · stride 2</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Stage 1-3</div><div class="stage-bar mb-uib"><strong>UIB Block</strong><small>32 → 128 canales · depthwise opcional + residual</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Stage 4-5</div><div class="stage-bar mb-mqa"><strong>UIB + Mobile MQA</strong><small>256 → 512 canales · atención ligera en baja resolución</small></div></div>
+            <div class="stack-row-ppt"><div class="stage-label">Head</div><div class="stage-bar eff-head"><strong>GAP → Linear(512 → 2)</strong><small>Softmax · clasificación binaria</small></div></div>
+          </div>
+          <div class="tech-grid-ppt vertical">
+            <div class="tech-card-ppt"><h4>🧩 UIB</h4><p>Universal Inverted Bottleneck unifica expansion, DW y projection.</p></div>
+            <div class="tech-card-ppt"><h4>👁️ Mobile MQA</h4><p>Multi-Query Attention ligero solo en resoluciones bajas.</p></div>
+            <div class="tech-card-ppt"><h4>🔄 Residual Skips</h4><p>Conexiones residuales que estabilizan el gradiente.</p></div>
+            <div class="tech-card-ppt"><h4>⚡ Edge-first</h4><p>Menos parámetros, latencia baja en CPU/GPU móviles.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 10: FASE 2 — PRUNING NO ESTRUCTURAL -->
+    <section class="slide fase-slide" id="slide-10">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Fase 2 — Pruning no estructural</div>
+        <h2>Fase 2: Poda No Estructural</h2>
+        <p class="fase-subtitle">Identificamos y anulamos los filtros de menor importancia en cada capa Conv2d del modelo entrenado.</p>
+        <div class="prune-context-flow">
+          <div class="prune-context-card">
+            <div class="pc-icon">💾</div>
+            <h4>best.pt</h4>
+            <p>Modelo base entrenado en Fase 1 con todos los filtros activos.</p>
+          </div>
+          <div class="prune-context-arrow">→</div>
+          <div class="prune-context-card">
+            <div class="pc-icon">🔍</div>
+            <h4>Evaluar Filtros</h4>
+            <p>¿Cuánto aporta cada filtro? Taylor o Magnitude.</p>
+          </div>
+          <div class="prune-context-arrow">→</div>
+          <div class="prune-context-card">
+            <div class="pc-icon">✂️</div>
+            <h4>Apagar</h4>
+            <p>~30% de los filtros con menor score se multiplican por cero.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 11: FASE 2 — PRUNING EN ACCIÓN -->
+    <section class="slide fase-slide" id="slide-11">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Visualización · Pruning en acción</div>
+        <div class="prune-viz-ppt">
+          <div class="prune-controls-ppt">
+            <button class="prune-btn-ppt active" data-level="0" onclick="applyPrunePpt(0)">0% pruning</button>
+            <button class="prune-btn-ppt" data-level="30" onclick="applyPrunePpt(30)">30% pruning</button>
+            <button class="prune-btn-ppt" data-level="50" onclick="applyPrunePpt(50)">50% pruning</button>
+            <button class="prune-btn-ppt" data-level="70" onclick="applyPrunePpt(70)">70% pruning</button>
+          </div>
+          <div class="prune-stats-ppt">
+            <div class="prune-stat-ppt"><div class="num" id="activeNodesPpt">38</div><div class="lbl">Nodos activos</div></div>
+            <div class="prune-stat-ppt"><div class="num" id="prunedNodesPpt">0</div><div class="lbl">Nodos apagados</div></div>
+            <div class="prune-stat-ppt"><div class="num" id="activeConnsPpt">—</div><div class="lbl">Conexiones activas</div></div>
+          </div>
+          <svg viewBox="0 0 900 360" preserveAspectRatio="xMidYMid meet" id="pruneSvgPpt">
+            <defs>
+              <linearGradient id="pruneFlowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(0,56,101,0.05)" />
+                <stop offset="50%" stop-color="#F8A900" />
+                <stop offset="100%" stop-color="rgba(0,56,101,0.05)" />
+              </linearGradient>
+            </defs>
+            <g id="pptLayer0"></g>
+            <g id="pptLayer1"></g>
+            <g id="pptLayer2"></g>
+            <g id="pptLayer3"></g>
+            <g id="pptLayer4"></g>
+            <g id="pptConnections"></g>
+            <g id="pptFlows"></g>
+            <g id="pptTravelers"></g>
+            <text x="80" y="345" class="layer-label">Input</text>
+            <text x="260" y="345" class="layer-label">Conv 1</text>
+            <text x="440" y="345" class="layer-label">Conv 2</text>
+            <text x="620" y="345" class="layer-label">Conv 3</text>
+            <text x="820" y="345" class="layer-label">Output</text>
+          </svg>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 12: FASE 3 — KNOWLEDGE DISTILLATION -->
+    <section class="slide fase-slide" id="slide-12">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Fase 3 — Recuperación de capacidad</div>
+        <h2>Knowledge Distillation</h2>
+        <p class="fase-subtitle">El modelo base (teacher) guía al modelo podado (student) para recuperar el desempeño perdido.</p>
+        <div class="kd-flow-ppt">
+          <div class="kd-box-ppt teacher">
+            <div class="kd-icon">👨‍🏫</div>
+            <h4>Teacher</h4>
+            <p>Fase 1: modelo base<br>Todos los filtros activos<br>Congelado durante KD</p>
+          </div>
+          <div class="kd-arrow-ppt">→</div>
+          <div class="kd-box-ppt">
+            <div class="kd-icon">🎓</div>
+            <h4>Student</h4>
+            <p>Fase 2: modelo podado<br>30% de filtros en cero<br>Entrenable</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 13: FASE 3 — CÓMO FUNCIONA EL KD -->
+    <section class="slide fase-slide" id="slide-13">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">¿Cómo funciona?</div>
+        <h2>Recuperación mediante soft labels</h2>
+        <p class="fase-subtitle">La temperatura T suaviza las probabilidades, revelando información en las colas de la distribución.</p>
+        <div class="formula-box-ppt">
+          <div class="formula-title-ppt">KL Divergence con temperatura</div>
+          <div class="formula-ppt">
+            <span class="var">L</span><sub class="var" style="font-size:.7rem;">KL</sub>
+            <span>=</span><span class="var">T</span><sup class="var" style="font-size:.7rem;">2</sup>
+            <span>· KL(</span><span>softmax(</span><span class="var">z<sub style="font-size:.5rem;">S</sub></span><span>/T)</span><span> ‖ </span><span>softmax(</span><span class="var">z<sub style="font-size:.5rem;">T</sub></span><span>/T)</span><span>)</span>
+          </div>
+        </div>
+        <div class="step-list-ppt">
+          <div class="step-item-ppt"><div class="step-num-ppt">1</div><div><h4>Gradiente desde la pérdida</h4><p>El gradiente fluye hacia atrás desde L<sub>KD</sub> hacia todos los parámetros del student.</p></div></div>
+          <div class="step-item-ppt"><div class="step-num-ppt">2</div><div><h4>Actualización de filtros en cero</h4><p>w<sub>new</sub> = w<sub>old</sub> − η·g. Como w<sub>old</sub> = 0, el filtro despierta con valor útil.</p></div></div>
+          <div class="step-item-ppt"><div class="step-num-ppt">3</div><div><h4>Redistribución del conocimiento</h4><p>Los filtros activos se reorganizan y los apagados vuelven a la vida.</p></div></div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 14: FASE 4 — CUANTIZACIÓN INT8 -->
+    <section class="slide fase-slide" id="slide-14">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Fase 4 — Post-Training Quantization</div>
+        <h2>Cuantización INT8</h2>
+        <p class="fase-subtitle">De 32 bits a 8 bits sin perder el diagnóstico. Permite desplegar modelos en smartphones de gama media.</p>
+        <div class="quant-grid-ppt">
+          <div class="quant-card-ppt">
+            <h4>🔢 FP32</h4>
+            <p>32 bits: 1 signo + 8 exponente + 23 mantisa. Ocupa 4 bytes y alcanza ~7 decimales.</p>
+            <div class="bit-row-ppt">
+              <div class="bit-ppt sign">0</div>
+              <div class="bit-ppt exp">0</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">0</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div>
+              <div class="bit-ppt mant">0</div><div class="bit-ppt mant">0</div><div class="bit-ppt mant">1</div><div class="bit-ppt mant">0</div><div class="bit-ppt mant">0</div><div class="bit-ppt mant">1</div><div class="bit-ppt mant">...</div>
+            </div>
+          </div>
+          <div class="quant-card-ppt">
+            <h4>🚀 INT8</h4>
+            <p>8 bits: 256 valores enteros (−128 a +127). Ocupa 1 byte y permite operaciones enteras rápidas.</p>
+            <div class="bit-row-ppt">
+              <div class="bit-ppt int">0</div><div class="bit-ppt int">0</div><div class="bit-ppt int">0</div><div class="bit-ppt int">0</div><div class="bit-ppt int">1</div><div class="bit-ppt int">0</div><div class="bit-ppt int">1</div><div class="bit-ppt int">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-box-ppt">
+          <div class="formula-title-ppt">Fórmula de cuantización</div>
+          <div class="formula-ppt">
+            <span class="var">Q</span><span>= round(</span><span class="var">R</span><span>/</span><span class="var">S</span><span> + </span><span class="var">Z</span><span>)</span>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 15: FASE 4 — DE FP32 A INT8 -->
+    <section class="slide fase-slide" id="slide-15">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Visualización · De FP32 a INT8</div>
+        <h2>¿Cómo se comprime un peso?</h2>
+        <p class="fase-subtitle">Se calculan escala (S) y punto cero (Z) por capa, y cada peso real se mapea a un entero de 8 bits.</p>
+        <div class="quant-anim-ppt">
+          <div class="quant-step-flow">
+            <div class="quant-step-box">
+              <div class="qs-icon">🔢</div>
+              <h5>Peso FP32</h5>
+              <p>w = 0.037</p>
+            </div>
+            <div class="quant-step-arrow">→</div>
+            <div class="quant-step-box">
+              <div class="qs-icon">📏</div>
+              <h5>Calibrar S, Z</h5>
+              <p>Observar rango real</p>
+            </div>
+            <div class="quant-step-arrow">→</div>
+            <div class="quant-step-box">
+              <div class="qs-icon">🎯</div>
+              <h5>Cuantizar</h5>
+              <p>Q = round(w/S + Z)</p>
+            </div>
+            <div class="quant-step-arrow">→</div>
+            <div class="quant-step-box">
+              <div class="qs-icon">🚀</div>
+              <h5>INT8</h5>
+              <p>00001010</p>
+            </div>
+          </div>
+          <div class="weight-anim-box">
+            <div class="weight-card active">
+              <h5>FP32</h5>
+              <div class="weight-value">0.037</div>
+            </div>
+            <div class="anim-arrow">→</div>
+            <div class="weight-card">
+              <h5>Escala + Punto cero</h5>
+              <div class="weight-value">S, Z</div>
+            </div>
+            <div class="anim-arrow">→</div>
+            <div class="weight-card active">
+              <h5>INT8</h5>
+              <div class="weight-value int">10</div>
+            </div>
+          </div>
+        </div>
+        <div class="note-box">
+          <strong>Resultado real:</strong> 41.62 MB (FP32) → 10.61 MB (INT8), ~3.9× de compresión, con AUC prácticamente sin cambio (0.8777 → 0.8781).
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 16: RESULTADOS — MÉTRICAS Y COMPARACIÓN DIRECTA -->
+    <section class="slide slide-results-1" id="slide-16">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1530,7 +2363,7 @@
     </section>
 
     <!-- SLIDE 7: RESULTADOS — BENCHMARK DE RENDIMIENTO -->
-    <section class="slide slide-results-2" id="slide-7">
+    <section class="slide slide-results-2" id="slide-17">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1643,7 +2476,7 @@
     </section>
 
     <!-- SLIDE 8: RESULTADOS — DESGLOSE POR DATASET -->
-    <section class="slide slide-results-3" id="slide-8">
+    <section class="slide slide-results-3" id="slide-18">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1684,14 +2517,14 @@
     </section>
 
     <!-- SLIDE 9: RESULTADOS — VEREDICTO POR MODELO -->
-    <section class="slide slide-results-4" id="slide-9">
+    <section class="slide slide-results-4" id="slide-19">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados · Veredicto por modelo</div>
+        <div class="section-kicker">Resultados · Mejor modelo</div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
@@ -1704,8 +2537,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong>MobileNetV4-M</strong></td>
+              <tr class="best-model">
+                <td><strong>MobileNetV4-M</strong><span class="best-badge">Mejor opción</span></td>
                 <td><span class="delta-pos">✅ 3.8×</span></td>
                 <td><span class="delta-pos">✅ 3.2×</span></td>
                 <td><span class="delta-pos">✅ 2.8×</span></td>
@@ -1745,7 +2578,7 @@
     </section>
 
     <!-- SLIDE 10: CONCLUSIONES -->
-    <section class="slide" id="slide-10">
+    <section class="slide" id="slide-20">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1792,7 +2625,7 @@
     </section>
 
     <!-- SLIDE 11: CIERRE -->
-    <section class="slide" id="slide-11">
+    <section class="slide" id="slide-21">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -2029,8 +2862,8 @@
     function initChartsForSlide(index) {
       const slide = slides[index];
       if (!slide) return;
-      if (slide.id === 'slide-6') initSizeChart();
-      if (slide.id === 'slide-7') {
+      if (slide.id === 'slide-16') initSizeChart();
+      if (slide.id === 'slide-17') {
         initLatencyChart();
         initThroughputChart();
       }
@@ -2038,6 +2871,146 @@
 
     // Inicializar gráficos del slide activo al cargar
     initChartsForSlide(current);
+
+    // ── Visualización interactiva de Pruning (slide 11) ──
+    let prunePptInitialized = false;
+    const pptNodes = [];
+    const pptConns = [];
+    const pptTravelers = [];
+
+    function initPrunePpt() {
+      if (prunePptInitialized) return;
+      const svg = document.getElementById('pruneSvgPpt');
+      if (!svg) return;
+      const layersConfig = [
+        { id: 'pptLayer0', x: 80, count: 6, radius: 12 },
+        { id: 'pptLayer1', x: 260, count: 10, radius: 11 },
+        { id: 'pptLayer2', x: 440, count: 10, radius: 11 },
+        { id: 'pptLayer3', x: 620, count: 10, radius: 11 },
+        { id: 'pptLayer4', x: 820, count: 2, radius: 16 }
+      ];
+      const startY = 55;
+      const gapY = 42;
+
+      layersConfig.forEach((cfg, li) => {
+        const group = document.getElementById(cfg.id);
+        const totalH = (cfg.count - 1) * gapY;
+        const offsetY = startY + (250 - totalH) / 2;
+        for (let i = 0; i < cfg.count; i++) {
+          const cx = cfg.x;
+          const cy = offsetY + i * gapY;
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', cx);
+          circle.setAttribute('cy', cy);
+          circle.setAttribute('r', cfg.radius);
+          circle.setAttribute('class', 'node');
+          circle.dataset.layer = li;
+          circle.dataset.index = i;
+          circle.dataset.importance = Math.random().toFixed(4);
+          group.appendChild(circle);
+          pptNodes.push({ el: circle, layer: li, index: i, cx, cy, r: cfg.radius });
+        }
+      });
+
+      const connGroup = document.getElementById('pptConnections');
+      const flowGroup = document.getElementById('pptFlows');
+      const travelerGroup = document.getElementById('pptTravelers');
+
+      pptNodes.forEach(src => {
+        pptNodes.forEach(dst => {
+          if (dst.layer === src.layer + 1) {
+            const x1 = src.cx + src.r;
+            const y1 = src.cy;
+            const x2 = dst.cx - dst.r;
+            const y2 = dst.cy;
+            const mx = (x1 + x2) / 2;
+            const my = (y1 + y2) / 2 + (((src.index + dst.index) % 5 - 2) * 8);
+            const d = `M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`;
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', d);
+            path.setAttribute('class', 'connection');
+            connGroup.appendChild(path);
+
+            const flow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            flow.setAttribute('d', d);
+            flow.setAttribute('class', 'connection flow');
+            flow.style.animationDelay = `${(Math.random() * 2).toFixed(2)}s`;
+            flowGroup.appendChild(flow);
+
+            pptConns.push({ el: path, flow, src, dst, d });
+          }
+        });
+      });
+
+      pptConns.forEach((c, i) => {
+        if (i % 12 !== 0) return;
+        const t = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        t.setAttribute('r', 3.5);
+        t.setAttribute('class', 'traveler');
+        const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+        anim.setAttribute('dur', `${2 + Math.random() * 1.5}s`);
+        anim.setAttribute('repeatCount', 'indefinite');
+        anim.setAttribute('path', c.d);
+        t.appendChild(anim);
+        travelerGroup.appendChild(t);
+        pptTravelers.push({ el: t, conn: c });
+      });
+
+      prunePptInitialized = true;
+      applyPrunePpt(0);
+    }
+
+    function applyPrunePpt(level) {
+      if (!prunePptInitialized) initPrunePpt();
+      document.querySelectorAll('.prune-btn-ppt').forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`.prune-btn-ppt[data-level="${level}"]`);
+      if (btn) btn.classList.add('active');
+
+      const pruneRatio = level / 100;
+      const layerNodes = {};
+      pptNodes.forEach(n => {
+        if (n.layer > 0 && n.layer < 4) {
+          if (!layerNodes[n.layer]) layerNodes[n.layer] = [];
+          layerNodes[n.layer].push(n);
+        }
+      });
+
+      const prunedIds = new Set();
+      Object.values(layerNodes).forEach(ln => {
+        ln.sort((a, b) => parseFloat(a.el.dataset.importance) - parseFloat(b.el.dataset.importance));
+        const nPrune = Math.floor(ln.length * pruneRatio);
+        ln.slice(0, nPrune).forEach(n => prunedIds.add(`${n.layer}-${n.index}`));
+      });
+
+      pptNodes.forEach(n => {
+        const key = `${n.layer}-${n.index}`;
+        n.el.classList.toggle('pruned', prunedIds.has(key));
+      });
+
+      pptConns.forEach(c => {
+        const srcKey = `${c.src.layer}-${c.src.index}`;
+        const dstKey = `${c.dst.layer}-${c.dst.index}`;
+        const isPruned = prunedIds.has(srcKey) || prunedIds.has(dstKey);
+        c.el.classList.toggle('pruned', isPruned);
+        c.flow.classList.toggle('pruned', isPruned);
+      });
+
+      pptTravelers.forEach(t => {
+        const srcKey = `${t.conn.src.layer}-${t.conn.src.index}`;
+        const dstKey = `${t.conn.dst.layer}-${t.conn.dst.index}`;
+        t.el.classList.toggle('pruned', prunedIds.has(srcKey) || prunedIds.has(dstKey));
+      });
+
+      const active = pptNodes.filter(n => !prunedIds.has(`${n.layer}-${n.index}`)).length;
+      const pruned = pptNodes.length - active;
+      const activeConn = pptConns.filter(c => !c.el.classList.contains('pruned')).length;
+      document.getElementById('activeNodesPpt').textContent = active;
+      document.getElementById('prunedNodesPpt').textContent = pruned;
+      document.getElementById('activeConnsPpt').textContent = activeConn;
+    }
+
+    if (document.getElementById('pruneSvgPpt')) initPrunePpt();
 
     // ── Puntero láser ──
     const laserPointer = document.getElementById('laser-pointer');
