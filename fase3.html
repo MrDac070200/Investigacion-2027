@@ -39,180 +39,127 @@
 
     /* ── Navegación ── */
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--primary);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 60px;
       box-shadow: 0 2px 12px rgba(0,0,0,.2);
     }
     .nav-logo {
-      font-weight: 800; font-size: .9rem; letter-spacing: .08em;
+      font-weight: 800; font-size: .85rem; letter-spacing: .08em;
       text-transform: uppercase; color: var(--text-on-primary);
     }
     .nav-logo span { color: var(--secondary); }
     nav ul { list-style: none; display: flex; gap: 1.5rem; }
     nav ul li a {
       color: rgba(255,255,255,.85); text-decoration: none;
-      font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+      font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
       transition: color .2s;
       white-space: nowrap;
     }
     nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
-
     .menu-toggle { display: none; }
     .menu-icon {
-      display: none;
-      color: var(--secondary);
-      font-size: 1.6rem;
-      cursor: pointer;
+      display: none; color: var(--secondary); font-size: 1.6rem; cursor: pointer;
     }
 
-    section { padding: 5rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-title {
-      font-size: 2.2rem; font-weight: 900; margin-bottom: .6rem;
-      color: var(--primary);
-    }
-    .section-rule {
-      width: 80px; height: 4px;
-      background: var(--secondary);
-      border-radius: 2px; margin-bottom: 2.5rem;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 50vh; padding: 0;
+    /* ── Diapositivas ── */
+    .slide {
+      min-height: 100vh;
+      padding: 6rem 2rem 3rem;
       display: flex; align-items: center; justify-content: center;
-      text-align: center; position: relative;
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      position: relative;
     }
-    .hero-content { position: relative; z-index: 1; padding: 4rem 2rem; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: .6rem;
-      border: 1px solid var(--secondary);
-      color: var(--secondary); border-radius: 50px;
-      padding: .35rem 1rem; font-size: .75rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero-badge::before {
-      content: ''; width: 8px; height: 8px;
-      border-radius: 50%; background: var(--secondary);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: .4; }
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.6rem);
-      font-weight: 900; line-height: 1.1;
-      color: var(--text-on-primary);
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      color: rgba(255,255,255,.85); font-size: 1.1rem;
-      max-width: 700px; margin: 0 auto 2rem;
-    }
-
-    /* ── Cards ── */
-    .concept-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem; margin-bottom: 3rem;
-    }
-    .concept-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      position: relative; overflow: hidden;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
-      box-shadow: var(--shadow);
-    }
-    .concept-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--secondary);
-    }
-    .concept-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--primary);
-      box-shadow: 0 8px 24px rgba(0,56,101,.15);
-    }
-    .concept-card.glow::before { background: var(--primary); }
-    .concept-card h4 {
-      font-size: 1.05rem; color: var(--primary);
-      margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
-    }
-    .concept-card p, .concept-card li {
-      font-size: .92rem; color: var(--text-secondary); line-height: 1.65;
-    }
-    .concept-card ul { padding-left: 1.2rem; margin-top: .6rem; }
-    .concept-card li { margin-bottom: .4rem; }
-    .concept-card strong { color: var(--primary); }
-
-    /* ── Analogía destacada ── */
-    .analogy-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      display: flex; gap: 1.5rem; align-items: flex-start;
-      margin: 1.5rem 0;
-    }
-    .analogy-icon { font-size: 3rem; flex-shrink: 0; }
-    .analogy-text h4 { color: var(--primary); font-size: 1.1rem; margin-bottom: .6rem; }
-    .analogy-text p { color: var(--text-secondary); font-size: .95rem; line-height: 1.7; }
-
-    /* ── Tablas ── */
-    .compare-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius); }
-    .compare-table {
-      width: 100%; border-collapse: collapse;
-      font-size: .9rem; background: var(--surface);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .compare-table thead th {
-      background: var(--primary); color: var(--text-on-primary);
-      padding: .9rem 1rem; text-align: left; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .05em; font-size: .78rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .compare-table tbody td {
-      padding: .8rem 1rem; border-bottom: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-    .compare-table tbody tr:nth-child(even) { background: var(--bg); }
-    .compare-table tbody tr:hover { background: var(--info-bg); }
-    .compare-table .mono {
-      font-family: 'Fira Code', 'Courier New', monospace;
-      font-weight: 700; color: var(--primary);
-    }
-
-    /* ── Diagrama teacher-student ── */
-    .kd-diagram {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin: 1.5rem 0;
-      box-shadow: var(--shadow);
+    .slide-content {
+      width: 100%; max-width: 1100px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
+    }
+    .slide-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      border: 1px solid var(--secondary); color: var(--secondary);
+      border-radius: 50px; padding: .35rem 1rem;
+      font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .slide-badge::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--secondary); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .slide h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900; color: var(--primary);
+      margin-bottom: 1rem; line-height: 1.1;
+    }
+    .slide h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900; color: var(--primary);
+      margin-bottom: .5rem; line-height: 1.2;
+    }
+    .slide-subtitle {
+      color: var(--text-secondary); font-size: 1.1rem;
+      max-width: 700px; margin-bottom: 2.5rem;
+    }
+
+    /* ── Slide 1: Contexto ── */
+    #slide-contexto { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); }
+    #slide-contexto .slide-badge { border-color: var(--secondary); color: var(--secondary); }
+    #slide-contexto h1 { color: var(--text-on-primary); }
+    #slide-contexto .slide-subtitle { color: rgba(255,255,255,.8); }
+
+    .context-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .context-card {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.8rem 1.4rem; min-width: 180px; max-width: 240px;
+      box-shadow: var(--shadow); text-align: center;
+      transition: transform .25s;
+    }
+    .context-card:hover { transform: translateY(-6px); }
+    .context-icon { font-size: 2.6rem; margin-bottom: .8rem; }
+    .context-card h3 { color: var(--primary); font-size: 1.05rem; margin-bottom: .4rem; }
+    .context-card p { color: var(--text-secondary); font-size: .85rem; line-height: 1.5; }
+    .context-arrow {
+      font-size: 2.2rem; color: var(--secondary); font-weight: 900;
+    }
+    .context-bullets {
+      list-style: none; max-width: 800px; text-align: left;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .context-bullets li {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius); padding: 1rem 1.4rem;
+      color: rgba(255,255,255,.9); font-size: 1rem;
+      backdrop-filter: blur(4px);
+    }
+    .context-bullets li strong { color: var(--secondary); }
+
+    /* ── Slide 2: Cómo funciona ── */
+    #slide-kd { background: var(--bg); }
+    .kd-content { width: 100%; text-align: left; }
+    .kd-content h3 {
+      font-size: 1.3rem; color: var(--primary); margin: 2rem 0 1rem;
+      text-align: center;
+    }
+    .kd-content h3:first-child { margin-top: 0; }
+
+    .kd-diagram {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem;
+      margin: 1.5rem 0; box-shadow: var(--shadow); text-align: center;
     }
     .kd-flow {
       display: flex; align-items: center; justify-content: center;
       gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0;
     }
     .kd-box {
-      background: var(--info-bg);
-      border: 2px solid var(--primary);
-      border-radius: var(--radius);
-      padding: 1.5rem 1rem;
-      min-width: 180px;
-      text-align: center;
+      background: var(--info-bg); border: 2px solid var(--primary);
+      border-radius: var(--radius); padding: 1.5rem 1rem;
+      min-width: 180px; text-align: center;
     }
     .kd-box.teacher { border-color: var(--secondary); background: var(--warning-bg); }
     .kd-box .kd-icon { font-size: 2.5rem; margin-bottom: .5rem; }
@@ -220,47 +167,57 @@
     .kd-box p { font-size: .82rem; color: var(--text-secondary); line-height: 1.4; }
     .kd-arrow { font-size: 2rem; color: var(--secondary); font-weight: 900; }
     .kd-loss {
-      background: var(--primary);
-      color: var(--text-on-primary);
-      border-radius: var(--radius);
-      padding: 1rem 1.5rem;
-      display: inline-block;
-      margin-top: 1rem;
+      background: var(--primary); color: var(--text-on-primary);
+      border-radius: var(--radius); padding: 1rem 1.5rem;
+      display: inline-block; margin-top: 1rem;
     }
     .kd-loss h5 { color: var(--secondary); font-size: .85rem; margin-bottom: .3rem; }
     .kd-loss p { font-size: .85rem; opacity: .9; }
 
-    /* ── Fórmulas ── */
     .formula-box {
-      background: var(--info-bg);
-      border-left: 5px solid var(--secondary);
+      background: var(--info-bg); border-left: 5px solid var(--secondary);
       border-radius: 0 var(--radius) var(--radius) 0;
       padding: 1.8rem 2rem; margin: 1.5rem 0;
     }
     .formula-title {
-      font-size: .78rem; font-weight: 800;
-      color: var(--primary); text-transform: uppercase;
-      letter-spacing: .1em; margin-bottom: 1rem;
+      font-size: .78rem; font-weight: 800; color: var(--primary);
+      text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1rem;
     }
     .formula {
       display: inline-flex; align-items: center; gap: .7rem;
       font-size: 1.3rem; color: var(--text);
-      font-family: 'Georgia', serif;
-      flex-wrap: wrap;
+      font-family: 'Georgia', serif; flex-wrap: wrap;
     }
     .formula .var { font-style: italic; color: var(--primary); font-weight: 700; }
 
-    /* ── Código inline ── */
+    .concept-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-bottom: 1.5rem;
+    }
+    .concept-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      box-shadow: var(--shadow); transition: transform .25s, border-color .25s;
+    }
+    .concept-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+    .concept-card::before {
+      content: ''; display: block; height: 3px;
+      background: var(--secondary); border-radius: 2px;
+      margin: -1.5rem -1.5rem 1rem -1.5rem;
+      width: calc(100% + 3rem);
+    }
+    .concept-card.glow::before { background: var(--primary); }
+    .concept-card h4 {
+      font-size: 1rem; color: var(--primary); margin-bottom: .7rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .concept-card p { font-size: .9rem; color: var(--text-secondary); line-height: 1.65; }
+
     .code-box {
-      background: #1E1E1E;
-      color: #D4D4D4;
-      border-radius: var(--radius);
-      padding: 1.2rem 1.5rem;
+      background: #1E1E1E; color: #D4D4D4;
+      border-radius: var(--radius); padding: 1.2rem 1.5rem;
       font-family: 'Fira Code', 'Courier New', monospace;
-      font-size: .85rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-      line-height: 1.5;
+      font-size: .85rem; overflow-x: auto; margin: 1rem 0; line-height: 1.5;
     }
     .code-box .kw { color: #569CD6; }
     .code-box .fn { color: #DCDCAA; }
@@ -268,120 +225,112 @@
     .code-box .num { color: #B5CEA8; }
     .code-box .cmt { color: #6A9955; }
 
-    /* ── Resultados ── */
+    .step-list {
+      display: flex; flex-direction: column; gap: 1rem; margin: 1.2rem 0;
+    }
+    .step-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--surface); border-left: 4px solid var(--secondary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1rem 1.2rem; box-shadow: var(--shadow);
+    }
+    .step-num {
+      background: var(--secondary); color: var(--primary);
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: .85rem; flex-shrink: 0;
+    }
+    .step-item h4 { color: var(--primary); font-size: .95rem; margin-bottom: .3rem; }
+    .step-item p { font-size: .87rem; color: var(--text-secondary); line-height: 1.55; }
+
+    .note-box {
+      background: var(--info-bg); border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1rem 1.2rem; font-size: .88rem;
+      color: var(--text-secondary); margin: 1rem 0;
+    }
+    .note-box strong { color: var(--primary); }
+
+    /* ── Slide 3: Resultados ── */
+    #slide-resultados { background: var(--surface); }
     .results-highlight {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.2rem; margin-bottom: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem; margin-bottom: 2rem; width: 100%;
     }
     .result-kpi {
-      background: var(--primary);
-      color: var(--text-on-primary); border-radius: var(--radius);
-      padding: 1.8rem 1.5rem; text-align: center;
-      position: relative; overflow: hidden;
+      background: var(--primary); color: var(--text-on-primary);
+      border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center;
       box-shadow: var(--shadow);
     }
     .result-kpi.gold { background: var(--secondary); color: var(--primary); }
     .result-kpi .kpi-val {
-      font-size: 2.6rem; font-weight: 900; line-height: 1;
+      font-size: 2.2rem; font-weight: 900; line-height: 1;
       color: var(--text-on-primary);
     }
     .result-kpi.gold .kpi-val { color: var(--primary); }
-    .result-kpi .kpi-label { font-size: .82rem; opacity: .85; margin-top: .4rem; }
+    .result-kpi .kpi-label { font-size: .8rem; opacity: .85; margin-top: .4rem; }
     .result-kpi .kpi-sub { font-size: .72rem; opacity: .65; margin-top: .2rem; }
 
-    .chart-section { margin-bottom: 3rem; }
+    .chart-section { margin-bottom: 2rem; width: 100%; }
     .chart-section h3 {
-      font-size: 1.1rem; color: var(--primary);
-      font-weight: 700; margin-bottom: 1rem;
+      font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 1rem;
     }
     .chart-wrapper {
       background: var(--bg); border-radius: var(--radius);
-      padding: 1.5rem; box-shadow: var(--shadow);
-      position: relative;
-      height: 400px;
+      padding: 1.2rem; box-shadow: var(--shadow);
+      position: relative; height: 360px;
     }
     canvas { max-height: 100% !important; }
 
     .results-table-wrap {
-      overflow-x: auto; margin-bottom: 2rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
+      overflow-x: auto; margin-bottom: 1.5rem;
+      border-radius: var(--radius); border: 1px solid var(--border);
     }
     .results-table {
-      width: 100%; border-collapse: collapse;
-      font-size: .82rem; background: var(--surface);
+      width: 100%; border-collapse: collapse; font-size: .78rem;
+      background: var(--surface);
     }
     .results-table thead th {
       background: var(--primary); color: var(--text-on-primary);
-      padding: .7rem .8rem; text-align: left;
-      font-weight: 700; font-size: .72rem;
-      letter-spacing: .04em;
+      padding: .6rem .5rem; text-align: left; font-weight: 700;
+      font-size: .68rem; letter-spacing: .03em;
     }
     .results-table tbody tr:nth-child(even) { background: var(--bg); }
     .results-table tbody tr:hover { background: var(--info-bg); }
     .results-table tbody td {
-      padding: .55rem .8rem; border-bottom: 1px solid var(--border);
+      padding: .45rem .5rem; border-bottom: 1px solid var(--border);
       color: var(--text-secondary);
     }
     .delta-pos { color: #2E7D32; font-weight: 700; }
     .delta-neg { color: #C62828; font-weight: 700; }
     .delta-neutral { color: var(--text-secondary); font-weight: 700; }
     .tag-dataset {
-      display: inline-block;
-      padding: .2rem .6rem; border-radius: 4px;
-      font-size: .75rem; font-weight: 600;
-      white-space: nowrap;
+      display: inline-block; padding: .15rem .5rem; border-radius: 4px;
+      font-size: .7rem; font-weight: 600; white-space: nowrap;
     }
     .tag-ojo { background: #E3F2FD; color: #1565C0; }
     .tag-oral { background: #FCE4EC; color: #880E4F; }
     .tag-skin { background: #E8F5E9; color: #1B5E20; }
 
-    /* ── Lista de pasos ── */
-    .step-list {
-      display: flex; flex-direction: column; gap: 1rem;
-      margin: 1.5rem 0;
+    /* ── Dots de navegación ── */
+    .slide-dots {
+      position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: .8rem; z-index: 90;
     }
-    .step-item {
-      display: flex; gap: 1rem; align-items: flex-start;
-      background: var(--surface);
-      border-left: 4px solid var(--secondary);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1.2rem 1.5rem;
-      box-shadow: var(--shadow);
+    .slide-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: rgba(0,56,101,.25); cursor: pointer;
+      transition: all .25s; border: 2px solid transparent;
     }
-    .step-num {
-      background: var(--secondary); color: var(--primary);
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: .9rem; flex-shrink: 0;
+    .slide-dot:hover, .slide-dot.active {
+      background: var(--secondary); transform: scale(1.2);
+      border-color: var(--primary);
     }
-    .step-item p { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; }
-
-    /* ── Resumen ── */
-    .thesis-box {
-      background: var(--primary);
-      color: var(--text-on-primary);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin: 2rem 0;
-      box-shadow: var(--shadow);
-    }
-    .thesis-box h4 { color: var(--secondary); font-size: 1.1rem; margin-bottom: 1rem; }
-    .thesis-box p { font-size: .95rem; line-height: 1.8; opacity: .95; }
-
-    .note-box {
-      background: var(--info-bg);
-      border-left: 4px solid var(--primary);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1.1rem 1.3rem;
-      font-size: .88rem; color: var(--text-secondary); margin-top: 1rem;
-    }
-    .note-box strong { color: var(--primary); }
 
     /* ── Footer ── */
     footer {
       background: var(--primary-dark); color: rgba(255,255,255,.6);
-      text-align: center; padding: 2.5rem; font-size: .8rem; line-height: 1.8;
+      text-align: center; padding: 2rem; font-size: .8rem; line-height: 1.8;
     }
     footer strong { color: var(--secondary); }
 
@@ -392,53 +341,34 @@
       .menu-icon { display: block; }
       nav ul {
         position: absolute; top: 60px; left: 0; right: 0;
-        flex-direction: column;
-        background: var(--primary);
+        flex-direction: column; background: var(--primary);
         border-bottom: 1px solid rgba(255,255,255,.1);
-        padding: 1rem 1.5rem 1.5rem;
-        gap: .6rem;
-        display: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,.3);
+        padding: 1rem 1.5rem 1.5rem; gap: .6rem;
+        display: none; box-shadow: 0 10px 40px rgba(0,0,0,.3);
       }
-      nav ul li a {
-        font-size: .9rem;
-        display: block;
-        padding: .6rem 0;
-        border-bottom: 1px solid rgba(255,255,255,.1);
-      }
+      nav ul li a { font-size: .9rem; display: block; padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.1); }
       .menu-toggle:checked ~ ul { display: flex; }
-
-      section { padding: 3.5rem 1rem; }
-      .container { padding: 0; }
-      h2.section-title { font-size: 1.6rem; }
-
-      .hero { min-height: auto; padding: 4rem 1rem; }
-      .hero h1 { font-size: 1.8rem; }
-      .hero p { font-size: 1rem; }
-
-      .concept-grid { grid-template-columns: 1fr; }
-      .concept-card { padding: 1.3rem; }
-
-      .analogy-box { flex-direction: column; gap: 1rem; }
-      .analogy-icon { font-size: 2.5rem; }
-
+      .slide { padding: 5rem 1rem 2rem; }
+      .context-flow { flex-direction: column; gap: 1rem; }
+      .context-arrow { transform: rotate(90deg); }
+      .context-card { min-width: auto; width: 100%; max-width: 300px; }
       .kd-flow { flex-direction: column; }
       .kd-arrow { transform: rotate(90deg); }
-
       .formula { font-size: 1.05rem; }
       .formula-box { padding: 1.2rem; }
-
+      .concept-grid { grid-template-columns: 1fr; }
+      .step-item { padding: .9rem 1rem; }
       .results-highlight { grid-template-columns: 1fr; }
-      .result-kpi .kpi-val { font-size: 2rem; }
-      .chart-wrapper { height: 420px; padding: 1rem; }
-      .results-table { font-size: .72rem; }
-      .results-table thead th, .results-table tbody td { padding: .4rem .5rem; }
+      .result-kpi .kpi-val { font-size: 1.8rem; }
+      .chart-wrapper { height: 320px; padding: 1rem; }
+      .results-table { font-size: .68rem; }
+      .results-table thead th, .results-table tbody td { padding: .35rem .4rem; }
+      .slide-dots { display: none; }
     }
 
     @media (max-width: 480px) {
-      h2.section-title { font-size: 1.35rem; }
-      .section-rule { width: 50px; }
-      .hero h1 { font-size: 1.5rem; }
+      .slide h1 { font-size: 1.8rem; }
+      .slide h2 { font-size: 1.5rem; }
       .code-box { padding: .9rem; font-size: .75rem; }
     }
   </style>
@@ -447,9 +377,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    UPeU <span>Investigación 2026</span>
-  </div>
+  <div class="nav-logo">UPeU <span>Investigación 2026</span></div>
   <input type="checkbox" id="menu-toggle" class="menu-toggle">
   <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú">☰</label>
   <ul>
@@ -457,209 +385,132 @@
     <li><a href="fase1.html">Fase 1</a></li>
     <li><a href="fase2.html">Fase 2</a></li>
     <li><a href="fase3.html" class="active">Fase 3</a></li>
-    <li><a href="index.html#metodologia">Metodología</a></li>
     <li><a href="fase4.html">Fase 4</a></li>
     <li><a href="index.html#resultados">Resultados</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">Fase 3 — Recuperación de capacidad</div>
+<!-- DIAPOSITIVA 1: CONTEXTO -->
+<section class="slide" id="slide-contexto">
+  <div class="slide-content">
+    <div class="slide-badge">Fase 3 — Recuperación de capacidad</div>
     <h1>Knowledge Distillation</h1>
-    <p>
-      Después de podar la red, el modelo tiene menos filtros activos. En esta fase usamos un modelo maestro (teacher) para enseñar al modelo podado (student) a recuperar el desempeño perdido sin restaurar los filtros eliminados.
-    </p>
-  </div>
-</header>
+    <p class="slide-subtitle">Después de podar la red, el modelo tiene menos filtros activos. En esta fase usamos el modelo base como teacher para enseñar al modelo podado a recuperar el desempeño perdido.</p>
 
-<!-- ══════════════════════════════════════
-     1. ¿QUÉ PROBLEMA RESUELVE? (fácil)
-══════════════════════════════════════ -->
-<section id="problema">
-  <div class="container">
-    <h2 class="section-title">1. ¿Qué problema resuelve?</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      Después de la Fase 2, el modelo tiene la misma arquitectura pero menos capacidad operativa. Un porcentaje de sus filtros está anulado (pesos en cero). Esto produce una caída natural en las métricas: el modelo “ve” la imagen, pero con menos herramientas para interpretarla.
-    </p>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <h4>📉 Caída de métricas</h4>
-        <p>El pruning no estructural apaga filtros. Con menos filtros activos, el modelo pierde capacidad de representación y las métricas bajan.</p>
+    <div class="context-flow">
+      <div class="context-card">
+        <div class="context-icon">📉</div>
+        <h3>Caída de métricas</h3>
+        <p>El pruning no estructural apaga filtros. Con menos filtros activos, el modelo pierde capacidad de representación.</p>
       </div>
-      <div class="concept-card glow">
-        <h4>🎯 Objetivo de la Fase 3</h4>
-        <p>Recuperar el desempeño original <strong>sin restaurar los filtros eliminados</strong>. Lograr que el modelo funcione igual de bien con el 70% de filtros activos.</p>
+      <div class="context-arrow">→</div>
+      <div class="context-card">
+        <div class="context-icon">🎯</div>
+        <h3>Objetivo</h3>
+        <p>Recuperar el desempeño original sin restaurar los filtros eliminados.</p>
       </div>
-      <div class="concept-card">
-        <h4>🧠 Solución: aprender del maestro</h4>
-        <p>En lugar de reentrenar solo con las etiquetas originales, usamos el modelo base (Fase 1) como teacher para guiar al modelo podado.</p>
+      <div class="context-arrow">→</div>
+      <div class="context-card">
+        <div class="context-icon">🧠</div>
+        <h3>Solución</h3>
+        <p>Usar el modelo base (Fase 1) como teacher para guiar al modelo podado.</p>
       </div>
     </div>
+
+    <ul class="context-bullets">
+      <li><strong>Entrada:</strong> <code>pruned.pt</code> de la Fase 2 — misma arquitectura, ~30% de filtros en cero.</li>
+      <li><strong>Proceso:</strong> Fine-tuning con Knowledge Distillation, combinando la salida suave del teacher con la etiqueta real del dataset.</li>
+      <li><strong>Salida:</strong> <code>recovered.pt</code> — modelo con métricas cercanas al baseline, listo para la cuantización INT8 de la Fase 4.</li>
+    </ul>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     2. DOS ESTRATEGIAS DE RECUPERACIÓN
-══════════════════════════════════════ -->
-<section id="estrategias" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">2. Dos estrategias de recuperación</h2>
-    <div class="section-rule"></div>
+<!-- DIAPOSITIVA 2: CÓMO FUNCIONA EL KD -->
+<section class="slide" id="slide-kd">
+  <div class="slide-content">
+    <div class="slide-badge" style="border-color:var(--primary);color:var(--primary);">¿Cómo funciona?</div>
+    <h2>Cómo funciona el Knowledge Distillation</h2>
+    <p class="slide-subtitle">Un modelo teacher (con todos los filtros activos) guía al student (podado) mediante una pérdida que combina la distribución suave del teacher con la etiqueta real.</p>
 
-    <div class="compare-table-wrap">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Estrategia</th>
-            <th>¿Qué hace?</th>
-            <th>Limitación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Fine-tuning simple</strong></td>
-            <td>Reentrena el modelo podado con las etiquetas originales (lesión / no lesión).</td>
-            <td>Solo aprende de etiquetas duras (0 o 1). Pierde la información fina sobre qué tan “parecida” es una muestra a la otra clase.</td>
-          </tr>
-          <tr>
-            <td><strong>Knowledge Distillation</strong></td>
-            <td>Un modelo íntegro (teacher) enseña al modelo dañado (student) cómo debería responder.</td>
-            <td>Requiere mantener el teacher en memoria durante el entrenamiento, pero aprovecha toda la distribución de probabilidades.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note-box">
-      <strong>¿Qué usamos en este pipeline?</strong> Implementamos <strong>Knowledge Distillation</strong> como método de fine-tuning, combinando la salida suave del teacher con la etiqueta real del dataset.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     3. ANTOGÍA: EL MAESTRO DE ORQUESTA
-══════════════════════════════════════ -->
-<section id="orquesta">
-  <div class="container">
-    <h2 class="section-title">3. Analogía: el maestro de orquesta</h2>
-    <div class="section-rule"></div>
-
-    <div class="analogy-box">
-      <div class="analogy-icon">🎼</div>
-      <div class="analogy-text">
-        <h4>La orquesta después de la poda</h4>
-        <p>
-          Imagina una orquesta de 100 músicos. Después del pruning, 30 de ellos están tocando en silencio. Quedan 70 músicos, pero las partituras siguen siendo para 100.
-        </p>
-        <p style="margin-top:.8rem;">
-          <strong>Fine-tuning normal</strong> le da al estudiante las partituras originales y le dice “toca lo que dice aquí”. Pero las partituras asumen 100 músicos, así que el estudiante pierde matices.
-        </p>
-        <p style="margin-top:.8rem;">
-          <strong>Knowledge Distillation</strong> hace que el maestro se siente frente al estudiante y toque la pieza completa. El estudiante escucha el resultado final, no solo las notas individuales, y reorganiza a sus 70 músicos para imitar la textura de los 100.
-        </p>
-        <p style="margin-top:.8rem;">
-          La <strong>temperatura</strong> (<span class="mono">T = 4</span>) es como si el maestro tocara la pieza más lenta y suave, para que el estudiante aprecie matices que a velocidad normal pasarían desapercibidos.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     4. CÓMO FUNCIONA EL KD
-══════════════════════════════════════ -->
-<section id="como-funciona" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">4. Cómo funciona el Knowledge Distillation</h2>
-    <div class="section-rule"></div>
-
-    <div class="kd-diagram">
-      <h4 style="color:var(--primary);margin-bottom:1rem;">Dos modelos en escena</h4>
-      <div class="kd-flow">
-        <div class="kd-box teacher">
-          <div class="kd-icon">👨‍🏫</div>
-          <h4>Teacher</h4>
-          <p>Fase 1: modelo base<br>Todos los filtros activos<br>Congelado durante KD</p>
+    <div class="kd-content">
+      <div class="kd-diagram">
+        <h4 style="color:var(--primary);margin-bottom:1rem;">Teacher → Student</h4>
+        <div class="kd-flow">
+          <div class="kd-box teacher">
+            <div class="kd-icon">👨‍🏫</div>
+            <h4>Teacher</h4>
+            <p>Fase 1: modelo base<br>Todos los filtros activos<br>Congelado durante KD</p>
+          </div>
+          <div class="kd-arrow">→</div>
+          <div class="kd-box">
+            <div class="kd-icon">🎓</div>
+            <h4>Student</h4>
+            <p>Fase 2: modelo podado<br>30% de filtros en cero<br>Entrenable</p>
+          </div>
         </div>
-        <div class="kd-arrow">→</div>
-        <div class="kd-box">
-          <div class="kd-icon">🎓</div>
-          <h4>Student</h4>
-          <p>Fase 2: modelo podado<br>30% de filtros en cero<br>Entrenable</p>
+        <div class="kd-loss">
+          <h5>L<sub>KD</sub> = α · L<sub>KL</sub> + (1 − α) · L<sub>CE</sub></h5>
+          <p>α = 0.7 (peso del teacher) · T = 4.0 (temperatura)</p>
         </div>
       </div>
-      <div style="margin:1rem 0;font-family:'Fira Code',monospace;font-size:.9rem;color:var(--text-secondary);">
-        Logits teacher: [2.5, −1.2] → más preciso<br>
-        Logits student: [1.8, −0.5] → menos preciso
-      </div>
-      <div class="kd-loss">
-        <h5>L<sub>KD</sub> = α · L<sub>KL</sub> + (1 − α) · L<sub>CE</sub></h5>
-        <p>α = 0.7 (peso del teacher) &nbsp;·&nbsp; T = 4.0 (temperatura)</p>
-      </div>
-    </div>
 
-    <div class="formula-box">
-      <div class="formula-title">Pérdida total de Knowledge Distillation</div>
-      <div class="formula">
-        <span class="var">L</span>
-        <sub class="var" style="font-size:.8rem;">KD</sub>
-        <span>=</span>
-        <span class="var">α</span>
-        <span>·</span>
-        <span class="var">L</span>
-        <sub class="var" style="font-size:.8rem;">KL</sub>
-        <span>+</span>
-        <span>(1 − α)</span>
-        <span>·</span>
-        <span class="var">L</span>
-        <sub class="var" style="font-size:.8rem;">CE</sub>
+      <div class="concept-grid">
+        <div class="concept-card glow">
+          <h4>🔥 KL Divergence</h4>
+          <p>Mide qué tan diferente es la distribución de probabilidades del student respecto al teacher. El student aprende a imitar la respuesta suave del maestro.</p>
+        </div>
+        <div class="concept-card">
+          <h4>⚓ Cross-Entropy</h4>
+          <p>Ancla al student a la realidad. Asegura que no se desvíe completamente de la etiqueta ground-truth.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="concept-grid">
-      <div class="concept-card glow">
-        <h4>🔥 Componente A: KL Divergence</h4>
-        <p>Mide qué tan diferente es la distribución de probabilidades del student respecto al teacher. El student aprende a “imitar” la respuesta suave del maestro.</p>
+      <div class="formula-box">
+        <div class="formula-title">Pérdida total de Knowledge Distillation</div>
+        <div class="formula">
+          <span class="var">L</span>
+          <sub class="var" style="font-size:.8rem;">KD</sub>
+          <span>=</span>
+          <span class="var">α</span>
+          <span>·</span>
+          <span class="var">L</span>
+          <sub class="var" style="font-size:.8rem;">KL</sub>
+          <span>+</span>
+          <span>(1 − α)</span>
+          <span>·</span>
+          <span class="var">L</span>
+          <sub class="var" style="font-size:.8rem;">CE</sub>
+        </div>
       </div>
-      <div class="concept-card">
-        <h4>⚓ Componente B: Cross-Entropy</h4>
-        <p>Ancla al student a la realidad. Asegura que no se desvíe completamente de la etiqueta ground-truth.</p>
-      </div>
-    </div>
 
-    <div class="formula-box">
-      <div class="formula-title">KL Divergence con temperatura</div>
-      <div class="formula">
-        <span class="var">L</span>
-        <sub class="var" style="font-size:.8rem;">KL</sub>
-        <span>=</span>
-        <span class="var">T</span>
-        <sup class="var" style="font-size:.8rem;">2</sup>
-        <span>·</span>
-        <span>KL</span>
-        <span>(</span>
-        <span>softmax</span>
-        <span>(</span>
-        <span class="frac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .25rem;"><span class="num var" style="border-bottom:2px solid var(--text);padding:0 .4rem;">z<sub style="font-size:.5rem;">S</sub></span><span class="den var" style="padding:0 .4rem;">T</span></span>
-        <span>)</span>
-        <span>‖</span>
-        <span>softmax</span>
-        <span>(</span>
-        <span class="frac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .25rem;"><span class="num var" style="border-bottom:2px solid var(--text);padding:0 .4rem;">z<sub style="font-size:.5rem;">T</sub></span><span class="den var" style="padding:0 .4rem;">T</span></span>
-        <span>)</span>
-        <span>)</span>
+      <div class="formula-box">
+        <div class="formula-title">KL Divergence con temperatura</div>
+        <div class="formula">
+          <span class="var">L</span>
+          <sub class="var" style="font-size:.8rem;">KL</sub>
+          <span>=</span>
+          <span class="var">T</span>
+          <sup class="var" style="font-size:.8rem;">2</sup>
+          <span>·</span>
+          <span>KL</span>
+          <span>(</span>
+          <span>softmax</span>
+          <span>(</span>
+          <span class="frac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .25rem;"><span class="num var" style="border-bottom:2px solid var(--text);padding:0 .4rem;">z<sub style="font-size:.5rem;">S</sub></span><span class="den var" style="padding:0 .4rem;">T</span></span>
+          <span>)</span>
+          <span>‖</span>
+          <span>softmax</span>
+          <span>(</span>
+          <span class="frac" style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .25rem;"><span class="num var" style="border-bottom:2px solid var(--text);padding:0 .4rem;">z<sub style="font-size:.5rem;">T</sub></span><span class="den var" style="padding:0 .4rem;">T</span></span>
+          <span>)</span>
+          <span>)</span>
+        </div>
+        <p style="margin-top:1rem;font-size:.9rem;color:var(--text-secondary);">
+          Donde <code>z<sub>S</sub></code> son los logits del student, <code>z<sub>T</sub></code> los del teacher y <code>T</code> la temperatura. Dividir por <code>T</code> suaviza las probabilidades, revelando información en las colas de la distribución.
+        </p>
       </div>
-      <p style="margin-top:1rem;font-size:.9rem;color:var(--text-secondary);">
-        Donde <span class="mono">z<sub>S</sub></span> son los logits del student, <span class="mono">z<sub>T</sub></span> los del teacher y <span class="mono">T</span> la temperatura. Dividir por <span class="mono">T</span> suaviza las probabilidades, revelando información en las “colas” de la distribución.
-      </p>
-    </div>
 
-    <div class="code-box">
+      <div class="code-box">
 <span class="cmt"># Configuración utilizada en este pipeline</span>
 <span class="kw">def</span> <span class="fn">kd_loss</span>(student_logits, teacher_logits, labels, T=<span class="num">4.0</span>, alpha=<span class="num">0.7</span>):
     <span class="cmt"># Soft labels suavizadas por temperatura</span>
@@ -671,134 +522,50 @@
     loss_ce = F.cross_entropy(student_logits, labels)
 
     <span class="kw">return</span> alpha * loss_kl + (<span class="num">1</span> - alpha) * loss_ce
-    </div>
-
-    <div class="note-box">
-      <strong>¿Por qué dividir por T?</strong> Con <span class="mono">T = 4</span>, los logits se dividen por 4 y las diferencias entre clases se atenúan. El student no solo aprende “esto es lesión”, sino “el teacher ve un 72% de evidencia de lesión y un 28% de no-lesión”. Ese 28% contiene información sobre qué características hacen que el teacher dude.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     5. ¿POR QUÉ KD ES SUPERIOR?
-══════════════════════════════════════ -->
-<section id="superior">
-  <div class="container">
-    <h2 class="section-title">5. ¿Por qué KD es superior al fine-tuning normal?</h2>
-    <div class="section-rule"></div>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <h4>🧱 Etiquetas duras (CE)</h4>
-        <p>Una etiqueta <span class="mono">[1, 0]</span> solo le dice al student “maximiza la primera salida”. Si predice <span class="mono">[0.99, 0.01]</span> o <span class="mono">[0.60, 0.40]</span>, la pérdida puede ser la misma. Se pierde información sobre la relación entre clases.</p>
       </div>
-      <div class="concept-card glow">
-        <h4>💧 Etiquetas suaves (teacher)</h4>
-        <p>El teacher produce distribuciones como <span class="mono">[0.65, 0.35]</span>. El student aprende que la imagen sí es lesión, pero que no debe estar tan seguro, porque hay características ambiguas.</p>
-      </div>
-    </div>
 
-    <div class="analogy-box">
-      <div class="analogy-icon">🎓</div>
-      <div class="analogy-text">
-        <h4>Aprender de la duda</h4>
-        <p>
-          Imagina un examen de clasificación de imágenes. Fine-tuning normal solo te dice “la respuesta correcta es A”. KD te dice “la respuesta correcta es A, pero el maestro consideró un 35% de probabilidad para B porque la imagen tiene una sombra que se parece a B”. Esa “duda” es información extra que hace al student más robusto.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+      <h3>Recuperación de los pesos</h3>
+      <p style="color:var(--text-secondary);font-size:.95rem;margin-bottom:1rem;text-align:center;">
+        Un filtro que fue puesto a cero en la Fase 2 puede “despertar” durante el KD. Aunque su peso sea cero, sigue participando en el grafo computacional, por lo que el gradiente llega a él.
+      </p>
 
-<!-- ══════════════════════════════════════
-     6. ¿POR QUÉ FUNCIONA BIEN EN ESTE PIPELINE?
-══════════════════════════════════════ -->
-<section id="por-que-funciona" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">6. ¿Por qué funciona bien en este pipeline?</h2>
-    <div class="section-rule"></div>
-
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">Teacher y student tienen la misma arquitectura</h4>
-          <p>En KD clásico el student es más pequeño y no puede expresar todo lo que sabe el teacher. Aquí el student solo tiene filtros en cero, pero tiene la misma capacidad potencial. Solo necesita “despertar” los filtros correctos.</p>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Gradiente desde la pérdida</h4>
+            <p>El gradiente fluye hacia atrás desde <code>L<sub>KD</sub></code> hacia todos los parámetros del student.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Actualización de filtros en cero</h4>
+            <p>El optimizador actualiza el filtro: <code>w<sub>new</sub> = w<sub>old</sub> − η·g</code>. Como <code>w<sub>old</sub> = 0</code>, el filtro despierta con <code>w<sub>new</sub> = −η·g</code>.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Redistribución del conocimiento</h4>
+            <p>Los filtros activos se reorganizan para cubrir el trabajo de los ausentes, y los filtros apagados vuelven a la vida con valores útiles.</p>
+          </div>
         </div>
       </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">El problema es binario, pero con matices</h4>
-          <p>Aunque la clasificación es lesión vs. no lesión, las imágenes reales no son binarias. Una lesión inflamada puede parecerse a tejido sano irritado. El teacher ha aprendido estas fronteras difusas y KD las transmite.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">La temperatura alta preserva información de las colas</h4>
-          <p>Las imágenes ambiguas son las más importantes en diagnóstico médico. Con <span class="mono">T = 4</span>, el teacher revela: “esta imagen no es 99% lesión; es 65% lesión, 35% sano”. Esa ambigüedad calibra las fronteras del student.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">Ratio de pruning en zona óptima</h4>
-          <p>Investigación reciente muestra que KD funciona mejor cuando el student retiene 60-80% de la capacidad original. Con 70% de filtros restantes hay suficiente plasticidad para redistribuir el conocimiento sin colapso.</p>
-        </div>
+
+      <div class="note-box">
+        <strong>¿Por qué dividir por T?</strong> Con <code>T = 4</code>, los logits se dividen por 4 y las diferencias entre clases se atenúan. El student no solo aprende “esto es lesión”, sino “el teacher ve un 72% de evidencia de lesión y un 28% de no-lesión”. Ese 28% contiene información sobre qué características hacen que el teacher dude.
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     7. CÓMO SE RECUPERAN LOS PESOS
-══════════════════════════════════════ -->
-<section id="pesos">
-  <div class="container">
-    <h2 class="section-title">7. Cómo se recuperan los pesos en la práctica</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      Un filtro que fue puesto a cero en la Fase 2 puede “despertar” durante el KD. Aunque su peso sea cero, sigue participando en el grafo computacional, por lo que el gradiente llega a él.
-    </p>
-
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <p>El gradiente fluye hacia atrás desde <span class="mono">L<sub>KD</sub></span>.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <p>La KL divergence mide cuánto debería cambiar el student para parecerse más al teacher.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <p>Ese gradiente llega a los filtros en cero. Es no-cero porque el filtro afecta la salida a través de las capas subsiguientes.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <p>El optimizador (AdamW) actualiza el filtro: <span class="mono">w<sub>new</sub> = w<sub>old</sub> − η·g</span>. Como <span class="mono">w<sub>old</sub> = 0</span>, el filtro despierta con <span class="mono">w<sub>new</sub> = −η·g</span>.</p>
-      </div>
-      <div class="step-item">
-        <div class="step-num">5</div>
-        <p>Resultado: los filtros apagados vuelven a la vida con valores que compensan la pérdida de los eliminados. Los filtros activos se reorganizan para cubrir el trabajo de los ausentes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     8. RESULTADOS REALES
-══════════════════════════════════════ -->
-<section id="resultados" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">8. Resultados de la Fase 3</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      A continuación comparamos las métricas de la Fase 1 (base), Fase 2 (podado) y Fase 3 (recuperado con KD). La columna <strong>Recuperación</strong> indica qué porcentaje de la caída causada por el pruning fue recuperada en esta fase.
-    </p>
+<!-- DIAPOSITIVA 3: RESULTADOS -->
+<section class="slide" id="slide-resultados">
+  <div class="slide-content">
+    <div class="slide-badge" style="border-color:var(--primary);color:var(--primary);">Resultados</div>
+    <h2>Resultados de la Fase 3</h2>
+    <p class="slide-subtitle">Comparación de AUC y F1-score entre Fase 1 (base), Fase 2 (podado) y Fase 3 (recuperado con KD). La columna <strong>Recuperación</strong> indica qué porcentaje de la caída por pruning fue recuperada.</p>
 
     <div class="results-highlight">
       <div class="result-kpi gold">
@@ -861,7 +628,7 @@
           </tr>
           <tr>
             <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
-            <td><strong>MobileNetV4-M</strong></td>
+            <td><strong>MobileNetV4-Conv-Medium</strong></td>
             <td>0.9754</td>
             <td>0.7499</td>
             <td>0.9572</td>
@@ -897,7 +664,7 @@
           </tr>
           <tr>
             <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
-            <td><strong>MobileNetV4-M</strong></td>
+            <td><strong>MobileNetV4-Conv-Medium</strong></td>
             <td>0.8580</td>
             <td>0.4698</td>
             <td>0.6471</td>
@@ -933,7 +700,7 @@
           </tr>
           <tr>
             <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
-            <td><strong>MobileNetV4-M</strong></td>
+            <td><strong>MobileNetV4-Conv-Medium</strong></td>
             <td>0.8896</td>
             <td>0.8451</td>
             <td>0.8725</td>
@@ -959,98 +726,11 @@
       </table>
     </div>
 
-    <div class="note-box" style="margin-top:1.5rem;">
+    <div class="note-box">
       <strong>Lectura de los resultados:</strong> 
       <strong>YOLOv26</strong> es la familia más robusta: en ojo_dr y cáncer oral recupera casi todo el AUC perdido, quedando a menos de 0.007 del modelo base. En melanoma de piel, <strong>YOLOv26n</strong> no solo recupera, sino que supera el AUC base (+0.0129) y el F1-score (+0.0382), lo que indica que el KD actuó como regularización efectiva.
       <strong>EfficientNetV2-S</strong> muestra recuperaciones impresionantes en ojo_dr (99.2%) y cáncer oral (87.7%), aunque en melanoma el F1-score base ya era bajo (0.4906) por desbalance severo.
-      <strong>MobileNetV4-M</strong> es la familia más débil ante el pruning y el KD: en cáncer oral solo recupera el 45.7% del AUC y el F1-score cae −0.18, lo que sugiere que sus filtros son menos redundantes.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     9. KD VS FINE-TUNING NORMAL
-══════════════════════════════════════ -->
-<section id="comparacion">
-  <div class="container">
-    <h2 class="section-title">9. KD vs. fine-tuning normal</h2>
-    <div class="section-rule"></div>
-
-    <div class="compare-table-wrap">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Aspecto</th>
-            <th>Scheduler-only (CE)</th>
-            <th>Knowledge Distillation (KD)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Fuente de aprendizaje</strong></td>
-            <td>Etiquetas reales [1, 0]</td>
-            <td>Teacher + etiquetas reales</td>
-          </tr>
-          <tr>
-            <td><strong>Información por muestra</strong></td>
-            <td>1 bit (clase correcta)</td>
-            <td>Distribución completa (probabilidades suaves)</td>
-          </tr>
-          <tr>
-            <td><strong>Regularización</strong></td>
-            <td>Dropout, augmentations</td>
-            <td>Dropout + “duda” calibrada del teacher</td>
-          </tr>
-          <tr>
-            <td><strong>Velocidad de convergencia</strong></td>
-            <td>Media (puede estancarse)</td>
-            <td>Rápida (el teacher guía)</td>
-          </tr>
-          <tr>
-            <td><strong>Recuperación típica de AUC</strong></td>
-            <td>~60-80%</td>
-            <td>~95-99%</td>
-          </tr>
-          <tr>
-            <td><strong>Uso en nuestra config</strong></td>
-            <td><span class="mono">ft_method: "scheduler"</span></td>
-            <td><span class="mono">ft_method: "kd"</span> (recomendado)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     10. RESUMEN
-══════════════════════════════════════ -->
-<section id="resumen" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">10. Resumen</h2>
-    <div class="section-rule"></div>
-
-    <div class="thesis-box">
-      <h4>🎓 Resumen técnico</h4>
-      <p>
-        En la Fase 3 implementamos fine-tuning con <strong>Knowledge Distillation (KD)</strong> para recuperar la capacidad diagnóstica degradada por el pruning no estructural de la Fase 2. El procedimiento emplea un modelo teacher —el checkpoint original de la Fase 1, con arquitectura y pesos completos— que guía al student —el modelo podado— mediante una función de pérdida compuesta.
-      </p>
-      <p style="margin-top:1rem;">
-        Usamos una ponderación <strong>α = 0.7</strong> para la divergencia KL entre las distribuciones suavizadas del student y del teacher, y <strong>(1 − α) = 0.3</strong> para la entropía cruzada con las etiquetas ground-truth. La temperatura <strong>T = 4.0</strong> atenúa las diferencias entre logits, revelando información en las colas de la distribución que las etiquetas duras no transmiten. Esto permite al student aprender no solo la clase correcta, sino también la calibración de confianza y las similitudes interclase que el teacher internalizó durante el entrenamiento original.
-      </p>
-      <p style="margin-top:1rem;">
-        Dado que el student preserva la arquitectura completa del teacher —difiriendo únicamente en que el 30% de sus filtros fueron anulados—, la KD redistribuye el conocimiento en los filtros activos y despierta los filtros en cero mediante gradientes no nulos de la divergencia KL. Los resultados muestran recuperaciones superiores al 90% del AUC en YOLOv26 y EfficientNetV2-S para retinopatía diabética y cáncer oral, posicionando al pipeline como un método de compresión consciente donde la poda identifica redundancia y el KD recondiciona el modelo para operar eficientemente dentro de la sub-arquitectura remanente.
-      </p>
-    </div>
-
-    <div class="analogy-box">
-      <div class="analogy-icon">💡</div>
-      <div class="analogy-text">
-        <h4>Frase de cierre</h4>
-        <p>
-          Knowledge Distillation no enseña al student a memorizar las respuestas correctas; le enseña a pensar como el teacher. Cuando el teacher dice “esto es lesión, pero no estoy completamente seguro”, el student aprende más de esa duda que de mil etiquetas categóricas.
-        </p>
-      </div>
+      <strong>MobileNetV4-Conv-Medium</strong> es la familia más débil ante el pruning y el KD: en cáncer oral solo recupera el 45.7% del AUC y el F1-score cae −0.18, lo que sugiere que sus filtros son menos redundantes.
     </div>
   </div>
 </section>
@@ -1065,6 +745,61 @@
   </p>
 </footer>
 
+<!-- Dots de navegación -->
+<div class="slide-dots">
+  <div class="slide-dot active" data-slide="slide-contexto"></div>
+  <div class="slide-dot" data-slide="slide-kd"></div>
+  <div class="slide-dot" data-slide="slide-resultados"></div>
+</div>
+
+<script>
+  // Navegación por dots y teclado
+  const dots = document.querySelectorAll('.slide-dot');
+  const slides = ['slide-contexto', 'slide-kd', 'slide-resultados'];
+
+  function updateActiveDot() {
+    const scrollPos = window.scrollY + window.innerHeight / 2;
+    slides.forEach((id, idx) => {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollPos && el.offsetTop + el.offsetHeight > scrollPos) {
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    });
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const id = dot.dataset.slide;
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const current = document.querySelector('.slide-dot.active');
+    const idx = Array.from(dots).indexOf(current);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
+      e.preventDefault();
+      const next = Math.min(slides.length - 1, idx + 1);
+      document.getElementById(slides[next]).scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      const prev = Math.max(0, idx - 1);
+      document.getElementById(slides[prev]).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  window.addEventListener('scroll', updateActiveDot, { passive: true });
+
+  document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', () => {
+      const toggle = document.getElementById('menu-toggle');
+      if (toggle) toggle.checked = false;
+    });
+  });
+</script>
+
 <script>
   const PRIMARY = '#003865';
   const SECONDARY = '#F8A900';
@@ -1076,8 +811,8 @@
     type: 'bar',
     data: {
       labels: isMobileRes
-        ? ['EffV2\\nOjo', 'MobileNetV4\\nOjo', 'YOLOv26m\\nOjo', 'EffV2\\nOral', 'MobileNetV4\\nOral', 'YOLOv26m\\nOral', 'EffV2\\nPiel', 'MobileNetV4\\nPiel', 'YOLOv26n\\nPiel']
-        : ['EfficientNetV2-S · Ojo', 'MobileNetV4-M · Ojo', 'YOLOv26m-cls · Ojo', 'EfficientNetV2-S · Oral', 'MobileNetV4-M · Oral', 'YOLOv26m-cls · Oral', 'EfficientNetV2-S · Piel', 'MobileNetV4-M · Piel', 'YOLOv26n-cls · Piel'],
+        ? ['EffV2\nOjo', 'MobileNetV4\nOjo', 'YOLOv26m\nOjo', 'EffV2\nOral', 'MobileNetV4\nOral', 'YOLOv26m\nOral', 'EffV2\nPiel', 'MobileNetV4\nPiel', 'YOLOv26n\nPiel']
+        : ['EfficientNetV2-S · Ojo', 'MobileNetV4-Conv-Medium · Ojo', 'YOLOv26m-cls · Ojo', 'EfficientNetV2-S · Oral', 'MobileNetV4-Conv-Medium · Oral', 'YOLOv26m-cls · Oral', 'EfficientNetV2-S · Piel', 'MobileNetV4-Conv-Medium · Piel', 'YOLOv26n-cls · Piel'],
       datasets: [
         {
           label: 'Fase 1 — AUC base',
@@ -1110,21 +845,12 @@
       plugins: {
         legend: {
           position: 'top',
-          labels: {
-            color: PRIMARY,
-            font: { size: isMobileRes ? 10 : 12 },
-            boxWidth: isMobileRes ? 12 : 14
-          }
+          labels: { color: PRIMARY, font: { size: isMobileRes ? 10 : 12 }, boxWidth: isMobileRes ? 12 : 14 }
         }
       },
       scales: {
         x: {
-          ticks: {
-            color: '#4A4A4A',
-            font: { size: isMobileRes ? 8 : 10 },
-            maxRotation: isMobileRes ? 55 : 0,
-            minRotation: isMobileRes ? 55 : 0
-          },
+          ticks: { color: '#4A4A4A', font: { size: isMobileRes ? 8 : 10 }, maxRotation: isMobileRes ? 55 : 0, minRotation: isMobileRes ? 55 : 0 },
           grid: { color: 'rgba(0,56,101,.08)' }
         },
         y: {
@@ -1135,13 +861,6 @@
         }
       }
     }
-  });
-
-  document.querySelectorAll('nav ul li a').forEach(link => {
-    link.addEventListener('click', () => {
-      const toggle = document.getElementById('menu-toggle');
-      if (toggle) toggle.checked = false;
-    });
   });
 </script>
 

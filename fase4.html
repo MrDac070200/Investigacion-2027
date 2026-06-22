@@ -296,28 +296,7 @@
     .pipeline-step h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
     .pipeline-step p { font-size: .84rem; color: var(--text-secondary); line-height: 1.55; }
 
-    /* ── Analogías ── */
-    .analogy-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.2rem; margin: 1.5rem 0;
-    }
-    .analogy-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.5rem;
-      box-shadow: var(--shadow);
-      transition: transform .2s, border-color .2s;
-    }
-    .analogy-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-      box-shadow: 0 8px 24px rgba(0,56,101,.15);
-    }
-    .analogy-card .a-icon { font-size: 2.2rem; margin-bottom: .7rem; }
-    .analogy-card h4 { font-size: .98rem; color: var(--primary); margin-bottom: .5rem; }
-    .analogy-card p { font-size: .86rem; color: var(--text-secondary); line-height: 1.55; }
-
-    /* ── Banner de compresión ── */
+/* ── Banner de compresión ── */
     .compression-banner {
       background: var(--primary);
       color: var(--text-on-primary); border-radius: var(--radius);
@@ -398,9 +377,7 @@
       .example-step { gap: .7rem; }
 
       .pipeline-steps { grid-template-columns: 1fr; }
-      .analogy-cards { grid-template-columns: 1fr; }
-
-      .compression-banner {
+.compression-banner {
         flex-direction: column;
         gap: 1.2rem;
         padding: 1.8rem 1rem;
@@ -436,7 +413,6 @@
     <li><a href="fase1.html">Fase 1</a></li>
     <li><a href="fase2.html">Fase 2</a></li>
     <li><a href="fase3.html">Fase 3</a></li>
-    <li><a href="index.html#metodologia">Metodología</a></li>
     <li><a href="fase4.html" class="active">Fase 4</a></li>
     <li><a href="index.html#resultados">Resultados</a></li>
   </ul>
@@ -732,39 +708,6 @@
 </section>
 
 <!-- ══════════════════════════════════════
-     5. ANALOGÍAS
-══════════════════════════════════════ -->
-<section id="analogias">
-  <div class="container">
-    <h2 class="section-title">5. Analogías para entender la cuantización</h2>
-    <div class="section-rule"></div>
-
-    <div class="analogy-cards">
-      <div class="analogy-card">
-        <div class="a-icon">🗺️</div>
-        <h4>El mapa de la ciudad</h4>
-        <p>FP32 es un mapa topográfico con curvas cada 1 mm: precisísimo, pero pesa 4 kg. INT8 es el mismo mapa con curvas cada 10 m: no sabes si el bache mide 2 o 3 cm, pero llegas al mismo destino con un mapa de 1 kg.</p>
-      </div>
-      <div class="analogy-card">
-        <div class="a-icon">🍲</div>
-        <h4>La receta de cocina</h4>
-        <p>FP32 dice: "Agrega 250.000000 ml de agua". INT8 dice: "Un vaso de agua". La sopa sale igual de rica porque la receta no depende del miligramo exacto.</p>
-      </div>
-      <div class="analogy-card">
-        <div class="a-icon">🎹</div>
-        <h4>El piano</h4>
-        <p>FP32 es un piano digital con 1,000 niveles de presión por tecla. INT8 tiene 256 niveles. Para el oído humano sigue siendo música; para una red neuronal que clasifica imágenes, no nota la diferencia.</p>
-      </div>
-      <div class="analogy-card">
-        <div class="a-icon">👵</div>
-        <h4>La báscula de la abuela</h4>
-        <p>La abuela no necesita una báscula de laboratorio que diga 23.472891 kg. Con saber ~23 kg le basta para comprar la ropa. La red neuronal entrenada ya es experta; no necesita 6 decimales para decidir.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
      6. RESULTADOS
 ══════════════════════════════════════ -->
 <section id="resultados" style="background:var(--surface);">
@@ -803,35 +746,8 @@
       </div>
     </div>
 
-    <h3 style="color:var(--primary);margin:2.5rem 0 1rem;font-size:1.2rem;">PTQ vs QAT</h3>
-    <div class="compare-table-wrap">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Enfoque</th>
-            <th>Descripción</th>
-            <th>Ventaja</th>
-            <th>Desventaja</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono">QAT</td>
-            <td>Reentrena el modelo simulando INT8 durante el forward.</td>
-            <td>Más preciso</td>
-            <td>Requiere días de computación adicional</td>
-          </tr>
-          <tr>
-            <td class="mono">PTQ</td>
-            <td>Toma el modelo entrenado, lo calibra en minutos y lo comprime.</td>
-            <td>Rápido y simple</td>
-            <td>Pérdida mínima de precisión (&lt;0.5% AUC)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
     <div class="note-box">
-      <strong>Justificación de ingeniería:</strong> Dado que el objetivo es desplegar en móviles con recursos limitados y el dataset de calibración es representativo, PTQ estático ofrece el punto óptimo entre simplicidad de implementación, tiempo de desarrollo y preservación de métricas clínicas.
+      <strong>Justificación de ingeniería:</strong> El pipeline aplica <strong>PTQ estático</strong>: se calibra el modelo entrenado con un subconjunto representativo del dataset (15 batches de 32 imágenes) y se cuantiza a INT8 sin reentrenamiento. Con este enfoque se logra una compresión de ~3.9× con pérdida mínima de precisión, lo que permite desplegar el modelo en dispositivos móviles con recursos limitados.
     </div>
   </div>
 </section>
