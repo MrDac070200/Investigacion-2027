@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fase 2: Pruning — UPeU 2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* ════════════════════════════════════════
        PALETA INSTITUCIONAL UPeU
@@ -20,7 +21,6 @@
       --text-on-primary: #FFFFFF;
       --border:        rgba(0,56,101,.12);
       --info-bg:       #EAF3FB;
-      --warning-bg:    #FFF5DE;
       --radius:        12px;
       --shadow:        0 4px 20px rgba(0,56,101,.12);
     }
@@ -38,384 +38,268 @@
 
     /* ── Navegación ── */
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--primary);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 60px;
       box-shadow: 0 2px 12px rgba(0,0,0,.2);
     }
     .nav-logo {
-      font-weight: 800; font-size: .9rem; letter-spacing: .08em;
+      font-weight: 800; font-size: .85rem; letter-spacing: .08em;
       text-transform: uppercase; color: var(--text-on-primary);
     }
     .nav-logo span { color: var(--secondary); }
     nav ul { list-style: none; display: flex; gap: 1.5rem; }
     nav ul li a {
       color: rgba(255,255,255,.85); text-decoration: none;
-      font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+      font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
       transition: color .2s;
       white-space: nowrap;
     }
     nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
-
     .menu-toggle { display: none; }
     .menu-icon {
-      display: none;
-      color: var(--secondary);
-      font-size: 1.6rem;
-      cursor: pointer;
+      display: none; color: var(--secondary); font-size: 1.6rem; cursor: pointer;
     }
 
-    section { padding: 5rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-title {
-      font-size: 2.2rem; font-weight: 900; margin-bottom: .6rem;
-      color: var(--primary);
-    }
-    .section-rule {
-      width: 80px; height: 4px;
-      background: var(--secondary);
-      border-radius: 2px; margin-bottom: 2.5rem;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 50vh; padding: 0;
+    /* ── Diapositivas ── */
+    .slide {
+      min-height: 100vh;
+      padding: 6rem 2rem 3rem;
       display: flex; align-items: center; justify-content: center;
-      text-align: center; position: relative;
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      position: relative;
     }
-    .hero-content { position: relative; z-index: 1; padding: 4rem 2rem; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: .6rem;
-      border: 1px solid var(--secondary);
-      color: var(--secondary); border-radius: 50px;
-      padding: .35rem 1rem; font-size: .75rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero-badge::before {
-      content: ''; width: 8px; height: 8px;
-      border-radius: 50%; background: var(--secondary);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: .4; }
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.6rem);
-      font-weight: 900; line-height: 1.1;
-      color: var(--text-on-primary);
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      color: rgba(255,255,255,.85); font-size: 1.1rem;
-      max-width: 700px; margin: 0 auto 2rem;
-    }
-
-    /* ── Cards ── */
-    .concept-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem; margin-bottom: 3rem;
-    }
-    .concept-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      position: relative; overflow: hidden;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
-      box-shadow: var(--shadow);
-    }
-    .concept-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--secondary);
-    }
-    .concept-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--primary);
-      box-shadow: 0 8px 24px rgba(0,56,101,.15);
-    }
-    .concept-card.glow::before { background: var(--primary); }
-    .concept-card h4 {
-      font-size: 1.05rem; color: var(--primary);
-      margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem;
-    }
-    .concept-card p, .concept-card li {
-      font-size: .92rem; color: var(--text-secondary); line-height: 1.65;
-    }
-    .concept-card ul { padding-left: 1.2rem; margin-top: .6rem; }
-    .concept-card li { margin-bottom: .4rem; }
-    .concept-card strong { color: var(--primary); }
-
-    /* ── Analogía destacada ── */
-    .analogy-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      display: flex; gap: 1.5rem; align-items: flex-start;
-      margin: 1.5rem 0;
-    }
-    .analogy-icon { font-size: 3rem; flex-shrink: 0; }
-    .analogy-text h4 { color: var(--primary); font-size: 1.1rem; margin-bottom: .6rem; }
-    .analogy-text p { color: var(--text-secondary); font-size: .95rem; line-height: 1.7; }
-
-    /* ── Tablas ── */
-    .compare-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius); }
-    .compare-table {
-      width: 100%; border-collapse: collapse;
-      font-size: .9rem; background: var(--surface);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .compare-table thead th {
-      background: var(--primary); color: var(--text-on-primary);
-      padding: .9rem 1rem; text-align: left; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .05em; font-size: .78rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .compare-table tbody td {
-      padding: .8rem 1rem; border-bottom: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-    .compare-table tbody tr:nth-child(even) { background: var(--bg); }
-    .compare-table tbody tr:hover { background: var(--info-bg); }
-    .compare-table .mono {
-      font-family: 'Fira Code', 'Courier New', monospace;
-      font-weight: 700; color: var(--primary);
-    }
-
-    /* ── Visualización de pruning ── */
-    .prune-viz {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      box-shadow: var(--shadow);
+    .slide-content {
+      width: 100%; max-width: 1100px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
-      overflow-x: auto;
+    }
+    .slide-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      border: 1px solid var(--secondary); color: var(--secondary);
+      border-radius: 50px; padding: .35rem 1rem;
+      font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .slide-badge::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--secondary); animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .slide h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900; color: var(--primary);
+      margin-bottom: 1rem; line-height: 1.1;
+    }
+    .slide h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900; color: var(--primary);
+      margin-bottom: .5rem; line-height: 1.2;
+    }
+    .slide-subtitle {
+      color: var(--text-secondary); font-size: 1.1rem;
+      max-width: 700px; margin-bottom: 2.5rem;
+    }
+
+    /* ── Slide 1: Contexto ── */
+    #slide-contexto { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); }
+    #slide-contexto .slide-badge { border-color: var(--secondary); color: var(--secondary); }
+    #slide-contexto h1 { color: var(--text-on-primary); }
+    #slide-contexto .slide-subtitle { color: rgba(255,255,255,.8); }
+
+    .context-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .context-card {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.8rem 1.4rem; min-width: 180px; max-width: 240px;
+      box-shadow: var(--shadow); text-align: center;
+      transition: transform .25s;
+    }
+    .context-card:hover { transform: translateY(-6px); }
+    .context-icon { font-size: 2.6rem; margin-bottom: .8rem; }
+    .context-card h3 { color: var(--primary); font-size: 1.05rem; margin-bottom: .4rem; }
+    .context-card p { color: var(--text-secondary); font-size: .85rem; line-height: 1.5; }
+    .context-arrow {
+      font-size: 2.2rem; color: var(--secondary); font-weight: 900;
+    }
+    .context-output {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: var(--radius);
+      padding: 1.2rem 2rem;
+      color: #fff;
+      margin: 1rem 0 2rem;
+      backdrop-filter: blur(4px);
+    }
+    .context-output strong { color: var(--secondary); }
+    .context-bullets {
+      list-style: none; max-width: 800px; text-align: left;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .context-bullets li {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius); padding: 1rem 1.4rem;
+      color: rgba(255,255,255,.9); font-size: 1rem;
+      backdrop-filter: blur(4px);
+    }
+    .context-bullets li strong { color: var(--secondary); }
+
+    /* ── Slide 2: Visualización ── */
+    #slide-visual { background: var(--bg); }
+    .prune-viz {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      margin: 1.5rem 0; box-shadow: var(--shadow);
+      text-align: center; overflow-x: auto;
+      width: 100%;
     }
     .prune-controls {
-      display: flex; flex-wrap: wrap; gap: .8rem;
-      justify-content: center; margin-bottom: 1.2rem;
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      justify-content: center; margin-bottom: 1rem;
     }
     .prune-btn {
       background: var(--info-bg); color: var(--primary);
-      border: 2px solid var(--primary);
-      border-radius: 50px;
-      padding: .5rem 1.2rem;
-      font-weight: 800; font-size: .85rem;
-      cursor: pointer;
-      transition: all .2s;
+      border: 2px solid var(--primary); border-radius: 50px;
+      padding: .5rem 1.2rem; font-weight: 800; font-size: .85rem;
+      cursor: pointer; transition: all .2s;
     }
-    .prune-btn:hover, .prune-btn.active {
-      background: var(--primary); color: var(--text-on-primary);
-    }
+    .prune-btn:hover, .prune-btn.active { background: var(--primary); color: var(--text-on-primary); }
     .prune-stats {
-      display: flex; flex-wrap: wrap; gap: 1.2rem;
+      display: flex; flex-wrap: wrap; gap: 1rem;
       justify-content: center; margin-bottom: 1rem;
     }
     .prune-stat {
-      background: var(--info-bg);
-      border-radius: 8px;
-      padding: .6rem 1rem;
-      min-width: 130px;
+      background: var(--info-bg); border-radius: 8px;
+      padding: .6rem 1rem; min-width: 120px;
     }
     .prune-stat .num { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
     .prune-stat .lbl { font-size: .75rem; color: var(--text-secondary); }
-
     .prune-viz svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
     .prune-viz .node {
-      fill: #FFFFFF;
-      stroke: var(--primary);
-      stroke-width: 3;
-      transition: all .45s cubic-bezier(.4,0,.2,1);
-      cursor: pointer;
+      fill: #FFFFFF; stroke: var(--primary); stroke-width: 3;
+      transition: all .45s cubic-bezier(.4,0,.2,1); cursor: pointer;
     }
     .prune-viz .node.input-node { stroke-width: 2.5; }
     .prune-viz .node.output-melanoma { stroke: #C62828; }
     .prune-viz .node.output-benign { stroke: #2E7D32; }
     .prune-viz .node.pruned {
-      fill: #ECEFF1;
-      stroke: #B0BEC5;
-      opacity: .22;
-      filter: grayscale(100%);
+      fill: #ECEFF1; stroke: #B0BEC5; opacity: .22; filter: grayscale(100%);
     }
     .prune-viz .node:hover { filter: drop-shadow(0 0 6px rgba(248,169,0,.6)); }
     .prune-viz .node.pruned:hover { filter: grayscale(100%); }
-
     .prune-viz .connection {
-      fill: none;
-      stroke: rgba(0,56,101,.13);
-      stroke-width: 1.3;
+      fill: none; stroke: rgba(0,56,101,.13); stroke-width: 1.3;
       transition: all .45s cubic-bezier(.4,0,.2,1);
     }
-    .prune-viz .connection.pruned {
-      stroke: rgba(176,190,197,.12);
-      stroke-width: .7;
-    }
+    .prune-viz .connection.pruned { stroke: rgba(176,190,197,.12); stroke-width: .7; }
     .prune-viz .connection.flow {
-      stroke: url(#pruneFlowGradient);
-      stroke-width: 2;
-      stroke-dasharray: 7 7;
-      animation: pruneDashFlow 2.2s linear infinite;
-      opacity: .85;
-      pointer-events: none;
+      stroke: url(#pruneFlowGradient); stroke-width: 2;
+      stroke-dasharray: 7 7; animation: pruneDashFlow 2.2s linear infinite;
+      opacity: .85; pointer-events: none;
     }
     .prune-viz .connection.flow.pruned { opacity: 0; }
-    @keyframes pruneDashFlow {
-      to { stroke-dashoffset: -14; }
-    }
+    @keyframes pruneDashFlow { to { stroke-dashoffset: -14; } }
     .prune-viz .traveler {
-      fill: var(--secondary);
-      filter: drop-shadow(0 0 3px var(--secondary));
-      opacity: .9;
-      pointer-events: none;
+      fill: var(--secondary); filter: drop-shadow(0 0 3px var(--secondary));
+      opacity: .9; pointer-events: none;
     }
     .prune-viz .traveler.pruned { opacity: 0; }
     .prune-viz .layer-label {
-      font-size: 12px;
-      fill: var(--primary);
-      font-weight: 800;
-      text-anchor: middle;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
-    @media (max-width: 768px) {
-      .prune-viz { padding: 1rem; }
-      .prune-viz svg { min-width: 680px; }
+      font-size: 12px; fill: var(--primary); font-weight: 800;
+      text-anchor: middle; text-transform: uppercase; letter-spacing: .05em;
     }
 
-    /* ── Filtro 3D visual ── */
-    .filter-viz {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      margin: 1.5rem 0;
+    /* ── Slide 3: Resultados ── */
+    #slide-resultados { background: var(--surface); }
+    .results-highlight {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem; margin-bottom: 2rem; width: 100%;
+    }
+    .result-kpi {
+      background: var(--primary); color: var(--text-on-primary);
+      border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center;
       box-shadow: var(--shadow);
     }
-    .filter-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .filter-box {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-    }
-    .filter-box h5 { color: var(--primary); font-size: .9rem; margin-bottom: .8rem; }
-    .filter-matrix {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-      max-width: 120px;
-      margin: 0 auto;
-    }
-    .filter-cell {
-      aspect-ratio: 1;
-      border-radius: 3px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .65rem; font-weight: 700;
-    }
-    .filter-box.pruned .filter-cell { background: #E0E0E0 !important; color: #888 !important; }
-
-    /* ── Código inline ── */
-    .code-box {
-      background: #1E1E1E;
-      color: #D4D4D4;
-      border-radius: var(--radius);
-      padding: 1.2rem 1.5rem;
-      font-family: 'Fira Code', 'Courier New', monospace;
-      font-size: .85rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-      line-height: 1.5;
-    }
-    .code-box .kw { color: #569CD6; }
-    .code-box .fn { color: #DCDCAA; }
-    .code-box .str { color: #CE9178; }
-    .code-box .num { color: #B5CEA8; }
-    .code-box .cmt { color: #6A9955; }
-
-    /* ── Diagrama YOLO ── */
-    .yolo-diagram {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin: 1.5rem 0;
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-    .yolo-diagram pre {
-      font-family: 'Fira Code', 'Courier New', monospace;
-      font-size: .85rem;
-      color: var(--text-secondary);
-      line-height: 1.4;
-      background: var(--bg);
-      padding: 1rem;
-      border-radius: 8px;
-      overflow-x: auto;
-    }
-
-    /* ── Lista de pasos ── */
-    .step-list {
-      display: flex; flex-direction: column; gap: 1rem;
-      margin: 1.5rem 0;
-    }
-    .step-item {
-      display: flex; gap: 1rem; align-items: flex-start;
-      background: var(--surface);
-      border-left: 4px solid var(--secondary);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1.2rem 1.5rem;
-      box-shadow: var(--shadow);
-    }
-    .step-num {
-      background: var(--secondary); color: var(--primary);
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: .9rem; flex-shrink: 0;
-    }
-    .step-item p { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; }
-
-    /* ── Resumen académico ── */
-    .thesis-box {
-      background: var(--primary);
+    .result-kpi.gold { background: var(--secondary); color: var(--primary); }
+    .result-kpi .kpi-val {
+      font-size: 2.2rem; font-weight: 900; line-height: 1;
       color: var(--text-on-primary);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin: 2rem 0;
-      box-shadow: var(--shadow);
     }
-    .thesis-box h4 { color: var(--secondary); font-size: 1.1rem; margin-bottom: 1rem; }
-    .thesis-box p { font-size: .95rem; line-height: 1.8; opacity: .95; }
+    .result-kpi.gold .kpi-val { color: var(--primary); }
+    .result-kpi .kpi-label { font-size: .8rem; opacity: .85; margin-top: .4rem; }
+    .result-kpi .kpi-sub { font-size: .72rem; opacity: .65; margin-top: .2rem; }
 
-    /* ── Nota final ── */
+    .chart-section { margin-bottom: 2rem; width: 100%; }
+    .chart-section h3 {
+      font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 1rem;
+    }
+    .chart-wrapper {
+      background: var(--bg); border-radius: var(--radius);
+      padding: 1.2rem; box-shadow: var(--shadow);
+      position: relative; height: 320px;
+    }
+    canvas { max-height: 100% !important; }
+
+    .results-table-wrap {
+      overflow-x: auto; margin-bottom: 1.5rem;
+      border-radius: var(--radius); border: 1px solid var(--border);
+    }
+    .results-table {
+      width: 100%; border-collapse: collapse; font-size: .78rem;
+      background: var(--surface);
+    }
+    .results-table thead th {
+      background: var(--primary); color: var(--text-on-primary);
+      padding: .6rem .5rem; text-align: left; font-weight: 700;
+      font-size: .68rem; letter-spacing: .03em;
+    }
+    .results-table tbody tr:nth-child(even) { background: var(--bg); }
+    .results-table tbody tr:hover { background: var(--info-bg); }
+    .results-table tbody td {
+      padding: .45rem .5rem; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .delta-pos { color: #2E7D32; font-weight: 700; }
+    .delta-neg { color: #C62828; font-weight: 700; }
+    .delta-neutral { color: var(--text-secondary); font-weight: 700; }
+    .tag-dataset {
+      display: inline-block; padding: .15rem .5rem; border-radius: 4px;
+      font-size: .7rem; font-weight: 600; white-space: nowrap;
+    }
+    .tag-ojo { background: #E3F2FD; color: #1565C0; }
+    .tag-oral { background: #FCE4EC; color: #880E4F; }
+    .tag-skin { background: #E8F5E9; color: #1B5E20; }
+
     .note-box {
-      background: var(--info-bg);
-      border-left: 4px solid var(--primary);
+      background: var(--info-bg); border-left: 4px solid var(--primary);
       border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1.1rem 1.3rem;
-      font-size: .88rem; color: var(--text-secondary); margin-top: 1rem;
+      padding: 1rem 1.2rem; font-size: .88rem;
+      color: var(--text-secondary); margin-top: 1rem; text-align: left;
     }
     .note-box strong { color: var(--primary); }
+
+    /* ── Dots de navegación ── */
+    .slide-dots {
+      position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: .8rem; z-index: 90;
+    }
+    .slide-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: rgba(0,56,101,.25); cursor: pointer;
+      transition: all .25s; border: 2px solid transparent;
+    }
+    .slide-dot:hover, .slide-dot.active {
+      background: var(--secondary); transform: scale(1.2);
+      border-color: var(--primary);
+    }
 
     /* ── Footer ── */
     footer {
       background: var(--primary-dark); color: rgba(255,255,255,.6);
-      text-align: center; padding: 2.5rem; font-size: .8rem; line-height: 1.8;
+      text-align: center; padding: 2rem; font-size: .8rem; line-height: 1.8;
     }
     footer strong { color: var(--secondary); }
 
@@ -426,145 +310,36 @@
       .menu-icon { display: block; }
       nav ul {
         position: absolute; top: 60px; left: 0; right: 0;
-        flex-direction: column;
-        background: var(--primary);
+        flex-direction: column; background: var(--primary);
         border-bottom: 1px solid rgba(255,255,255,.1);
-        padding: 1rem 1.5rem 1.5rem;
-        gap: .6rem;
-        display: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,.3);
+        padding: 1rem 1.5rem 1.5rem; gap: .6rem;
+        display: none; box-shadow: 0 10px 40px rgba(0,0,0,.3);
       }
-      nav ul li a {
-        font-size: .9rem;
-        display: block;
-        padding: .6rem 0;
-        border-bottom: 1px solid rgba(255,255,255,.1);
-      }
+      nav ul li a { font-size: .9rem; display: block; padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.1); }
       .menu-toggle:checked ~ ul { display: flex; }
-
-      section { padding: 3.5rem 1rem; }
-      .container { padding: 0; }
-      h2.section-title { font-size: 1.6rem; }
-
-      .hero { min-height: auto; padding: 4rem 1rem; }
-      .hero h1 { font-size: 1.8rem; }
-      .hero p { font-size: 1rem; }
-
-      .concept-grid { grid-template-columns: 1fr; }
-      .concept-card { padding: 1.3rem; }
-
-      .analogy-box { flex-direction: column; gap: 1rem; }
-      .analogy-icon { font-size: 2.5rem; }
-
-      .prune-controls { gap: .5rem; }
-      .prune-btn { padding: .4rem 1rem; font-size: .78rem; }
-      .prune-stat { min-width: 110px; }
-
-      .filter-grid { grid-template-columns: 1fr; }
-      .filter-box { padding: .8rem; }
+      .slide { padding: 5rem 1rem 2rem; }
+      .context-flow { flex-direction: column; gap: 1rem; }
+      .context-arrow { transform: rotate(90deg); }
+      .context-card { min-width: auto; width: 100%; max-width: 300px; }
+      .results-highlight { grid-template-columns: 1fr; }
+      .result-kpi .kpi-val { font-size: 1.8rem; }
+      .chart-wrapper { height: 300px; padding: 1rem; }
+      .results-table { font-size: .68rem; }
+      .results-table thead th, .results-table tbody td { padding: .35rem .4rem; }
+      .slide-dots { display: none; }
     }
 
     @media (max-width: 480px) {
-      h2.section-title { font-size: 1.35rem; }
-      .section-rule { width: 50px; }
-      .hero h1 { font-size: 1.5rem; }
-      .code-box { padding: .9rem; font-size: .75rem; }
-      .yolo-diagram { padding: 1.2rem; }
-      .yolo-diagram pre { font-size: .7rem; }
+      .slide h1 { font-size: 1.8rem; }
+      .slide h2 { font-size: 1.5rem; }
     }
-  
-    /* ── Resultados ── */
-    .results-highlight {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.2rem; margin-bottom: 3rem;
-    }
-    .result-kpi {
-      background: var(--primary);
-      color: var(--text-on-primary); border-radius: var(--radius);
-      padding: 1.8rem 1.5rem; text-align: center;
-      position: relative; overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .result-kpi.gold { background: var(--secondary); color: var(--primary); }
-    .result-kpi .kpi-val {
-      font-size: 2.6rem; font-weight: 900; line-height: 1;
-      color: var(--text-on-primary);
-    }
-    .result-kpi.gold .kpi-val { color: var(--primary); }
-    .result-kpi .kpi-label { font-size: .82rem; opacity: .85; margin-top: .4rem; }
-    .result-kpi .kpi-sub { font-size: .72rem; opacity: .65; margin-top: .2rem; }
-
-    .chart-section { margin-bottom: 3rem; }
-    .chart-section h3 {
-      font-size: 1.1rem; color: var(--primary);
-      font-weight: 700; margin-bottom: 1rem;
-    }
-    .chart-wrapper {
-      background: var(--bg); border-radius: var(--radius);
-      padding: 1.5rem; box-shadow: var(--shadow);
-      position: relative;
-      height: 360px;
-    }
-    canvas { max-height: 100% !important; }
-
-    .results-table-wrap {
-      overflow-x: auto; margin-bottom: 2rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-    }
-    .results-table {
-      width: 100%; border-collapse: collapse;
-      font-size: .82rem; background: var(--surface);
-    }
-    .results-table thead th {
-      background: var(--primary); color: var(--text-on-primary);
-      padding: .7rem .8rem; text-align: left;
-      font-weight: 700; font-size: .72rem;
-      letter-spacing: .04em;
-    }
-    .results-table tbody tr:nth-child(even) { background: var(--bg); }
-    .results-table tbody tr:hover { background: var(--info-bg); }
-    .results-table tbody td {
-      padding: .55rem .8rem; border-bottom: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-    .delta-pos { color: #2E7D32; font-weight: 700; }
-    .delta-neg { color: #C62828; font-weight: 700; }
-    .delta-neutral { color: var(--text-secondary); font-weight: 700; }
-    .size-reduction {
-      display: inline-flex; align-items: center; gap: .3rem;
-      background: var(--info-bg); color: var(--primary);
-      border-radius: 4px; padding: .15rem .5rem;
-      font-weight: 700; font-size: .8rem;
-    }
-    .tag-dataset {
-      display: inline-block;
-      padding: .2rem .6rem; border-radius: 4px;
-      font-size: .75rem; font-weight: 600;
-      white-space: nowrap;
-    }
-    .tag-ojo { background: #E3F2FD; color: #1565C0; }
-    .tag-oral { background: #FCE4EC; color: #880E4F; }
-    .tag-skin { background: #E8F5E9; color: #1B5E20; }
-
-    @media (max-width: 768px) {
-      .results-highlight { grid-template-columns: 1fr; }
-      .result-kpi .kpi-val { font-size: 2rem; }
-      .chart-wrapper { height: 420px; padding: 1rem; }
-      .results-table { font-size: .72rem; }
-      .results-table thead th, .results-table tbody td { padding: .4rem .5rem; }
-    }
-
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    UPeU <span>Investigación 2026</span>
-  </div>
+  <div class="nav-logo">UPeU <span>Investigación 2026</span></div>
   <input type="checkbox" id="menu-toggle" class="menu-toggle">
   <label for="menu-toggle" class="menu-icon" aria-label="Abrir menú">☰</label>
   <ul>
@@ -572,124 +347,56 @@
     <li><a href="fase1.html">Fase 1</a></li>
     <li><a href="fase2.html" class="active">Fase 2</a></li>
     <li><a href="fase3.html">Fase 3</a></li>
-    <li><a href="index.html#metodologia">Metodología</a></li>
     <li><a href="fase4.html">Fase 4</a></li>
     <li><a href="index.html#resultados">Resultados</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">Fase 2 — Pruning no estructural</div>
-    <h1>Pruning: Apagando lo que no sirve</h1>
-    <p>
-      Identificamos las conexiones redundantes de la red neuronal y las ponemos a cero. Es como silenciar a los músicos que tocan muy bajo: la orquesta sigue completa, pero solo los necesarios producen sonido.
-    </p>
-  </div>
-</header>
+<!-- DIAPOSITIVA 1: CONTEXTO -->
+<section class="slide" id="slide-contexto">
+  <div class="slide-content">
+    <div class="slide-badge">Fase 2 — Pruning no estructural</div>
+    <h1>Fase 2: Pruning (Poda No Estructural)</h1>
+    <p class="slide-subtitle">Identificamos y anulamos los filtros de menor importancia en cada capa Conv2d del modelo entrenado en la Fase 1.</p>
 
-<!-- ══════════════════════════════════════
-     1. ¿QUÉ ES EL PRUNING? (fácil)
-══════════════════════════════════════ -->
-<section id="que-es">
-  <div class="container">
-    <h2 class="section-title">1. ¿Qué es el pruning?</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      Una red neuronal convolucional tiene millones de conexiones. Muchas de ellas son <strong>redundantes</strong>: no aportan información útil para la decisión final. El <strong>pruning</strong> es el proceso de identificar y eliminar esa redundancia.
-    </p>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <h4>🧠 Redes con exceso de conexiones</h4>
-        <p>Una CNN moderna puede tener decenas de millones de pesos. Entrenar con tantos parámetros ayuda a aprender, pero muchos acaban siendo ruido.</p>
+    <div class="context-flow">
+      <div class="context-card">
+        <div class="context-icon">💾</div>
+        <h3>best.pt</h3>
+        <p>Modelo base entrenado en Fase 1 con todos los filtros activos.</p>
       </div>
-      <div class="concept-card glow">
-        <h4>✂️ Pruning</h4>
-        <p>Se calcula qué conexiones o filtros son los menos importantes y se les asigna un peso de cero. Es como podar las ramas secas de un árbol.</p>
+      <div class="context-arrow">→</div>
+      <div class="context-card">
+        <div class="context-icon">🔍</div>
+        <h3>Evaluar Filtros</h3>
+        <p>¿Cuánto aporta cada filtro? Se calcula su importancia con Taylor o Magnitude.</p>
       </div>
-      <div class="concept-card">
-        <h4>🎯 Objetivo</h4>
-        <p>Mantener la precisión del modelo con la menor cantidad de parámetros activos, preparando el terreno para la compresión final.</p>
+      <div class="context-arrow">→</div>
+      <div class="context-card">
+        <div class="context-icon">✂️</div>
+        <h3>Apagar</h3>
+        <p>~30% de los filtros con menor score se multiplican por cero.</p>
       </div>
     </div>
 
-    <div class="analogy-box">
-      <div class="analogy-icon">🛣️</div>
-      <div class="analogy-text">
-        <h4>Analogía: la red como una ciudad</h4>
-        <p>
-          Imagina una red vial con 100 carreteras entre dos ciudades. Si 30 carreteras casi no se usan (tráfico casi nulo), podrías:
-        </p>
-        <ul style="margin-top:.8rem;padding-left:1.2rem;color:var(--text-secondary);font-size:.92rem;line-height:1.7;">
-          <li><strong>Cerrarlas y quitar el asfalto</strong> → pruning <em>estructural</em>.</li>
-          <li><strong>Dejarlas como caminos de tierra</strong> (siguen existiendo pero no aportan) → pruning <em>no estructural</em>.</li>
-        </ul>
-        <p style="margin-top:.8rem;">
-          Nuestro código de YOLOv26 hace lo segundo: <strong>apaga la carretera</strong> poniendo los pesos a cero, pero no quita físicamente la capa.
-        </p>
-      </div>
+    <div class="context-output">
+      <strong>pruned.pt</strong> — Misma arquitectura, menos filtros activos
     </div>
+
+    <ul class="context-bullets">
+      <li><strong>Objetivo:</strong> Identificar y anular los filtros de menor importancia en cada capa Conv2d, forzando al modelo a redistribuir la información en los filtros restantes.</li>
+      <li><strong>Métodos:</strong> <em>Taylor</em> (importancia = gradiente × activación) o <em>Magnitude</em> (norma L1 de los pesos del filtro).</li>
+      <li><strong>Resultado:</strong> <code>pruned.pt</code> — mismas dimensiones que el modelo original, con aproximadamente el 30% de los pesos en cero. No acelera la inferencia, pero prepara el modelo para la recuperación de la Fase 3.</li>
+    </ul>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     2. DOS TIPOS DE PRUNING
-══════════════════════════════════════ -->
-<section id="tipos" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">2. Dos tipos de pruning</h2>
-    <div class="section-rule"></div>
-
-    <div class="compare-table-wrap">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>Tipo</th>
-            <th>¿Qué hace?</th>
-            <th>Shape del modelo</th>
-            <th>Tamaño en disco</th>
-            <th>Velocidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>No estructural</strong></td>
-            <td>Pone pesos a cero</td>
-            <td class="mono">Se mantiene igual</td>
-            <td>Igual (los ceros siguen ocupando espacio)</td>
-            <td>Igual (las operaciones siguen ejecutándose)</td>
-          </tr>
-          <tr>
-            <td><strong>Estructural</strong></td>
-            <td>Elimina filtros/canales físicamente</td>
-            <td class="mono">Cambia (se hace más pequeña)</td>
-            <td>Menor (menos parámetros)</td>
-            <td>Mayor (menos operaciones)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note-box">
-      <strong>¿Por qué usamos pruning no estructural?</strong> En nuestro <span class="mono">prune_yolo.py</span> se multiplica el peso del filtro por una máscara con 0. Esto no elimina el filtro físicamente: la capa sigue siendo <span class="mono">Conv2d(128, 64, 3×3)</span>, no se convierte en <span class="mono">Conv2d(128, 45, 3×3)</span>.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     3. VISUALIZACIÓN INTERACTIVA
-══════════════════════════════════════ -->
-<section id="visualizacion">
-  <div class="container">
-    <h2 class="section-title">3. Veamos el pruning en acción</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      La siguiente red tiene 4 capas ocultas. Presiona los botones para aplicar diferentes niveles de pruning. Los nodos atenuados son los que el algoritmo ha decidido “apagar”.
-    </p>
+<!-- DIAPOSITIVA 2: VISUALIZACIÓN INTERACTIVA -->
+<section class="slide" id="slide-visual">
+  <div class="slide-content">
+    <div class="slide-badge" style="border-color:var(--primary);color:var(--primary);">Visualización</div>
+    <h2>Veamos el pruning en acción</h2>
+    <p class="slide-subtitle">La siguiente red tiene 4 capas ocultas. Presiona los botones para aplicar diferentes niveles de pruning. Los nodos atenuados son los que el algoritmo ha decidido “apagar”.</p>
 
     <div class="prune-viz">
       <div class="prune-controls">
@@ -699,18 +406,9 @@
         <button class="prune-btn" data-level="70">70% pruning</button>
       </div>
       <div class="prune-stats">
-        <div class="prune-stat">
-          <div class="num" id="activeNodes">38</div>
-          <div class="lbl">Nodos activos</div>
-        </div>
-        <div class="prune-stat">
-          <div class="num" id="prunedNodes">0</div>
-          <div class="lbl">Nodos apagados</div>
-        </div>
-        <div class="prune-stat">
-          <div class="num" id="activeConns">—</div>
-          <div class="lbl">Conexiones activas</div>
-        </div>
+        <div class="prune-stat"><div class="num" id="activeNodes">38</div><div class="lbl">Nodos activos</div></div>
+        <div class="prune-stat"><div class="num" id="prunedNodes">0</div><div class="lbl">Nodos apagados</div></div>
+        <div class="prune-stat"><div class="num" id="activeConns">—</div><div class="lbl">Conexiones activas</div></div>
       </div>
       <svg viewBox="0 0 900 360" preserveAspectRatio="xMidYMid meet" id="pruneSvg">
         <defs>
@@ -720,23 +418,14 @@
             <stop offset="100%" stop-color="rgba(0,56,101,0.05)" />
           </linearGradient>
         </defs>
-        <!-- Capa 0: Input -->
         <g id="layer0"></g>
-        <!-- Capa 1 -->
         <g id="layer1"></g>
-        <!-- Capa 2 -->
         <g id="layer2"></g>
-        <!-- Capa 3 -->
         <g id="layer3"></g>
-        <!-- Capa 4: Output -->
         <g id="layer4"></g>
-        <!-- Conexiones base -->
         <g id="connections"></g>
-        <!-- Conexiones animadas -->
         <g id="flows"></g>
-        <!-- Travelers -->
         <g id="travelers"></g>
-        <!-- Etiquetas -->
         <text x="80" y="335" class="layer-label">Input</text>
         <text x="260" y="335" class="layer-label">Conv 1</text>
         <text x="440" y="335" class="layer-label">Conv 2</text>
@@ -744,242 +433,15 @@
         <text x="820" y="335" class="layer-label">Output</text>
       </svg>
     </div>
-
-    <div class="filter-viz">
-      <h4 style="color:var(--primary);margin-bottom:.5rem;">Ejemplo: tres filtros de una capa convolucional</h4>
-      <p style="color:var(--text-secondary);font-size:.9rem;margin-bottom:1rem;">
-        El Filtro 1 tiene valores muy pequeños (casi inútiles). Al aplicar la máscara <span class="mono">[1.0, 0.0, 1.0]</span>, ese filtro se apaga.
-      </p>
-      <div class="filter-grid">
-        <div class="filter-box" id="filterBefore">
-          <h5>Antes del pruning</h5>
-          <p style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.5rem;">Filtro 1 (débil)</p>
-          <div class="filter-matrix">
-            <div class="filter-cell" style="background:#E3F2FD;color:#1565C0">0.1</div>
-            <div class="filter-cell" style="background:#FFCDD2;color:#B71C1C">-0.2</div>
-            <div class="filter-cell" style="background:#E3F2FD;color:#1565C0">0.3</div>
-            <div class="filter-cell" style="background:#E3F2FD;color:#1565C0">0.4</div>
-            <div class="filter-cell" style="background:#E3F2FD;color:#1565C0">0.5</div>
-            <div class="filter-cell" style="background:#FFCDD2;color:#B71C1C">-0.1</div>
-            <div class="filter-cell" style="background:#FFF9C4;color:#F57F17">0.0</div>
-            <div class="filter-cell" style="background:#E3F2FD;color:#1565C0">0.2</div>
-            <div class="filter-cell" style="background:#FFCDD2;color:#B71C1C">-0.3</div>
-          </div>
-        </div>
-        <div class="filter-box pruned" id="filterAfter">
-          <h5>Después del pruning</h5>
-          <p style="font-size:.8rem;color:var(--text-secondary);margin-bottom:.5rem;">Filtro 1 apagado</p>
-          <div class="filter-matrix">
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-            <div class="filter-cell" style="background:#E0E0E0;color:#888">0.0</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     4. ¿CÓMO FUNCIONA EN NUESTRO CÓDIGO?
-══════════════════════════════════════ -->
-<section id="codigo" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">4. ¿Cómo funciona en nuestro código?</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      Nuestro <span class="mono">prune_yolo.py</span> implementa pruning a nivel de filtros. Para cada filtro de salida calcula un <strong>score de importancia</strong> y luego aplica una máscara binaria.
-    </p>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <h4>📏 Magnitude Pruning (L1)</h4>
-        <p>Suma los valores absolutos de todos los pesos de un filtro. Si la suma es pequeña, el filtro es débil.</p>
-      </div>
-      <div class="concept-card glow">
-        <h4>🔬 Taylor Pruning</h4>
-        <p>Usa activación × gradiente. Un filtro que se activa mucho pero no afecta la pérdida es candidato a poda.</p>
-      </div>
-    </div>
-
-    <div class="code-box">
-<span class="cmt"># Magnitude pruning: importancia = suma de valores absolutos del filtro</span>
-<span class="kw">if</span> pruning_method == <span class="str">"magnitude"</span>:
-    importance = module.weight.data.abs().sum(dim=(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>))
-
-<span class="cmt"># Taylor pruning: importancia = activación × gradiente</span>
-<span class="kw">elif</span> pruning_method == <span class="str">"taylor"</span>:
-    score = (activation * gradient).abs().mean(dim=(<span class="num">0</span>, <span class="num">2</span>, <span class="num">3</span>))
-    </div>
-
-    <div class="code-box">
-<span class="cmt"># Seleccionamos los k filtros menos importantes</span>
-_, prune_idx = torch.topk(importance, k=n_prune, largest=<span class="kw">False</span>)
-
-<span class="cmt"># Creamos una máscara: 1 = activo, 0 = apagado</span>
-mask = torch.ones(n_out, device=module.weight.device)
-mask[prune_idx] = <span class="num">0.0</span>
-
-<span class="cmt"># Aplicamos la máscara al peso del filtro</span>
-module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="num">1</span>)
-    </div>
-
-    <div class="note-box">
-      <strong>Interpretación de Taylor:</strong> si un filtro se activa mucho (<span class="mono">a<sub>k</sub></span> grande) pero su gradiente es casi cero (<span class="mono">∂L/∂a<sub>k</sub> ≈ 0</span>), significa que está “haciendo ruido” sin afectar la decisión final. Es un candidato ideal para podar.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     5. ¿POR QUÉ NO ACELERA LA INFERENCIA?
-══════════════════════════════════════ -->
-<section id="no-acelera">
-  <div class="container">
-    <h2 class="section-title">5. ¿Por qué no acelera la inferencia?</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      Aunque los filtros están a cero, PyTorch <strong>sigue ejecutando todas las operaciones</strong>. No sabe que puede saltarse los filtros anulados.
-    </p>
-
-    <div class="analogy-box">
-      <div class="analogy-icon">🎭</div>
-      <div class="analogy-text">
-        <h4>Analogía: la obra de teatro</h4>
-        <p>
-          Imagina una obra con 100 actores. 30 de ellos están en escena pero no dicen ninguna línea. El público no los nota, pero la obra dura lo mismo porque siguen saliendo a escena, caminando y ocupando espacio. El pruning no estructural es exactamente eso: silencia actores, pero no los saca del escenario.
-        </p>
-      </div>
-    </div>
-
-    <div class="concept-grid">
-      <div class="concept-card">
-        <h4>🐢 Mismo tamaño</h4>
-        <p>Los ceros ocupan el mismo espacio que cualquier otro número en memoria. Fase 2 pesa igual que Fase 1.</p>
-      </div>
-      <div class="concept-card glow">
-        <h4>⏱️ Misma latencia</h4>
-        <p>La convolución sigue multiplicando y sumando todos los valores. El resultado es cero, pero el trabajo computacional sigue ahí.</p>
-      </div>
-      <div class="concept-card">
-        <h4>🎯 ¿Para qué sirve entonces?</h4>
-        <p>Prepara el modelo para la Fase 3 (fine-tuning con Knowledge Distillation). Al apagar filtros irrelevantes, el modelo redistribuye la información en los restantes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     6. ¿POR QUÉ NO ESTRUCTURAL EN YOLO?
-══════════════════════════════════════ -->
-<section id="yolo-problema" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">6. ¿Por qué no podemos podar estructuralmente YOLOv26?</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      El pruning estructural elimina filtros físicamente. Suena ideal, pero YOLOv26 no es una red secuencial simple: tiene <strong>skip connections</strong>, <strong>concatenaciones</strong> y <strong>convoluciones depthwise</strong> que hacen imposible reescribir el grafo a mano.
-    </p>
-
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">El problema de las conexiones entre capas</h4>
-          <p>En una red secuencial, si eliminas 10 filtros de la Capa B, solo debes cambiar la Capa C para que acepte 118 canales en lugar de 128. Es manejable.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">YOLO tiene conexiones ramificadas</h4>
-          <p>En YOLOv26, la salida de una capa puede alimentar a varias ramas: la siguiente convolución, una skip connection y una concatenación. Cambiar una dimensión afecta a todo el grafo.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">Los índices de canales no son intercambiables</h4>
-          <p>Si concatenas dos tensores de 64 canales y eliminas el canal #5 del primero, el resultado tiene 127 canales y los índices del segundo tensor se desplazan. Reescribir eso requiere modificar todo el grafo computacional.</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div>
-          <h4 style="color:var(--primary);margin-bottom:.3rem;font-size:1rem;">Las capas depthwise son intrínsecamente no podables</h4>
-          <p>En una convolución depthwise (<span class="mono">groups &gt; 1</span>), cada canal de entrada tiene exactamente un filtro asociado. Eliminar un filtro obliga a eliminar el canal de entrada correspondiente, propagando el cambio hacia atrás.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="yolo-diagram">
-      <h4 style="color:var(--primary);margin-bottom:1rem;">Diagrama: red secuencial vs. red con skip connections</h4>
-      <div style="margin-bottom:1.5rem;">
-        <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:.5rem;"><strong>Secuencial (fácil de podar estructuralmente):</strong></p>
-        <pre>Capa A (64) → Capa B (128) → Capa C (256)</pre>
-      </div>
-      <div>
-        <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:.5rem;"><strong>YOLO con skip connection (difícil):</strong></p>
-        <pre>        ┌──────────────────────┐
-        ↓                      │
-   Conv1 → Conv2 → Conv3 → Concat → Conv4
-              ↑              │
-              └──────────────┘</pre>
-      </div>
-      <p style="font-size:.85rem;color:var(--text-secondary);margin-top:1rem;text-align:left;">
-        Si eliminas filtros de <strong>Conv2</strong>, debes cambiar <strong>Conv3</strong>, <strong>Concat</strong> y <strong>Conv4</strong>. Y si Conv2 alimenta otra rama, también esa. Un error en un índice de canal rompe todo el modelo.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     7. ¿CÓMO SE HARÍA ESTRUCTURAL? (teórico)
-══════════════════════════════════════ -->
-<section id="estructural">
-  <div class="container">
-    <h2 class="section-title">7. ¿Cómo se haría pruning estructural?</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      Aunque no lo aplicamos en este trabajo, existen dos caminos teóricos para lograr pruning estructural real en YOLOv26.
-    </p>
-
-    <div class="concept-grid">
-      <div class="concept-card glow">
-        <h4>📚 Opción A: Librerías especializadas</h4>
-        <p>Herramientas como <strong>torch-pruning</strong> o <strong>nnprune</strong> analizan el grafo computacional completo, identifican dependencias entre canales, propagan los cambios a través de skip connections y reescriben el modelo con las nuevas dimensiones.</p>
-      </div>
-      <div class="concept-card">
-        <h4>🔧 Opción B: Manualmente</h4>
-        <p>Escribir un script que reconstruya el modelo capa por capa, mapee los pesos antiguos a los nuevos índices y verifique que el output shape sea correcto. Es extremadamente complejo para YOLO por sus bloques C3, SPPF y cabeza de clasificación.</p>
-      </div>
-    </div>
-
-    <div class="note-box">
-      <strong>¿Por qué no lo usamos?</strong> Las librerías especializadas suelen tener incompatibilidades con la API interna de Ultralytics/YOLOv26. Implementarlo manualmente excede el alcance del pipeline y aumenta el riesgo de errores silenciosos en el grafo.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     8. RESULTADOS DE LA FASE 2
-══════════════════════════════════════ -->
-<section id="resultados-f2" style="background:var(--surface);">
-  <div class="container">
-    <h2 class="section-title">8. Resultados de la Fase 2</h2>
-    <div class="section-rule"></div>
-
-    <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:1rem;">
-      A continuación se muestran las métricas del modelo base (Fase 1) comparadas con el modelo podado (Fase 2). Recuerda que el pruning aplicado es <strong>no estructural</strong>: los filtros se apagan, pero el grafo computacional no cambia, por eso el tamaño en disco apenas varía.
-    </p>
+<!-- DIAPOSITIVA 3: RESULTADOS -->
+<section class="slide" id="slide-resultados">
+  <div class="slide-content">
+    <div class="slide-badge" style="border-color:var(--primary);color:var(--primary);">Resultados</div>
+    <h2>Resultados de la Fase 2</h2>
+    <p class="slide-subtitle">Comparación del modelo base (Fase 1) contra el modelo podado (Fase 2). El pruning aplicado es no estructural: los filtros se apagan, pero el grafo computacional no cambia.</p>
 
     <div class="results-highlight">
       <div class="result-kpi gold">
@@ -1006,7 +468,7 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
 
     <div class="chart-section">
       <h3>Caída de AUC tras el pruning (F1 → F2)</h3>
-      <div class="chart-wrapper" style="height:360px;">
+      <div class="chart-wrapper">
         <canvas id="aucDropChart"></canvas>
       </div>
     </div>
@@ -1032,179 +494,159 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
-              <td><strong>EfficientNetV2-S</strong></td>
-              <td>0.9873</td>
-              <td>0.7262</td>
-              <td><span class="delta-neg">-0.2611</span></td>
-              <td>0.9617</td>
-              <td>0.4617</td>
-              <td><span class="delta-neg">-0.5000</span></td>
-              <td>0.9583</td>
-              <td>0.7457</td>
-              <td><span class="delta-neg">-0.2126</span></td>
-              <td>81.5700</td>
-              <td>81.6100</td>
-              <td><span class="delta-neutral">+0.04</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
-              <td><strong>MobileNetV4-M</strong></td>
-              <td>0.9754</td>
-              <td>0.7499</td>
-              <td><span class="delta-neg">-0.2255</span></td>
-              <td>0.9372</td>
-              <td>0.4645</td>
-              <td><span class="delta-neg">-0.4727</span></td>
-              <td>0.9373</td>
-              <td>0.7287</td>
-              <td><span class="delta-neg">-0.2086</span></td>
-              <td>34.1700</td>
-              <td>34.1900</td>
-              <td><span class="delta-neutral">+0.02</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
-              <td><strong>YOLOv26-m-cls</strong></td>
-              <td>0.9934</td>
-              <td>0.9784</td>
-              <td><span class="delta-neg">-0.0150</span></td>
-              <td>0.9508</td>
-              <td>0.4563</td>
-              <td><span class="delta-neg">-0.4945</span></td>
-              <td>0.9474</td>
-              <td>0.9297</td>
-              <td><span class="delta-neg">-0.0177</span></td>
-              <td>41.6400</td>
-              <td>41.6200</td>
-              <td><span class="delta-neutral">-0.02</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
-              <td><strong>EfficientNetV2-S</strong></td>
-              <td>0.9189</td>
-              <td>0.4766</td>
-              <td><span class="delta-neg">-0.4423</span></td>
-              <td>0.8819</td>
-              <td>0.5208</td>
-              <td><span class="delta-neg">-0.3611</span></td>
-              <td>0.8608</td>
-              <td>0.4865</td>
-              <td><span class="delta-neg">-0.3743</span></td>
-              <td>81.5700</td>
-              <td>81.6100</td>
-              <td><span class="delta-neutral">+0.04</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
-              <td><strong>MobileNetV4-M</strong></td>
-              <td>0.8580</td>
-              <td>0.4698</td>
-              <td><span class="delta-neg">-0.3882</span></td>
-              <td>0.7431</td>
-              <td>0.4722</td>
-              <td><span class="delta-neg">-0.2709</span></td>
-              <td>0.8256</td>
-              <td>0.4966</td>
-              <td><span class="delta-neg">-0.3290</span></td>
-              <td>34.1700</td>
-              <td>34.1900</td>
-              <td><span class="delta-neutral">+0.02</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
-              <td><strong>YOLOv26-m-cls</strong></td>
-              <td>0.9427</td>
-              <td>0.8825</td>
-              <td><span class="delta-neg">-0.0602</span></td>
-              <td>0.9097</td>
-              <td>0.5278</td>
-              <td><span class="delta-neg">-0.3819</span></td>
-              <td>0.8986</td>
-              <td>0.7846</td>
-              <td><span class="delta-neg">-0.1140</span></td>
-              <td>41.6400</td>
-              <td>41.6200</td>
-              <td><span class="delta-neutral">-0.02</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
-              <td><strong>EfficientNetV2-S</strong></td>
-              <td>0.8925</td>
-              <td>0.7544</td>
-              <td><span class="delta-neg">-0.1381</span></td>
-              <td>0.9036</td>
-              <td>0.8883</td>
-              <td><span class="delta-neg">-0.0153</span></td>
-              <td>0.4906</td>
-              <td>0.3152</td>
-              <td><span class="delta-neg">-0.1754</span></td>
-              <td>81.5700</td>
-              <td>81.6100</td>
-              <td><span class="delta-neutral">+0.04</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
-              <td><strong>MobileNetV4-M</strong></td>
-              <td>0.8896</td>
-              <td>0.8451</td>
-              <td><span class="delta-neg">-0.0445</span></td>
-              <td>0.8969</td>
-              <td>0.8883</td>
-              <td><span class="delta-neg">-0.0086</span></td>
-              <td>0.4334</td>
-              <td>0.3935</td>
-              <td><span class="delta-neg">-0.0399</span></td>
-              <td>34.1700</td>
-              <td>34.1900</td>
-              <td><span class="delta-neutral">+0.02</span></td>
-            </tr>
-            <tr>
-              <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
-              <td><strong>YOLOv26-n-cls</strong></td>
-              <td>0.8837</td>
-              <td>0.8362</td>
-              <td><span class="delta-neg">-0.0475</span></td>
-              <td>0.8976</td>
-              <td>0.8883</td>
-              <td><span class="delta-neg">-0.0093</span></td>
-              <td>0.4417</td>
-              <td>0.3687</td>
-              <td><span class="delta-neg">-0.0730</span></td>
-              <td>6.2800</td>
-              <td>6.2600</td>
-              <td><span class="delta-neutral">-0.02</span></td>
-            </tr>
+          <tr>
+            <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
+            <td><strong>EfficientNetV2-S</strong></td>
+            <td>0.9873</td>
+            <td>0.7262</td>
+            <td><span class="delta-neg">-0.2611</span></td>
+            <td>0.9617</td>
+            <td>0.4617</td>
+            <td><span class="delta-neg">-0.5000</span></td>
+            <td>0.9583</td>
+            <td>0.7457</td>
+            <td><span class="delta-neg">-0.2126</span></td>
+            <td>81.57</td>
+            <td>81.61</td>
+            <td><span class="delta-neutral">+0.04</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
+            <td><strong>MobileNetV4-Conv-Medium</strong></td>
+            <td>0.9754</td>
+            <td>0.7499</td>
+            <td><span class="delta-neg">-0.2255</span></td>
+            <td>0.9372</td>
+            <td>0.4645</td>
+            <td><span class="delta-neg">-0.4727</span></td>
+            <td>0.9373</td>
+            <td>0.7287</td>
+            <td><span class="delta-neg">-0.2086</span></td>
+            <td>34.17</td>
+            <td>34.19</td>
+            <td><span class="delta-neutral">+0.02</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-ojo">Retino. diabética</span></td>
+            <td><strong>YOLOv26-m-cls</strong></td>
+            <td>0.9934</td>
+            <td>0.9784</td>
+            <td><span class="delta-neg">-0.0150</span></td>
+            <td>0.9508</td>
+            <td>0.4563</td>
+            <td><span class="delta-neg">-0.4945</span></td>
+            <td>0.9474</td>
+            <td>0.9297</td>
+            <td><span class="delta-neg">-0.0177</span></td>
+            <td>41.64</td>
+            <td>41.62</td>
+            <td><span class="delta-neutral">-0.02</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
+            <td><strong>EfficientNetV2-S</strong></td>
+            <td>0.9189</td>
+            <td>0.4766</td>
+            <td><span class="delta-neg">-0.4423</span></td>
+            <td>0.8819</td>
+            <td>0.5208</td>
+            <td><span class="delta-neg">-0.3611</span></td>
+            <td>0.8608</td>
+            <td>0.4865</td>
+            <td><span class="delta-neg">-0.3743</span></td>
+            <td>81.57</td>
+            <td>81.61</td>
+            <td><span class="delta-neutral">+0.04</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
+            <td><strong>MobileNetV4-Conv-Medium</strong></td>
+            <td>0.8580</td>
+            <td>0.4698</td>
+            <td><span class="delta-neg">-0.3882</span></td>
+            <td>0.7431</td>
+            <td>0.4722</td>
+            <td><span class="delta-neg">-0.2709</span></td>
+            <td>0.8256</td>
+            <td>0.4966</td>
+            <td><span class="delta-neg">-0.3290</span></td>
+            <td>34.17</td>
+            <td>34.19</td>
+            <td><span class="delta-neutral">+0.02</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-oral">Cáncer oral</span></td>
+            <td><strong>YOLOv26-m-cls</strong></td>
+            <td>0.9427</td>
+            <td>0.8825</td>
+            <td><span class="delta-neg">-0.0602</span></td>
+            <td>0.9097</td>
+            <td>0.5278</td>
+            <td><span class="delta-neg">-0.3819</span></td>
+            <td>0.8986</td>
+            <td>0.7846</td>
+            <td><span class="delta-neg">-0.1140</span></td>
+            <td>41.64</td>
+            <td>41.62</td>
+            <td><span class="delta-neutral">-0.02</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
+            <td><strong>EfficientNetV2-S</strong></td>
+            <td>0.8925</td>
+            <td>0.7544</td>
+            <td><span class="delta-neg">-0.1381</span></td>
+            <td>0.9036</td>
+            <td>0.8883</td>
+            <td><span class="delta-neg">-0.0153</span></td>
+            <td>0.4906</td>
+            <td>0.3152</td>
+            <td><span class="delta-neg">-0.1754</span></td>
+            <td>81.57</td>
+            <td>81.61</td>
+            <td><span class="delta-neutral">+0.04</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
+            <td><strong>MobileNetV4-Conv-Medium</strong></td>
+            <td>0.8896</td>
+            <td>0.8451</td>
+            <td><span class="delta-neg">-0.0445</span></td>
+            <td>0.8969</td>
+            <td>0.8883</td>
+            <td><span class="delta-neg">-0.0086</span></td>
+            <td>0.4334</td>
+            <td>0.3935</td>
+            <td><span class="delta-neg">-0.0399</span></td>
+            <td>34.17</td>
+            <td>34.19</td>
+            <td><span class="delta-neutral">+0.02</span></td>
+          </tr>
+          <tr>
+            <td><span class="tag-dataset tag-skin">Melanoma piel</span></td>
+            <td><strong>YOLOv26-n-cls</strong></td>
+            <td>0.8837</td>
+            <td>0.8362</td>
+            <td><span class="delta-neg">-0.0475</span></td>
+            <td>0.8976</td>
+            <td>0.8883</td>
+            <td><span class="delta-neg">-0.0093</span></td>
+            <td>0.4417</td>
+            <td>0.3687</td>
+            <td><span class="delta-neg">-0.0730</span></td>
+            <td>6.28</td>
+            <td>6.26</td>
+            <td><span class="delta-neutral">-0.02</span></td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="note-box" style="margin-top:1.5rem;">
+    <div class="note-box">
       <strong>Lectura de los resultados:</strong> 
       <strong>EfficientNetV2-S</strong> es la familia más afectada por el pruning no estructural, con caídas de AUC de hasta 0.44 en cáncer oral y 0.26 en retinopatía diabética. Esto indica que sus filtros son menos redundantes: cada uno aporta información necesaria.
-      <strong>MobileNetV4-M</strong> también se degrada fuertemente en ojo_dr y oral (−0.23 y −0.39 de AUC), aunque es más estable en melanoma.
+      <strong>MobileNetV4-Conv-Medium</strong> también se degrada fuertemente en ojo_dr y oral (−0.23 y −0.39 de AUC), aunque es más estable en melanoma.
       <strong>YOLOv26</strong> es claramente la arquitectura más robusta: sus caídas de AUC son menores al 7% y su F1-score se mantiene cercano al original. Esto confirma que YOLOv26 tiene mayor redundancia interna, lo que lo hace ideal para el pipeline de compresión.
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     9. CONclusIÓN
-══════════════════════════════════════ -->
-<section id="conclusion">
-  <div class="container">
-    <h2 class="section-title">9. Conclusión</h2>
-    <div class="section-rule"></div>
-
-    <div class="thesis-box">
-      <h4>🎓 Conclusión para tu tesis</h4>
-      <p>
-        La Fase 2 implementa pruning no estructural a nivel de filtros mediante los criterios de Magnitude (L1) y Taylor. Los resultados muestran que el impacto del pruning varía fuertemente según la arquitectura: mientras EfficientNetV2-S y MobileNetV4-M sufren degradaciones severas en AUC y F1-score tras anular filtros, YOLOv26 mantiene métricas estables, evidenciando mayor redundancia interna.
-      </p>
-      <p style="margin-top:1rem;">
-        El cambio de tamaño es prácticamente nulo (diferencias menores a 0.05 MB), confirmando la naturaleza no estructural del método. Por ello, el valor de esta fase no reside en la reducción de modelo, sino en su función de regularización: al forzar al modelo a prescindir de filtros no informativos, se prepara para la Fase 3 de fine-tuning con Knowledge Distillation y, eventualmente, para la cuantización INT8 de la Fase 4.
-      </p>
     </div>
   </div>
 </section>
@@ -1218,6 +660,13 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
     Asesor: Ferdinand Pineda Ancco · Co-Asesor: Nemias Saboya Rios
   </p>
 </footer>
+
+<!-- Dots de navegación -->
+<div class="slide-dots">
+  <div class="slide-dot active" data-slide="slide-contexto"></div>
+  <div class="slide-dot" data-slide="slide-visual"></div>
+  <div class="slide-dot" data-slide="slide-resultados"></div>
+</div>
 
 <script>
   // Generar la red y conexiones
@@ -1274,7 +723,6 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
         const y1 = src.cy;
         const x2 = dst.cx - dst.r;
         const y2 = dst.cy;
-        // curva determinista basada en índices para estabilidad visual
         const curve = ((src.index + dst.index) % 5 - 2) * 8;
         const d = makePath(x1, y1, x2, y2, curve);
 
@@ -1298,7 +746,6 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
     });
   });
 
-  // Travelers sobre conexiones activas
   const travelers = [];
   conns.forEach((c, i) => {
     if (i % 12 !== 0) return;
@@ -1314,7 +761,6 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
     travelers.push({ el: t, conn: c });
   });
 
-  // Aplicar pruning
   function applyPrune(level) {
     const pruneRatio = level / 100;
     const layerNodes = {};
@@ -1369,6 +815,45 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
 
   applyPrune(0);
 
+  // Navegación por dots y teclado
+  const dots = document.querySelectorAll('.slide-dot');
+  const slides = ['slide-contexto', 'slide-visual', 'slide-resultados'];
+
+  function updateActiveDot() {
+    const scrollPos = window.scrollY + window.innerHeight / 2;
+    slides.forEach((id, idx) => {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollPos && el.offsetTop + el.offsetHeight > scrollPos) {
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    });
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const id = dot.dataset.slide;
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const current = document.querySelector('.slide-dot.active');
+    const idx = Array.from(dots).indexOf(current);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
+      e.preventDefault();
+      const next = Math.min(slides.length - 1, idx + 1);
+      document.getElementById(slides[next]).scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      const prev = Math.max(0, idx - 1);
+      document.getElementById(slides[prev]).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  window.addEventListener('scroll', updateActiveDot, { passive: true });
+
   document.querySelectorAll('nav ul li a').forEach(link => {
     link.addEventListener('click', () => {
       const toggle = document.getElementById('menu-toggle');
@@ -1377,12 +862,9 @@ module.weight.data *= mask.view(-<span class="num">1</span>, <span class="num">1
   });
 </script>
 
-
-<!-- Chart.js para resultados -->
 <script>
 const PRIMARY = '#003865';
 const SECONDARY = '#F8A900';
-const SURFACE = 'rgba(0,56,101,.12)';
 const isMobileRes = window.innerWidth < 768;
 
 const aucDropCtx = document.getElementById('aucDropChart').getContext('2d');
@@ -1390,8 +872,8 @@ new Chart(aucDropCtx, {
   type: 'bar',
   data: {
     labels: isMobileRes
-      ? ["EffNetV2\\nOjo", "MobileNetV4\\nOjo", "YOLOv26\\nOjo", "EffNetV2\\nOral", "MobileNetV4\\nOral", "YOLOv26\\nOral", "EffNetV2\\nPiel", "MobileNetV4\\nPiel", "YOLOv26\\nPiel"]
-      : ["EffNetV2\\nOjo", "MobileNetV4\\nOjo", "YOLOv26\\nOjo", "EffNetV2\\nOral", "MobileNetV4\\nOral", "YOLOv26\\nOral", "EffNetV2\\nPiel", "MobileNetV4\\nPiel", "YOLOv26\\nPiel"],
+      ? ["EffNetV2\nOjo", "MobileNetV4\nOjo", "YOLOv26\nOjo", "EffNetV2\nOral", "MobileNetV4\nOral", "YOLOv26\nOral", "EffNetV2\nPiel", "MobileNetV4\nPiel", "YOLOv26\nPiel"]
+      : ["EffNetV2\nOjo", "MobileNetV4\nOjo", "YOLOv26\nOjo", "EffNetV2\nOral", "MobileNetV4\nOral", "YOLOv26\nOral", "EffNetV2\nPiel", "MobileNetV4\nPiel", "YOLOv26\nPiel"],
     datasets: [{
       label: 'Caída de AUC (F1 → F2)',
       data: [-0.2611, -0.2255, -0.015, -0.4423, -0.3882, -0.0602, -0.1381, -0.0445, -0.0475],
@@ -1405,20 +887,11 @@ new Chart(aucDropCtx, {
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (item) => `Δ AUC: ${item.raw}`
-        }
-      }
+      tooltip: { callbacks: { label: (item) => `Δ AUC: ${item.raw}` } }
     },
     scales: {
       x: {
-        ticks: {
-          color: '#4A4A4A',
-          font: { size: isMobileRes ? 8 : 10 },
-          maxRotation: isMobileRes ? 55 : 0,
-          minRotation: isMobileRes ? 55 : 0
-        },
+        ticks: { color: '#4A4A4A', font: { size: isMobileRes ? 8 : 10 }, maxRotation: isMobileRes ? 55 : 0, minRotation: isMobileRes ? 55 : 0 },
         grid: { color: 'rgba(0,56,101,.08)' }
       },
       y: {
