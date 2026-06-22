@@ -1,0 +1,181 @@
+Fase 2: Pruning (Poda de Redes Neuronales)
+1. ¿Qué es el pruning? (Lo más básico)
+Una red neuronal convolucional tiene millones de conexiones. Muchas de esas conexiones son redundantes: no aportan información útil para la decisión final. El pruning es el proceso de identificar y eliminar esa redundancia.
+Analogía: La red como una ciudad
+Imagina una red vial con 100 carreteras entre dos ciudades. Si 30 carreteras casi no se usan (tienen tráfico casi nulo), podrías:
+Cerrarlas (quitar el asfalto) → pruning estructural.
+Dejarlas como caminos de tierra (siguen existiendo pero no aportan) → pruning no estructural.
+Tu código de YOLO hace lo segundo: pone a cero los pesos (apaga la carretera) pero no quita la capa físicamente.
+2. Dos tipos de pruning: Estructural vs No Estructural
+Table
+Tipo	¿Qué hace?	Shape del modelo	Tamaño en disco	Velocidad
+No estructural	Pone pesos a cero	Se mantiene igual	Igual (los ceros siguen ocupando espacio)	Igual (las operaciones siguen ejecutándose)
+Estructural	Elimina filtros/canales físicamente	Cambia (se hace más pequeña)	Menor (menos parámetros)	Mayor (menos operaciones)
+¿Por qué tu código usa NO estructural?
+En tu prune_yolo.py:
+Python
+module.weight.data *= mask.view(-1, 1, 1, 1)  # Multiplica por 0
+Esto no elimina el filtro. Solo lo hace cero. La capa sigue siendo Conv2d(128, 64, 3x3), no se convierte en Conv2d(128, 45, 3x3).
+3. ¿Por qué NO se puede hacer pruning estructural en YOLO fácilmente?
+3.1 El problema de las conexiones entre capas
+En una red neuronal secuencial simple (tipo MobileNet), una capa se conecta solo con la siguiente:
+plain
+Capa A (64 canales) → Capa B (128 canales) → Capa C (256 canales)
+Si eliminas 10 filtros de la Capa B, la salida de B pasa de 128 a 118 canales. La Capa C esperaba 128 canales de entrada. Debes cambiar C para que acepte 118.
+Esto es manejable en redes secuenciales.
+3.2 El problema de YOLO: conexiones ramificadas y skip connections
+YOLOv6 (y casi todas las redes modernas) no son secuenciales. Tienen conexiones residuales (skip connections) y concatenaciones:
+plain
+        ┌──────────────────────┐
+        ↓                      │
+   Conv1 → Conv2 → Conv3 → Concat → Conv4
+              ↑              │
+              └──────────────┘
+Si eliminas 10 filtros de Conv2, su salida tiene 10 canales menos. Pero esa salida va a:
+Conv3 (que espera la dimensión original).
+Concat (que concatena la salida de Conv3 con la salida de Conv2).
+Si cambias la salida de Conv2, debes cambiar Conv3 y Concat y Conv4. Pero si Conv2 también alimenta otra rama paralela, debes cambiar esa también.
+3.3 El problema de los índices de canales
+Incluso si pudieras rastrear todas las dependencias, hay un problema más profundo: los canales no son intercambiables.
+Cuando concatenas:
+plain
+Concat([Tensor A de 64 canales], [Tensor B de 64 canales]) → Tensor de 128 canales
+Si eliminas el filtro #5 de A, el canal #5 de A desaparece. El resultado del Concat ahora tiene 127 canales, y los índices de los canales de B se desplazan. La capa siguiente que esperaba "los canales 0-63 de A y 64-127 de B" ahora debe reajustar sus índices internos.
+Esto requiere reescribir el grafo computacional completo, algo que PyTorch no hace automáticamente.
+3.4 Por qué tu código evita el pruning estructural
+En tu prune_yolo.py:
+Python
+def get_prunable_layers(model):
+    # NO toca la cabeza Classify
+    classify_ids = set()
+    for _, module in model.named_modules():
+        if "Classify" in type(module).__name__:
+            for child in module.modules():
+                classify_ids.add(id(child))
+    
+    # NO toca Depthwise (groups > 1)
+    if module.groups > 1:
+        continue
+Depthwise convolutions (groups > 1) son intrínsecamente no podables estructuralmente: cada canal de entrada tiene exactamente un filtro asociado. Si eliminas un filtro, debes eliminar el canal de entrada correspondiente, lo que afecta a todas las capas anteriores.
+4. Cómo funciona el pruning en tu código (No estructural)
+4.1 Magnitude Pruning (L1 norm)
+Si pruning_method = "magnitude":
+Python
+importance = module.weight.data.abs().sum(dim=(1, 2, 3))
+Matemática:
+I 
+k
+​
+ =∑ 
+c,h,w
+​
+ ∣W 
+k,c,h,w
+​
+ ∣ 
+Donde:
+k  = índice del filtro (canal de salida).
+c,h,w  = canales de entrada, alto, ancho del filtro.
+Si un filtro tiene pesos pequeños (cercanos a cero), su contribución a la salida es débil. Se considera "no importante".
+4.2 Taylor Pruning (aproximación de segundo orden)
+Si pruning_method = "taylor":
+Python
+score = (activation * gradient).abs().mean(dim=(0, 2, 3))
+Matemática:
+I 
+k
+​
+ =E 
+batches
+​
+ [E 
+spatial
+​
+ (∣a 
+k
+​
+ ⋅ 
+∂a 
+k
+​
+ 
+∂L
+​
+ ∣)] 
+Donde:
+a 
+k
+​
+   = activación del filtro k  (output de la convolución).
+∂a 
+k
+​
+ 
+∂L
+​
+   = gradiente de la pérdida respecto a esa activación.
+Interpretación: Si un filtro se activa mucho (a 
+k
+​
+   grande) pero el gradiente es pequeño ( 
+∂a 
+k
+​
+ 
+∂L
+​
+ ≈0 ), significa que el filtro está "haciendo ruido" pero no afecta la pérdida. Es candidato a poda.
+Si un filtro casi no se activa (a 
+k
+​
+ ≈0 ), su importancia también es baja.
+4.3 Aplicación de la máscara
+Python
+_, prune_idx = torch.topk(importance, k=n_prune, largest=False)
+mask = torch.ones(n_out, device=module.weight.device)
+mask[prune_idx] = 0.0
+module.weight.data *= mask.view(-1, 1, 1, 1)
+Visualización:
+plain
+Filtro original (3 canales de salida, 2 de entrada, 3x3):
+  [[[[0.1, -0.2, 0.3], [0.4, 0.5, -0.1], ...]],   ← Filtro 0
+   [[[0.01, 0.02, -0.01], [0.03, -0.02, 0.01], ...]],  ← Filtro 1 (débil)
+   [[[-0.5, 0.3, 0.2], [0.1, -0.4, 0.6], ...]]]   ← Filtro 2
+
+Máscara: [1.0, 0.0, 1.0]  ← Filtro 1 se apaga
+
+Después del pruning:
+  [[[[0.1, -0.2, 0.3], ...]],   ← Filtro 0 (activo)
+   [[[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], ...]],  ← Filtro 1 (apagado)
+   [[[-0.5, 0.3, 0.2], ...]]]   ← Filtro 2 (activo)
+5. ¿Por qué el pruning no estructural NO acelera la inferencia?
+Aunque los filtros están a cero, la operación de convolución sigue ejecutándose:
+Python
+output = conv2d(input, weight=zeroed_weights, bias=zeroed_bias)
+PyTorch no sabe que puede saltarse los filtros en cero. Hace todas las multiplicaciones y sumas. El resultado es cero, pero el trabajo computacional sigue ahí.
+Por eso en tu benchmark:
+Fase 2 (pruned) tiene el mismo tamaño que Fase 1 (base).
+Fase 2 tiene la misma latencia que Fase 1.
+La única ventaja del pruning no estructural es que prepara el modelo para la Fase 3 (Fine-tuning con KD). Al apagar filtros irrelevantes, el modelo se ve forzado a redistribuir la información en los filtros restantes, haciéndolo más robusto.
+6. ¿Cómo se haría pruning estructural (teóricamente)?
+Para hacer pruning estructural real en YOLO necesitarías:
+Opción A: Usar una librería especializada
+Como torch-pruning o nnprune, que:
+Analiza el grafo computacional completo.
+Identifica qué canales de salida de una capa son entradas de otras.
+Propaga los cambios de índices a través de skip connections y concatenaciones.
+Reescribe el modelo con las nuevas dimensiones.
+Opción B: Hacerlo manualmente
+Escribir un script que:
+Identifique las capas a podar.
+Reconstruya el modelo capa por capa con las nuevas dimensiones.
+Mapee los pesos antiguos a los nuevos índices.
+Verifique que el output shape sigue siendo correcto.
+Esto es extremadamente complejo para YOLO porque tiene bloques C3, SPPF, concatenaciones, y la cabeza de detección/clasificación. Un error en un índice de canal rompe todo el modelo.
+7. Resumen para tu tesis
+"La Fase 2 implementa pruning no estructural a nivel de filtros, basado en el criterio de importancia de Taylor (primera aproximación de orden) o Magnitude (norma L1). El método calcula, para cada filtro de salida de las capas Conv2d podables (excluyendo depthwise convolutions y la cabeza clasificadora), un score de importancia que determina qué filtros pueden anularse sin degradar significativamente la función de pérdida.
+La anulación se realiza mediante una máscara binaria que pone a cero los pesos y biases del filtro seleccionado, preservando la dimensionalidad del tensor. Esto implica que la arquitectura del grafo computacional permanece invariante: el número de canales de entrada y salida de cada capa no cambia, y por tanto las operaciones de convolución consumen el mismo número de FLOPs que el modelo original.
+El pruning estructural —que eliminaría físicamente filtros y reduciría dimensiones— no se aplica porque YOLOv6 contiene conexiones residuales (skip connections) y concatenaciones intercapas que crean dependencias complejas entre los índices de canales. Eliminar un canal de salida de una capa requeriría reescribir todas las capas subsiguientes que consumen dicho tensor, incluyendo operaciones de concatenación donde los índices de canales no son intercambiables. Esta reescritura manual del grafo excede el alcance del pipeline y se delega a librerías especializadas de pruning estructural (p. ej. torch-pruning) que, aunque disponibles, introducen incompatibilidades con la API interna de Ultralytics.
+El valor del pruning no estructural en este pipeline radica en su función de regularización: al anular filtros no informativos antes de la Fase 3 (Knowledge Distillation), se fuerza al modelo a concentrar la representación en un subconjunto de conexiones, facilitando la recuperación de métricas mediante fine-tuning y preparando el terreno para la cuantización de la Fase 4, donde los pesos en cero se comprimen eficientemente en formatos con soporte de sparsity (sparse INT8 en hardware especializado)."
+8. Analogía final para el público
+"Imagina una orquesta sinfónica de 100 músicos. El pruning no estructural es como descubrir que 30 de ellos están tocando notas tan bajas que no se escuchan. En lugar de echarlos de la orquesta (lo cual requería reescribir todas las partituras y reordenar las filas), les pides que toquen en silencio. La orquesta sigue teniendo 100 músicos en el escenario, pero solo 70 producen sonido. Después de un ensayo intensivo (fine-tuning), los 70 restantes aprenden a cubrir las partes de los silenciados, y la música suena igual de bien. Finalmente, cuando grabas el concierto en un formato comprimido (cuantización), los silencios ocupan casi nada de espacio."

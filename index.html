@@ -696,6 +696,8 @@
     <li><a href="#objetivos">Objetivos</a></li>
     <li><a href="#metodologia">Metodología</a></li>
     <li><a href="fase1.html">Fase 1</a></li>
+    <li><a href="fase2.html">Fase 2</a></li>
+    <li><a href="fase3.html">Fase 3</a></li>
     <li><a href="fase4.html">Fase 4</a></li>
     <li><a href="#resultados">Resultados</a></li>
     <li><a href="#conclusiones">Conclusiones</a></li>
@@ -1007,21 +1009,21 @@
         <div class="output-pill">modelo_base.pt</div>
       </a>
 
-      <div class="fase-step">
+      <a href="fase2.html" class="fase-step-link">
         <div class="fase-num">Fase 2</div>
         <div class="fase-icon">✂️</div>
         <h4>Pruning</h4>
         <p>Eliminación de neuronas de baja importancia (método Taylor). Reduce parámetros con pérdida controlada.</p>
         <div class="output-pill">modelo_podado.pt</div>
-      </div>
+      </a>
 
-      <div class="fase-step">
+      <a href="fase3.html" class="fase-step-link">
         <div class="fase-num">Fase 3</div>
         <div class="fase-icon">🔄</div>
         <h4>Fine-Tuning</h4>
         <p>Reentrenamiento del modelo podado con Knowledge Distillation para recuperar precisión perdida.</p>
         <div class="output-pill">modelo_ft.pt</div>
-      </div>
+      </a>
 
       <div class="fase-step active">
         <div class="fase-num">Fase 4 — Clave</div>
@@ -1243,6 +1245,190 @@
     </div>
 
     <div class="chart-section">
+      <h3>📊 Benchmark de rendimiento: Fase 1 (FP32) vs Fase 4 (INT8)</h3>
+      <p style="margin-bottom:1.5rem;color:var(--text-secondary);font-size:.95rem;">
+        Medición de latencia e inferencia por segundo en CPU, comparando el modelo original (Fase 1) con el modelo cuantizado (Fase 4). Los valores de MobileNetV4 y EfficientNetV2 son promedios sobre los tres datasets; YOLOv26n corresponde a melanoma de piel y YOLOv26m al promedio de retinopatía diabética y cáncer oral.
+      </p>
+
+      <div class="results-highlight">
+        <div class="result-kpi gold">
+          <div class="kpi-val">3.2×</div>
+          <div class="kpi-label">Speedup de latencia</div>
+          <div class="kpi-sub">MobileNetV4: 22.7 ms → 7.2 ms</div>
+        </div>
+        <div class="result-kpi">
+          <div class="kpi-val">2.8×</div>
+          <div class="kpi-label">Speedup de throughput</div>
+          <div class="kpi-sub">MobileNetV4: 62 → 176 img/s</div>
+        </div>
+        <div class="result-kpi">
+          <div class="kpi-val">3.8×</div>
+          <div class="kpi-label">Compresión</div>
+          <div class="kpi-sub">MobileNetV4: 32.6 → 8.5 MB</div>
+        </div>
+        <div class="result-kpi gold">
+          <div class="kpi-val">⚠️</div>
+          <div class="kpi-label">Overhead en EfficientNetV2</div>
+          <div class="kpi-sub">Throughput baja 17% en INT8</div>
+        </div>
+      </div>
+
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Modelo</th>
+              <th>Tamaño F1</th>
+              <th>Tamaño F4</th>
+              <th>Compresión</th>
+              <th>Latencia F1</th>
+              <th>Latencia F4</th>
+              <th>Speedup lat.</th>
+              <th>Throughput F1</th>
+              <th>Throughput F4</th>
+              <th>Speedup thr.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>MobileNetV4-M</strong></td>
+              <td>32.6 MB</td>
+              <td>8.5 MB</td>
+              <td><span class="size-reduction">3.8×</span></td>
+              <td>22.7 ms</td>
+              <td>7.2 ms</td>
+              <td><span class="delta-pos">3.2×</span></td>
+              <td>62 img/s</td>
+              <td>176 img/s</td>
+              <td><span class="delta-pos">2.8×</span></td>
+            </tr>
+            <tr>
+              <td><strong>EfficientNetV2-S</strong></td>
+              <td>77.8 MB</td>
+              <td>21.1 MB</td>
+              <td><span class="size-reduction">3.7×</span></td>
+              <td>59.8 ms</td>
+              <td>49.7 ms</td>
+              <td><span class="delta-neutral">1.2×</span></td>
+              <td>21 img/s</td>
+              <td>18 img/s</td>
+              <td><span class="delta-neg">0.8×</span></td>
+            </tr>
+            <tr>
+              <td><strong>YOLOv26n-cls</strong> <span style="font-size:.7rem;color:#888">(melanoma)</span></td>
+              <td>6.0 MB</td>
+              <td>1.9 MB</td>
+              <td><span class="size-reduction">3.2×</span></td>
+              <td>8.6 ms</td>
+              <td>6.6 ms</td>
+              <td><span class="delta-neutral">1.3×</span></td>
+              <td>216 img/s</td>
+              <td>189 img/s</td>
+              <td><span class="delta-neg">0.9×</span></td>
+            </tr>
+            <tr>
+              <td><strong>YOLOv26m-cls</strong> <span style="font-size:.7rem;color:#888">(ojo/oral)</span></td>
+              <td>39.7 MB</td>
+              <td>10.4 MB</td>
+              <td><span class="size-reduction">3.8×</span></td>
+              <td>38.5 ms</td>
+              <td>38.2 ms</td>
+              <td><span class="delta-neutral">1.0×</span></td>
+              <td>28 img/s</td>
+              <td>24 img/s</td>
+              <td><span class="delta-neg">0.9×</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-wrapper" style="margin-bottom:2rem;">
+        <canvas id="latencyChart"></canvas>
+      </div>
+
+      <div class="chart-wrapper" style="margin-bottom:2rem;">
+        <canvas id="throughputChart"></canvas>
+      </div>
+
+      <h4 style="color:var(--primary);margin:2rem 0 1rem;font-size:1.1rem;">Desglose por dataset</h4>
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Dataset</th>
+              <th>Modelo</th>
+              <th>Latencia F1</th>
+              <th>Latencia F4</th>
+              <th>Throughput F1</th>
+              <th>Throughput F4</th>
+              <th>Compresión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="tag-dataset tag-ojo">Retinopatía diabética</span></td><td>MobileNetV4-M</td><td>23.1 ms</td><td>7.2 ms</td><td>61.4 img/s</td><td>184.6 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-oral">Cáncer oral</span></td><td>MobileNetV4-M</td><td>23.0 ms</td><td>7.1 ms</td><td>61.9 img/s</td><td>185.7 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-skin">Melanoma de piel</span></td><td>MobileNetV4-M</td><td>22.0 ms</td><td>7.2 ms</td><td>62.7 img/s</td><td>158.3 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-ojo">Retinopatía diabética</span></td><td>EfficientNetV2-S</td><td>65.4 ms</td><td>48.3 ms</td><td>17.3 img/s</td><td>17.4 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-oral">Cáncer oral</span></td><td>EfficientNetV2-S</td><td>56.9 ms</td><td>50.1 ms</td><td>21.3 img/s</td><td>18.3 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-skin">Melanoma de piel</span></td><td>EfficientNetV2-S</td><td>56.9 ms</td><td>50.8 ms</td><td>24.9 img/s</td><td>17.4 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-skin">Melanoma de piel</span></td><td>YOLOv26n-cls</td><td>8.6 ms</td><td>6.6 ms</td><td>215.8 img/s</td><td>189.0 img/s</td><td><span class="size-reduction">3.16×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-ojo">Retinopatía diabética</span></td><td>YOLOv26m-cls</td><td>39.3 ms</td><td>38.2 ms</td><td>25.9 img/s</td><td>23.6 img/s</td><td><span class="size-reduction">3.80×</span></td></tr>
+            <tr><td><span class="tag-dataset tag-oral">Cáncer oral</span></td><td>YOLOv26m-cls</td><td>37.6 ms</td><td>38.3 ms</td><td>29.5 img/s</td><td>23.7 img/s</td><td><span class="size-reduction">3.80×</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="color:var(--primary);margin:2rem 0 1rem;font-size:1.1rem;">Veredicto por modelo</h4>
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Modelo</th>
+              <th>Compresión</th>
+              <th>Speedup latencia</th>
+              <th>Speedup throughput</th>
+              <th>Recomendación para móvil</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>MobileNetV4-M</strong></td>
+              <td><span class="delta-pos">✅ 3.8×</span></td>
+              <td><span class="delta-pos">✅ 3.2×</span></td>
+              <td><span class="delta-pos">✅ 2.8×</span></td>
+              <td>Ideal para despliegue en edge</td>
+            </tr>
+            <tr>
+              <td><strong>EfficientNetV2-S</strong></td>
+              <td><span class="delta-pos">✅ 3.7×</span></td>
+              <td><span class="delta-neutral">⚠️ 1.2×</span></td>
+              <td><span class="delta-neg">❌ 0.8×</span></td>
+              <td>Solo si el espacio es crítico</td>
+            </tr>
+            <tr>
+              <td><strong>YOLOv26n-cls</strong></td>
+              <td><span class="delta-pos">✅ 3.2×</span></td>
+              <td><span class="delta-neutral">⚠️ 1.3×</span></td>
+              <td><span class="delta-neg">❌ 0.9×</span></td>
+              <td>Ya es suficientemente pequeño en FP32</td>
+            </tr>
+            <tr>
+              <td><strong>YOLOv26m-cls</strong></td>
+              <td><span class="delta-pos">✅ 3.8×</span></td>
+              <td><span class="delta-neutral">⚠️ 1.0×</span></td>
+              <td><span class="delta-neg">❌ 0.9×</span></td>
+              <td>Útil por compresión, no por velocidad</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note-box" style="margin-top:1.5rem;">
+        <strong>Conclusión de rendimiento:</strong> La efectividad de la cuantización INT8 depende críticamente de la arquitectura subyacente. <strong>MobileNetV4</strong>, diseñado explícitamente para inferencia eficiente en hardware móvil, alcanza un speedup de 3.2× en latencia y 2.8× en throughput, convirtiéndose en la opción óptima para despliegue en edge. En contraste, <strong>EfficientNetV2</strong> sufre de overhead por operaciones depthwise y SE blocks que no se fusionan eficientemente en el formato QDQ de ONNX Runtime, resultando en una mejora marginal de solo 1.2×. <strong>YOLOv26n-cls</strong>, al ser intrínsecamente ligero (6 MB), presenta ganancias de velocidad limitadas porque la latencia ya está dominada por el overhead del runtime, no por la aritmética de punto flotante.
+      </div>
+    </div>
+
+    <div class="chart-section">
       <h3>Comparación de AUC: Modelo Base vs. Modelo Optimizado</h3>
       <div class="chart-wrapper">
         <canvas id="aucChart"></canvas>
@@ -1415,12 +1601,12 @@ new Chart(sizeCtx, {
   type: 'bar',
   data: {
     labels: isMobile
-      ? ['YOLOv26m\nRetino.', 'YOLOv26m\nOral', 'YOLOv26n\nMelan.', 'EffNetV2\nRetino.', 'MobileNetV4\nMelan.', 'MobileNetV4\nMelan.']
-      : ['YOLOv26m\n(Retino.)', 'YOLOv26m\n(Oral Cancer)', 'YOLOv26n\n(Melanoma)', 'EfficientNetV2-S\n(Retino.)', 'MobileNetV4-M\n(Melanoma)', 'MobileNetV4-S\n(Melanoma)'],
+      ? ['YOLOv26m\nOjo', 'YOLOv26m\nOral', 'YOLOv26n\nMelan.', 'EffNetV2\nOjo', 'MobileNetV4\nOral', 'MobileNetV4\nMelan.']
+      : ['YOLOv26m (Ojo)', 'YOLOv26m (Oral)', 'YOLOv26n (Melanoma)', 'EfficientNetV2-S (Ojo)', 'MobileNetV4-M (Oral)', 'MobileNetV4-M (Melanoma)'],
     datasets: [
       {
         label: 'Fase 1 — Base (MB)',
-        data: [41.64, 41.64, 6.28, 81.57, 34.17, 10.17],
+        data: [39.71, 39.71, 5.98, 77.79, 32.58, 32.58],
         backgroundColor: SURFACE,
         borderColor: 'rgba(0,56,101,.2)',
         borderWidth: 1,
@@ -1429,7 +1615,7 @@ new Chart(sizeCtx, {
       },
       {
         label: 'Fase 4 — INT8 (MB)',
-        data: [10.95, 10.95, 1.98, 22.11, 8.95, 2.78],
+        data: [10.44, 10.44, 1.89, 21.09, 8.53, 8.53],
         backgroundColor: SECONDARY,
         borderRadius: 4,
         barPercentage: isMobile ? 0.65 : 0.7
@@ -1499,6 +1685,108 @@ new Chart(aucCtx, {
         ...commonOptions.scales.y,
         min: 0.5, max: 1.0,
         title: { display: true, text: 'AUC (Área bajo la curva ROC)', color: '#4A4A4A', font: { size: isMobile ? 10 : 11 } }
+      }
+    }
+  }
+});
+
+/* ── Chart 3: Latencia F1 vs F4 ── */
+const isMobileBench = window.innerWidth < 768;
+const benchOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: 'top',
+      labels: {
+        color: PRIMARY,
+        font: { size: isMobileBench ? 11 : 12 },
+        boxWidth: isMobileBench ? 12 : 14
+      }
+    }
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#4A4A4A',
+        font: { size: isMobileBench ? 10 : 11 },
+        maxRotation: isMobileBench ? 45 : 0,
+        minRotation: isMobileBench ? 45 : 0
+      },
+      grid: { color: 'rgba(0,56,101,.08)' }
+    },
+    y: {
+      ticks: { color: '#4A4A4A', font: { size: isMobileBench ? 10 : 11 } },
+      grid: { color: 'rgba(0,56,101,.08)' },
+      beginAtZero: true,
+      title: { display: true, text: 'ms', color: '#4A4A4A', font: { size: isMobileBench ? 10 : 11 } }
+    }
+  }
+};
+
+const latencyCtx = document.getElementById('latencyChart').getContext('2d');
+new Chart(latencyCtx, {
+  type: 'bar',
+  data: {
+    labels: isMobileBench
+      ? ['MobileNetV4', 'EffNetV2', 'YOLOv26n', 'YOLOv26m']
+      : ['MobileNetV4-M', 'EfficientNetV2-S', 'YOLOv26n-cls', 'YOLOv26m-cls'],
+    datasets: [
+      {
+        label: 'Fase 1 — FP32 (ms)',
+        data: [22.7, 59.8, 8.6, 38.5],
+        backgroundColor: SURFACE,
+        borderColor: 'rgba(0,56,101,.2)',
+        borderWidth: 1,
+        borderRadius: 4,
+        barPercentage: isMobileBench ? 0.65 : 0.7
+      },
+      {
+        label: 'Fase 4 — INT8 (ms)',
+        data: [7.2, 49.7, 6.6, 38.2],
+        backgroundColor: SECONDARY,
+        borderRadius: 4,
+        barPercentage: isMobileBench ? 0.65 : 0.7
+      }
+    ]
+  },
+  options: benchOptions
+});
+
+/* ── Chart 4: Throughput F1 vs F4 ── */
+const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+new Chart(throughputCtx, {
+  type: 'bar',
+  data: {
+    labels: isMobileBench
+      ? ['MobileNetV4', 'EffNetV2', 'YOLOv26n', 'YOLOv26m']
+      : ['MobileNetV4-M', 'EfficientNetV2-S', 'YOLOv26n-cls', 'YOLOv26m-cls'],
+    datasets: [
+      {
+        label: 'Fase 1 — FP32 (img/s)',
+        data: [62, 21, 216, 28],
+        backgroundColor: SURFACE,
+        borderColor: 'rgba(0,56,101,.2)',
+        borderWidth: 1,
+        borderRadius: 4,
+        barPercentage: isMobileBench ? 0.65 : 0.7
+      },
+      {
+        label: 'Fase 4 — INT8 (img/s)',
+        data: [176, 18, 189, 24],
+        backgroundColor: SECONDARY,
+        borderRadius: 4,
+        barPercentage: isMobileBench ? 0.65 : 0.7
+      }
+    ]
+  },
+  options: {
+    ...benchOptions,
+    scales: {
+      ...benchOptions.scales,
+      y: {
+        ...benchOptions.scales.y,
+        title: { display: true, text: 'img/s', color: '#4A4A4A', font: { size: isMobileBench ? 10 : 11 } }
       }
     }
   }
