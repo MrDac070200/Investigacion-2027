@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentación — Método de Optimización CNN · UPeU 2026</title>
+  <style>
+    :root {
+      --primary:       #003865;
+      --primary-dark:  #00305F;
+      --secondary:     #F8A900;
+      --secondary-dark:#E39B00;
+      --bg:            #F7F7F7;
+      --surface:       #FFFFFF;
+      --text:          #003865;
+      --text-secondary:#4A4A4A;
+      --text-on-primary: #FFFFFF;
+      --border:        rgba(0,56,101,.12);
+      --info-bg:       #EAF3FB;
+      --warning-bg:    #FFF5DE;
+      --white:         #FFFFFF;
+      --radius:        14px;
+      --shadow:        0 8px 30px rgba(0,56,101,.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    /* ════════════════════════════════════════
+       SLIDES
+    ════════════════════════════════════════ */
+    .slides-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 3rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(60px);
+      transition: opacity .45s ease, transform .45s ease;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+      z-index: 2;
+    }
+    .slide.prev {
+      transform: translateX(-60px);
+      z-index: 1;
+    }
+
+    .slide-content {
+      width: 100%;
+      max-width: 1100px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 3rem 3.5rem;
+      position: relative;
+    }
+
+    /* ── Tipografía ── */
+    .slide h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .slide h1 em {
+      font-style: normal;
+      color: var(--secondary);
+    }
+    .slide h2 {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: .6rem;
+    }
+    .slide h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: .4rem;
+    }
+    .slide p, .slide li {
+      font-size: clamp(.95rem, 1.5vw, 1.15rem);
+      color: var(--text-secondary);
+    }
+    .slide ul { padding-left: 1.4rem; }
+    .slide li { margin-bottom: .5rem; }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--info-bg);
+      color: var(--primary);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .section-kicker::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--secondary);
+    }
+
+    /* ── Slide 1: Portada ── */
+    #slide-1 { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #1A5276 100%); }
+    #slide-1 .slide-content {
+      background: transparent;
+      box-shadow: none;
+      text-align: center;
+      color: var(--white);
+    }
+    #slide-1 h1 { color: #fff; }
+    #slide-1 h1 em { color: var(--secondary); }
+    #slide-1 .subtitle {
+      color: rgba(255,255,255,.8);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+    .portada-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50px;
+      padding: .5rem 1.2rem;
+      color: #fff;
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .portada-badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--secondary);
+    }
+    .portada-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .portada-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .7rem;
+      margin-bottom: 2.5rem;
+    }
+    .chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #fff;
+      border-radius: 50px;
+      padding: .35rem .9rem;
+      font-size: .8rem;
+    }
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .8rem;
+      margin-bottom: 1rem;
+    }
+    .team-card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 8px;
+      padding: .5rem 1rem;
+      color: #fff;
+      font-size: .85rem;
+    }
+    .advisors {
+      color: rgba(255,255,255,.65);
+      font-size: .85rem;
+      margin-top: .5rem;
+    }
+
+    /* ── Slide 2: Problema ── */
+    .brechas-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    .brecha-slide {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,56,101,.08);
+      border-top: 5px solid var(--primary);
+    }
+    .brecha-slide.infra { border-top-color: #C62828; }
+    .brecha-slide.esp   { border-top-color: #1565C0; }
+    .brecha-slide.con   { border-top-color: #2E7D32; }
+    .brecha-icon { font-size: 2.5rem; margin-bottom: .5rem; }
+    .brecha-number {
+      font-size: 2.4rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--primary);
+      margin-bottom: .3rem;
+    }
+    .brecha-slide.infra .brecha-number { color: #C62828; }
+    .brecha-slide.esp   .brecha-number { color: #1565C0; }
+    .brecha-slide.con   .brecha-number { color: #2E7D32; }
+    .brecha-title { font-weight: 700; color: var(--text); font-size: .95rem; margin-bottom: .2rem; }
+    .brecha-sub { font-size: .8rem; color: var(--text-secondary); }
+
+    /* ── Slide 3: Objetivos ── */
+    .objetivo-gral {
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .objetivo-gral .icon { font-size: 2rem; }
+    .objetivo-gral h3 {
+      color: var(--secondary);
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .3rem;
+    }
+    .objetivo-gral p { color: rgba(255,255,255,.9); }
+    .objetivos-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .8rem;
+    }
+    .obj-item {
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+      background: var(--info-bg);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .obj-num {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .85rem;
+    }
+    .obj-item.highlight { background: var(--warning-bg); }
+    .obj-item.highlight .obj-num { background: var(--secondary); color: var(--primary); }
+    .obj-item p { font-size: .9rem; }
+
+    /* ── Slide 4: Metodología ── */
+    .fases-row {
+      display: flex;
+      gap: .8rem;
+      margin-top: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: .5rem;
+    }
+    .fase-card {
+      flex: 1;
+      min-width: 150px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+    .fase-card.active {
+      border-color: var(--secondary);
+      background: var(--warning-bg);
+    }
+    .fase-card:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-weight: 900;
+      z-index: 1;
+    }
+    .fase-num {
+      font-size: .65rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .3rem;
+    }
+    .fase-card.active .fase-num { color: var(--secondary); }
+    .fase-icon { font-size: 1.8rem; margin-bottom: .4rem; }
+    .fase-card h4 { font-size: .85rem; color: var(--primary); margin-bottom: .3rem; }
+    .fase-card p { font-size: .72rem; color: var(--text-secondary); line-height: 1.4; }
+    .output-pill {
+      display: inline-block;
+      margin-top: .6rem;
+      background: var(--info-bg);
+      color: var(--primary);
+      border-radius: 50px;
+      padding: .2rem .6rem;
+      font-size: .65rem;
+      font-family: monospace;
+      font-weight: 600;
+    }
+
+    /* ── Slide 5: Cuantización ── */
+    .cuant-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .cuant-col ul { list-style: none; padding: 0; }
+    .cuant-col li {
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      margin-bottom: .8rem;
+      font-size: .95rem;
+    }
+    .cuant-col li::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--secondary);
+      margin-top: .5rem;
+      flex-shrink: 0;
+    }
+    .viz-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .bar {
+      display: flex;
+      height: 36px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: .7rem 0;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+    .bar-fp32 { background: #B0BEC5; color: #333; display: flex; align-items: center; justify-content: center; flex: 82; }
+    .bar-int8 { background: var(--secondary); color: var(--primary); display: flex; align-items: center; justify-content: center; flex: 22; }
+    .bar-label { font-size: .75rem; color: var(--text-secondary); margin-bottom: .5rem; }
+    .highlight-box {
+      background: var(--info-bg);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .highlight-box strong {
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    /* ── Slide 6: Resultados KPI ── */
+    .kpis-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .kpi-card {
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .kpi-card.gold { background: var(--secondary); color: var(--primary); }
+    .kpi-val { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+    .kpi-label { font-size: .82rem; opacity: .9; margin-top: .5rem; }
+    .kpi-sub { font-size: .72rem; opacity: .7; margin-top: .2rem; }
+
+    /* ── Slide 7: Tabla comparativa ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin-top: 1.2rem;
+    }
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .82rem;
+      background: var(--surface);
+    }
+    .results-table th {
+      background: var(--primary);
+      color: #fff;
+      padding: .7rem .8rem;
+      text-align: left;
+      font-weight: 700;
+    }
+    .results-table td {
+      padding: .55rem .8rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .results-table tr:nth-child(even) { background: var(--bg); }
+    .delta-pos { color: #2E7D32; font-weight: 700; }
+    .delta-neg { color: #C62828; font-weight: 700; }
+    .tag {
+      display: inline-block;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      font-size: .7rem;
+      font-weight: 600;
+    }
+    .tag-ojo { background: #E3F2FD; color: #1565C0; }
+    .tag-oral { background: #FCE4EC; color: #880E4F; }
+    .tag-skin { background: #E8F5E9; color: #1B5E20; }
+
+    /* ── Slide 8: Conclusiones ── */
+    .conclusiones-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .conclusion-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0,56,101,.08);
+      border-top: 4px solid var(--primary);
+    }
+    .conclusion-card.gold { border-top-color: var(--secondary); }
+    .conclusion-card .icon { font-size: 2rem; margin-bottom: .5rem; }
+    .conclusion-card h4 { font-size: .95rem; color: var(--primary); margin-bottom: .4rem; }
+    .conclusion-card p { font-size: .85rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── Slide 9: Cierre ── */
+    #slide-9 { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #1A5276 100%); }
+    #slide-9 .slide-content {
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.15);
+      box-shadow: none;
+      text-align: center;
+      color: #fff;
+    }
+    #slide-9 h2 { color: #fff; }
+    #slide-9 h2 em { color: var(--secondary); font-style: normal; }
+    #slide-9 p { color: rgba(255,255,255,.85); }
+    #slide-9 .future-list {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+      text-align: left;
+    }
+    .future-item {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      gap: .8rem;
+      align-items: center;
+    }
+    .future-item span { font-size: 1.4rem; }
+    .future-item p { color: #fff !important; margin: 0; }
+
+    @media (max-width: 900px) {
+      .slide { padding: 2rem 1.2rem; }
+      .slide-content { padding: 1.8rem; }
+      .brechas-row { grid-template-columns: 1fr; }
+      .objetivos-list { grid-template-columns: 1fr; }
+      .fases-row { flex-direction: column; }
+      .fase-card { min-width: auto; }
+      .fase-card:not(:last-child)::after { content: '↓'; right: 50%; top: auto; bottom: -18px; transform: translateX(50%); }
+      .cuant-grid { grid-template-columns: 1fr; }
+      .kpis-row { grid-template-columns: repeat(2, 1fr); }
+      .conclusiones-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slides-container">
+
+    <!-- SLIDE 1: PORTADA -->
+    <section class="slide active" id="slide-1">
+      <div class="slide-content">
+        <div class="portada-badge">
+          <div class="portada-badge-dot"></div>
+          Universidad Peruana Unión · Jornada Científica 2026
+        </div>
+        <div class="portada-icon">🧠</div>
+        <h1>Método de Optimización en <em>modelos CNN</em> para clasificación de imágenes médicas en dispositivos de recursos limitados</h1>
+        <p class="subtitle">
+          Reducción del peso de modelos de IA para habilitar diagnóstico médico asistido
+          en zonas rurales del Perú, sin necesidad de GPU ni internet.
+        </p>
+        <div class="portada-chips">
+          <span class="chip">🔬 Deep Learning</span>
+          <span class="chip">⚡ Model Compression</span>
+          <span class="chip">📱 Edge Deployment</span>
+          <span class="chip">🏥 Salud Rural</span>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">Alexis Del Castillo Yunca</div>
+          <div class="team-card">Luis Keny Lucero Balvin</div>
+          <div class="team-card">May Attilano Cango</div>
+        </div>
+        <p class="advisors">
+          Asesor: Ferdinand Pineda Ancco · Co-Asesor: Nemias Saboya Rios
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: PROBLEMÁTICA -->
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <div class="section-kicker">El Problema</div>
+        <h2>Tres brechas simultáneas en salud rural del Perú</h2>
+        <p style="margin-bottom:1rem;">
+          En las zonas rurales del Perú, <strong>tres brechas simultáneas</strong> impiden que el personal de
+          salud diagnostique a tiempo enfermedades identificables por imagen. Los modelos de IA actuales
+          <strong>no pueden desplegarse</strong> sin ser previamente optimizados.
+        </p>
+        <div class="brechas-row">
+          <div class="brecha-slide infra">
+            <div class="brecha-icon">🏥</div>
+            <div class="brecha-number">97.4%</div>
+            <div class="brecha-title">Infraestructura inadecuada</div>
+            <div class="brecha-sub">Primer nivel de atención · MINSA 2025</div>
+          </div>
+          <div class="brecha-slide esp">
+            <div class="brecha-icon">👨‍⚕️</div>
+            <div class="brecha-number">7.3</div>
+            <div class="brecha-title">Especialistas / 10,000 hab.</div>
+            <div class="brecha-sub">El más bajo de Sudamérica · OPS 2026</div>
+          </div>
+          <div class="brecha-slide con">
+            <div class="brecha-icon">📡</div>
+            <div class="brecha-number">80%</div>
+            <div class="brecha-title">Hogares rurales sin internet</div>
+            <div class="brecha-sub">Imposibilita soluciones en la nube · PRONATEL 2025</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: OBJETIVOS -->
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <div class="section-kicker">Objetivos</div>
+        <div class="objetivo-gral">
+          <div class="icon">🎯</div>
+          <div>
+            <h3>Objetivo General</h3>
+            <p>
+              Desarrollar un método de optimización de modelos de visión computacional aplicados a imágenes médicas
+              para reducir el costo computacional sin comprometer significativamente las métricas de rendimiento
+              diagnóstico, y habilitar su despliegue en dispositivos con recursos restringidos.
+            </p>
+          </div>
+        </div>
+        <div class="objetivos-list">
+          <div class="obj-item">
+            <div class="obj-num">1</div>
+            <p>Diseñar el método de optimización integrando técnicas de compresión de modelos.</p>
+          </div>
+          <div class="obj-item">
+            <div class="obj-num">2</div>
+            <p>Evaluar el impacto del pruning estructurado sobre Accuracy, F1, AUC-ROC y tamaño.</p>
+          </div>
+          <div class="obj-item">
+            <div class="obj-num">3</div>
+            <p>Validar la recuperación de métricas mediante fine-tuning post-pruning.</p>
+          </div>
+          <div class="obj-item">
+            <div class="obj-num">4</div>
+            <p>Comparar eficiencia del modelo cuantizado FP32 → INT8 en precisión, tamaño y latencia.</p>
+          </div>
+          <div class="obj-item highlight">
+            <div class="obj-num">5</div>
+            <p>Reducir el modelo a menos de 15 MB para ejecución local en móviles de recursos limitados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: METODOLOGÍA -->
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <div class="section-kicker">Metodología</div>
+        <h2>Pipeline de 5 fases</h2>
+        <p style="margin-bottom:1rem;">
+          Secuencia completa: entrenamiento base → pruning → fine-tuning → cuantización → evaluación.
+        </p>
+        <div class="fases-row">
+          <div class="fase-card">
+            <div class="fase-num">Fase 1</div>
+            <div class="fase-icon">🏋️</div>
+            <h4>Entrenamiento Base</h4>
+            <p>Transfer Learning + AdamW. Registro de métricas en MLflow.</p>
+            <div class="output-pill">modelo_base.pt</div>
+          </div>
+          <div class="fase-card">
+            <div class="fase-num">Fase 2</div>
+            <div class="fase-icon">✂️</div>
+            <h4>Pruning</h4>
+            <p>Método Taylor. Reduce parámetros con pérdida controlada.</p>
+            <div class="output-pill">modelo_podado.pt</div>
+          </div>
+          <div class="fase-card">
+            <div class="fase-num">Fase 3</div>
+            <div class="fase-icon">🔄</div>
+            <h4>Fine-Tuning</h4>
+            <p>Reentrenamiento con Knowledge Distillation.</p>
+            <div class="output-pill">modelo_ft.pt</div>
+          </div>
+          <div class="fase-card active">
+            <div class="fase-num">Fase 4 — Clave</div>
+            <div class="fase-icon">⚡</div>
+            <h4>Cuantización INT8</h4>
+            <p>FP32 → INT8 con SmoothQuant. Reduce tamaño hasta 4×.</p>
+            <div class="output-pill">modelo_int8.onnx</div>
+          </div>
+          <div class="fase-card">
+            <div class="fase-num">Fase 5</div>
+            <div class="fase-icon">📊</div>
+            <h4>Evaluación</h4>
+            <p>Comparación precisión vs. costo computacional.</p>
+            <div class="output-pill">reporte.xlsx</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: CUANTIZACIÓN -->
+    <section class="slide" id="slide-5">
+      <div class="slide-content">
+        <div class="section-kicker">Fase 4 · Núcleo</div>
+        <h2>Cuantización INT8: el corazón de la optimización</h2>
+        <div class="cuant-grid">
+          <div class="cuant-col">
+            <h3>¿Qué es la cuantización?</h3>
+            <ul>
+              <li>Los pesos se almacenan como números de 32 bits (<strong>FP32</strong>), haciendo los modelos grandes y lentos.</li>
+              <li>La cuantización convierte pesos a enteros de 8 bits (<strong>INT8</strong>), reduciendo el tamaño hasta <strong>4 veces</strong>.</li>
+              <li>Se usa <strong>SmoothQuant (PTQ)</strong> para calibrar la conversión con datos reales.</li>
+              <li>El modelo se exporta en <strong>ONNX</strong>, compatible con Android e iOS.</li>
+            </ul>
+          </div>
+          <div class="cuant-col">
+            <div class="viz-box">
+              <div class="bar-label">EfficientNetV2 sin optimizar · FP32</div>
+              <div class="bar"><div class="bar-fp32">82 MB</div></div>
+              <div class="bar-label">EfficientNetV2 optimizado · INT8</div>
+              <div class="bar"><div class="bar-int8">22 MB</div></div>
+              <div class="highlight-box">
+                <strong>−73%</strong><br>
+                <span style="font-size:.85rem;color:var(--text-secondary);">reducción de tamaño en YOLOv26m</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: RESULTADOS KPI -->
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <div class="section-kicker">Resultados</div>
+        <h2>Métricas destacadas del modelo optimizado</h2>
+        <div class="kpis-row">
+          <div class="kpi-card gold">
+            <div class="kpi-val">~73%</div>
+            <div class="kpi-label">Reducción promedio de tamaño</div>
+            <div class="kpi-sub">41.6 MB → 10.9 MB</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">98.7%</div>
+            <div class="kpi-label">AUC en retinopatía</div>
+            <div class="kpi-sub">YOLOv26m post-optimización</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">1.98 MB</div>
+            <div class="kpi-label">Modelo más ligero</div>
+            <div class="kpi-sub">YOLOv26n · melanoma de piel</div>
+          </div>
+          <div class="kpi-card gold">
+            <div class="kpi-val">+1.4%</div>
+            <div class="kpi-label">Mejora de AUC post-cuantización</div>
+            <div class="kpi-sub">YOLOv26n en skin melanoma</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: TABLA COMPARATIVA -->
+    <section class="slide" id="slide-7">
+      <div class="slide-content">
+        <div class="section-kicker">Resultados</div>
+        <h2>Fase 1 (Base) vs Fase 4 (Optimizado)</h2>
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Dataset</th>
+                <th>Modelo</th>
+                <th>Tamaño F1</th>
+                <th>Tamaño F4</th>
+                <th>Δ Tamaño</th>
+                <th>AUC F1</th>
+                <th>AUC F4</th>
+                <th>Δ AUC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag tag-ojo">Retinopatía</span></td>
+                <td>YOLOv26m</td>
+                <td>41.64 MB</td>
+                <td>10.95 MB</td>
+                <td class="delta-pos">↓ 73.7%</td>
+                <td>0.9934</td>
+                <td>0.9873</td>
+                <td class="delta-neg">−0.006</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-oral">Cáncer Oral</span></td>
+                <td>YOLOv26m</td>
+                <td>41.64 MB</td>
+                <td>10.95 MB</td>
+                <td class="delta-pos">↓ 73.7%</td>
+                <td>0.9427</td>
+                <td>0.9323</td>
+                <td class="delta-neg">−0.010</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td>YOLOv26n</td>
+                <td>6.28 MB</td>
+                <td>1.98 MB</td>
+                <td class="delta-pos">↓ 68.5%</td>
+                <td>0.8837</td>
+                <td>0.8974</td>
+                <td class="delta-pos">+0.014</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-ojo">Retinopatía</span></td>
+                <td>EfficientNetV2-S</td>
+                <td>81.57 MB</td>
+                <td>22.11 MB</td>
+                <td class="delta-pos">↓ 72.9%</td>
+                <td>0.9873</td>
+                <td>0.9575</td>
+                <td class="delta-neg">−0.030</td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td>MobileNetV4-M</td>
+                <td>34.17 MB</td>
+                <td>8.95 MB</td>
+                <td class="delta-pos">↓ 73.8%</td>
+                <td>0.8896</td>
+                <td>0.4747</td>
+                <td class="delta-neg">−0.415</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:1rem;font-size:.85rem;">
+          <strong>Veredicto:</strong> YOLOv26m logra la mejor combinación de tamaño y precisión.
+          MobileNetV4 y EfficientNetV2 presentan degradación mayor en datos desbalanceados.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: CONCLUSIONES -->
+    <section class="slide" id="slide-8">
+      <div class="slide-content">
+        <div class="section-kicker">Conclusiones</div>
+        <h2>Principales hallazgos</h2>
+        <div class="conclusiones-row">
+          <div class="conclusion-card gold">
+            <div class="icon">⚡</div>
+            <h4>La cuantización INT8 es viable</h4>
+            <p>Modelos cuantizados mantienen AUC > 0.93 en los mejores casos con reducción promedio del 73%.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="icon">🏆</div>
+            <h4>YOLOv26 es la arquitectura más robusta</h4>
+            <p>Menor degradación de métricas tras el pipeline completo de optimización.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="icon">📱</div>
+            <h4>Modelos de menos de 15 MB</h4>
+            <p>1.98 MB (YOLOv26n) con AUC 0.897 y 10.95 MB (YOLOv26m) con AUC 0.987.</p>
+          </div>
+          <div class="conclusion-card gold">
+            <div class="icon">🇵🇪</div>
+            <h4>Impacto en salud pública peruana</h4>
+            <p>Herramientas de alerta temprana operables en postas rurales sin internet.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="icon">🔁</div>
+            <h4>Fine-tuning post-pruning es indispensable</h4>
+            <p>La secuencia completa es necesaria para resultados clínicamente aceptables.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="icon">🚀</div>
+            <h4>Trabajo futuro</h4>
+            <p>Validación clínica real, interfaz móvil e integración con registros de salud.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: CIERRE -->
+    <section class="slide" id="slide-9">
+      <div class="slide-content">
+        <div class="section-kicker" style="background:rgba(255,255,255,.15);color:#fff;">Gracias</div>
+        <h2>IA local para diagnóstico médico <em>en zonas rurales</em></h2>
+        <p style="max-width:700px;margin:0 auto 1.5rem;">
+          El método propuesto demuestra que es posible llevar modelos de deep learning a dispositivos de
+          recursos limitados, abriendo la puerta a sistemas de salud más equitativos y accesibles.
+        </p>
+        <div class="future-list">
+          <div class="future-item">
+            <span>🏥</span>
+            <p>Validación clínica en establecimientos de salud reales</p>
+          </div>
+          <div class="future-item">
+            <span>📱</span>
+            <p>Desarrollo de interfaz móvil de captura y alerta</p>
+          </div>
+          <div class="future-item">
+            <span>🔗</span>
+            <p>Integración con registros de salud electrónicos rurales</p>
+          </div>
+        </div>
+        <p class="advisors" style="margin-top:2rem;">
+          Universidad Peruana Unión · Facultad de Ingeniería y Arquitectura<br>
+          Escuela Profesional de Ingeniería de Sistemas · 2026
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active', 'prev');
+        if (i === index) {
+          slide.classList.add('active');
+        } else if (i < index) {
+          slide.classList.add('prev');
+        }
+      });
+      current = index;
+    }
+
+    function nextSlide() {
+      if (current < totalSlides - 1) showSlide(current + 1);
+    }
+
+    function prevSlide() {
+      if (current > 0) showSlide(current - 1);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        showSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        showSlide(totalSlides - 1);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Avance con clic en los bordes de la slide
+    document.querySelector('.slides-container').addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      const width = window.innerWidth;
+      if (e.clientX > width * 0.65) nextSlide();
+      else if (e.clientX < width * 0.35) prevSlide();
+    });
+  </script>
+
+</body>
+</html>

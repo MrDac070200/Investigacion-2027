@@ -72,6 +72,24 @@
     }
     nav ul li a:hover { color: var(--secondary); }
 
+    .nav-btn-presentacion {
+      display: inline-flex; align-items: center; gap: .35rem;
+      background: var(--secondary); color: var(--primary) !important;
+      font-weight: 800; font-size: .72rem;
+      padding: .45rem 1rem; border-radius: 50px;
+      box-shadow: 0 2px 10px rgba(248,169,0,.35);
+      transition: transform .2s, box-shadow .2s, background .2s;
+      border: 2px solid var(--secondary);
+    }
+    .nav-btn-presentacion:hover {
+      background: var(--secondary-dark);
+      border-color: var(--secondary-dark);
+      color: var(--primary) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(248,169,0,.5);
+    }
+    .nav-btn-presentacion::before { content: '▶'; font-size: .6rem; }
+
     .menu-toggle { display: none; }
     .menu-icon {
       display: none;
@@ -535,6 +553,12 @@
         padding: .6rem 0;
         border-bottom: 1px solid rgba(255,255,255,.1);
       }
+      .nav-btn-presentacion {
+        justify-content: center;
+        margin-top: .5rem;
+        padding: .65rem 1.2rem;
+        font-size: .85rem;
+      }
       .menu-toggle:checked ~ ul { display: flex; }
 
       section { padding: 3.5rem 1rem; }
@@ -701,6 +725,7 @@
     <li><a href="fase4.html">Fase 4</a></li>
     <li><a href="#resultados">Resultados</a></li>
     <li><a href="#conclusiones">Conclusiones</a></li>
+    <li><a href="presentacion.html" class="nav-btn-presentacion">Presentación</a></li>
   </ul>
 </nav>
 
