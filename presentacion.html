@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Presentación — Método de Optimización CNN · UPeU 2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --blue-dark:     #003865;
@@ -130,7 +131,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-    #slide-10 .slide-footer {
+    #slide-11 .slide-footer {
       color: #fff;
     }
 
@@ -490,52 +491,122 @@
       background: linear-gradient(135deg, var(--blue-dark), var(--blue-corp));
       color: #fff;
       border-radius: var(--radius);
-      padding: 1.8rem 2.2rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      gap: 1.2rem;
-      align-items: flex-start;
+      padding: 1.6rem 2.2rem;
+      margin-bottom: 1.4rem;
       box-shadow: 0 12px 40px rgba(0,56,101,.18);
+      border: 3px solid var(--white);
     }
-    .objetivo-gral .icon { font-size: 2.2rem; }
     .objetivo-gral h3 {
       color: var(--gold);
-      font-size: .85rem;
+      font-size: .8rem;
       text-transform: uppercase;
-      letter-spacing: .07em;
-      margin-bottom: .3rem;
+      letter-spacing: .08em;
+      margin-bottom: .4rem;
     }
-    .objetivo-gral p { color: rgba(255,255,255,.9); }
+    .objetivo-gral .obj-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 800;
+      margin-bottom: .8rem;
+      line-height: 1.25;
+    }
+    .objetivo-gral ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.2rem;
+    }
+    .objetivo-gral li {
+      position: relative;
+      padding-left: 1.1rem;
+      font-size: .95rem;
+      color: rgba(255,255,255,.9);
+    }
+    .objetivo-gral li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .55rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
     .objetivos-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
     }
     .obj-item {
-      display: flex;
-      gap: .9rem;
-      align-items: flex-start;
+      flex: 1 1 calc(20% - 1rem);
+      min-width: 170px;
+      max-width: 210px;
       background: var(--blue-soft);
       border-radius: 14px;
-      padding: 1.1rem;
+      padding: 1rem;
       border: 1px solid rgba(0,56,101,.06);
+      text-align: center;
+      transition: transform .2s ease;
+    }
+    .obj-item:hover { transform: translateY(-4px); }
+    .obj-circle {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto .9rem;
+      border-radius: 50%;
+      border: 3px solid rgba(0,56,101,.12);
+      background: var(--white);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .obj-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .obj-circle:empty::before {
+      content: '🖼️';
+      font-size: 1.6rem;
+      opacity: .3;
+    }
+    .obj-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      margin-bottom: .4rem;
     }
     .obj-num {
       background: var(--blue-dark);
       color: #fff;
       font-weight: 800;
-      width: 34px;
-      height: 34px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-size: .9rem;
+      font-size: .8rem;
+    }
+    .obj-keyword {
+      font-size: .95rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      line-height: 1.2;
+    }
+    .obj-item p {
+      font-size: .8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
     }
     .obj-item.highlight { background: var(--gold-soft); border-color: rgba(248,169,0,.2); }
     .obj-item.highlight .obj-num { background: var(--gold); color: var(--blue-dark); }
-    .obj-item p { font-size: .95rem; }
 
     /* ════════════════════════════════════════
        SLIDE 4 · METODOLOGÍA
@@ -743,39 +814,77 @@
     }
 
     /* ════════════════════════════════════════
-       SLIDE 6 · RESULTADOS KPI
+       RESULTADOS · ESTILOS COMPARTIDOS
     ════════════════════════════════════════ */
+    .results-highlight {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .result-kpi {
+      background: var(--blue-dark);
+      color: #fff; border-radius: var(--radius);
+      padding: 1.8rem 1.2rem; text-align: center;
+      box-shadow: 0 8px 30px rgba(0,56,101,.1);
+    }
+    .result-kpi.gold { background: var(--gold); color: var(--blue-dark); }
+    .result-kpi .kpi-val {
+      font-size: 2.2rem; font-weight: 900; line-height: 1;
+    }
+    .result-kpi .kpi-label { font-size: .82rem; opacity: .85; margin-top: .4rem; }
+    .result-kpi .kpi-sub { font-size: .72rem; opacity: .65; margin-top: .2rem; }
+
     .kpis-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.2rem;
-      margin-top: 2rem;
+      margin-bottom: 2rem;
     }
     .kpi-card {
       background: rgba(255,255,255,.75);
       backdrop-filter: blur(6px);
       color: var(--blue-dark);
       border-radius: var(--radius);
-      padding: 2rem 1.2rem;
+      padding: 1.6rem 1rem;
       text-align: center;
       border: 1px solid rgba(0,56,101,.08);
       box-shadow: 0 8px 30px rgba(0,56,101,.06);
       border-top: 4px solid var(--blue-bright);
     }
     .kpi-card.gold { border-top-color: var(--gold); background: var(--gold-soft); }
-    .kpi-val { font-size: 2.4rem; font-weight: 900; line-height: 1; color: var(--blue-dark); }
+    .kpi-card .kpi-val { font-size: 2rem; font-weight: 900; line-height: 1; color: var(--blue-dark); }
     .kpi-card.gold .kpi-val { color: var(--blue-dark); }
-    .kpi-label { font-size: .88rem; color: var(--text-secondary); margin-top: .6rem; }
-    .kpi-sub { font-size: .75rem; color: var(--text-secondary); opacity: .8; margin-top: .25rem; }
+    .kpi-card .kpi-label { font-size: .82rem; color: var(--text-secondary); margin-top: .5rem; }
+    .kpi-card .kpi-sub { font-size: .72rem; color: var(--text-secondary); opacity: .8; margin-top: .2rem; }
 
-    /* ════════════════════════════════════════
-       SLIDE 7 · TABLA COMPARATIVA
-    ════════════════════════════════════════ */
+    .chart-section { margin-bottom: 1.5rem; }
+    .chart-section h3 {
+      font-size: 1rem; color: var(--blue-dark);
+      font-weight: 700; margin-bottom: .8rem;
+      display: inline-block;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      padding: .55rem 1.2rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 14px rgba(0,56,101,.1);
+    }
+    .chart-wrapper {
+      background: rgba(255,255,255,.7);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: 0 8px 30px rgba(0,56,101,.06);
+      position: relative;
+      height: 260px;
+      border: 1px solid rgba(0,56,101,.08);
+    }
+    .chart-wrapper canvas { max-height: 100% !important; }
+
     .table-wrap {
       overflow-x: auto;
       border-radius: var(--radius);
       border: 1px solid rgba(0,56,101,.1);
-      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
       background: rgba(255,255,255,.7);
       backdrop-filter: blur(6px);
       box-shadow: 0 8px 30px rgba(0,56,101,.06);
@@ -783,25 +892,34 @@
     .results-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: .88rem;
+      font-size: .8rem;
       background: transparent;
     }
     .results-table th {
       background: var(--blue-dark);
       color: #fff;
-      padding: .8rem .9rem;
+      padding: .65rem .8rem;
       text-align: left;
       font-weight: 700;
+      white-space: nowrap;
     }
     .results-table td {
-      padding: .65rem .9rem;
+      padding: .5rem .8rem;
       border-bottom: 1px solid rgba(0,56,101,.08);
       color: var(--text-secondary);
+      white-space: nowrap;
     }
     .results-table tr:nth-child(even) { background: var(--blue-soft); }
     .results-table tr:hover { background: var(--blue-light); }
     .delta-pos { color: #2E7D32; font-weight: 700; }
     .delta-neg { color: #C62828; font-weight: 700; }
+    .delta-neutral { color: var(--text-secondary); font-weight: 700; }
+    .size-reduction {
+      display: inline-flex; align-items: center; gap: .2rem;
+      background: var(--blue-light); color: var(--blue-dark);
+      border-radius: 4px; padding: .1rem .4rem;
+      font-weight: 700; font-size: .75rem;
+    }
     .tag {
       display: inline-block;
       padding: .2rem .55rem;
@@ -812,6 +930,54 @@
     .tag-ojo { background: #E3F2FD; color: #1565C0; }
     .tag-oral { background: #FCE4EC; color: #880E4F; }
     .tag-skin { background: #E8F5E9; color: #1B5E20; }
+
+    .note-box {
+      background: var(--blue-light); border-left: 4px solid var(--blue-dark);
+      border-radius: 0 8px 8px 0; padding: 1rem 1.2rem;
+      font-size: .85rem; color: var(--text-secondary); margin-top: 1rem;
+    }
+    .note-box strong { color: var(--blue-dark); }
+
+    /* Layouts específicos por slide de resultados */
+    .results-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .results-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .results-main .chart-section { margin-bottom: 0; }
+    .results-main .chart-wrapper { height: 220px; }
+    .results-main .table-wrap { margin-bottom: 0; }
+    .results-sidebar .results-highlight {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 0;
+    }
+    .results-sidebar .result-kpi {
+      padding: 1.4rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 120px;
+    }
+    .results-sidebar .result-kpi .kpi-val { font-size: 1.8rem; }
+    .results-sidebar .result-kpi .kpi-label { font-size: .78rem; }
+    .results-sidebar .result-kpi .kpi-sub { font-size: .68rem; }
+
+    .slide-results-2 .kpis-row { margin-bottom: 1.2rem; }
+    .slide-results-2 .chart-wrapper { height: 200px; }
+
+    .slide-results-3 .table-wrap { max-height: 440px; overflow-y: auto; }
+    .slide-results-4 .table-wrap { margin-bottom: 1.2rem; }
+    .slide-results-4 .note-box { margin-top: 0; }
 
     /* ════════════════════════════════════════
        SLIDE 8 · CONCLUSIONES
@@ -839,28 +1005,28 @@
     .conclusion-card p { font-size: .9rem; color: var(--text-secondary); line-height: 1.55; }
 
     /* ════════════════════════════════════════
-       SLIDE 10 · CIERRE
+       SLIDE 11 · CIERRE
     ════════════════════════════════════════ */
-    #slide-10 {
+    #slide-11 {
       background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-corp) 50%, #245C8A 100%);
       color: var(--white);
       text-align: center;
     }
-    #slide-10 .bg-shapes .shape-circle-tl {
+    #slide-11 .bg-shapes .shape-circle-tl {
       background: var(--gold);
       width: 380px;
       height: 380px;
       top: -150px;
       left: -150px;
     }
-    #slide-10 .bg-shapes .shape-triangle-br {
+    #slide-11 .bg-shapes .shape-triangle-br {
       border-bottom-color: rgba(255,255,255,.12);
       border-left-width: 320px;
       border-bottom-width: 320px;
       bottom: -30px;
       right: -30px;
     }
-    #slide-10 .bg-shapes .shape-diamond-tr {
+    #slide-11 .bg-shapes .shape-diamond-tr {
       background: rgba(255,255,255,.1);
       width: 400px;
       height: 400px;
@@ -868,27 +1034,7 @@
       right: -120px;
       border-radius: 42px;
     }
-    #slide-10 p { color: rgba(255,255,255,.82); }
-    #slide-10 .future-list {
-      display: flex;
-      flex-direction: column;
-      gap: .9rem;
-      max-width: 620px;
-      margin: 1.8rem auto 0;
-      text-align: left;
-    }
-    .future-item {
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 12px;
-      padding: 1rem 1.3rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      backdrop-filter: blur(4px);
-    }
-    .future-item span { font-size: 1.5rem; }
-    .future-item p { color: #fff !important; margin: 0; }
+    #slide-11 p { color: rgba(255,255,255,.82); }
 
     /* ════════════════════════════════════════
        RESPONSIVE
@@ -901,12 +1047,19 @@
       .problem-grid { grid-template-columns: 1fr; gap: 1rem; }
       .problem-card { --diag-offset: 0px !important; }
       .problem-card img { height: 160px; }
-      .objetivos-list { grid-template-columns: 1fr; }
+      .objetivos-list { flex-direction: column; align-items: center; }
+      .obj-item { flex: 1 1 100%; max-width: 320px; }
       .fases-row { flex-direction: column; align-items: center; gap: 2rem; }
       .fase-card { min-width: auto; max-width: 320px; width: 100%; }
       .cuant-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .results-highlight { grid-template-columns: repeat(2, 1fr); }
       .kpis-row { grid-template-columns: repeat(2, 1fr); }
-      .conclusiones-row { grid-template-columns: 1fr; }
+      .chart-wrapper { height: 240px; padding: 1rem; }
+      .results-layout { grid-template-columns: 1fr; }
+      .results-sidebar .results-highlight { flex-direction: row; }
+      .results-sidebar .result-kpi { min-height: auto; }
+      .slide-results-3 .table-wrap { max-height: none; }
+      .conclusiones-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -927,7 +1080,7 @@
         </p>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
@@ -975,7 +1128,7 @@
         </div>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
@@ -1045,7 +1198,7 @@
         </div>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
@@ -1059,41 +1212,71 @@
       <div class="slide-inner">
         <div class="section-kicker">Objetivos</div>
         <div class="objetivo-gral">
-          <div class="icon">🎯</div>
           <div>
             <h3>Objetivo General</h3>
-            <p>
-              Desarrollar un método de optimización de modelos de visión computacional aplicados a imágenes médicas
-              para reducir el costo computacional sin comprometer significativamente las métricas de rendimiento
-              diagnóstico, y habilitar su despliegue en dispositivos con recursos restringidos.
-            </p>
+            <div class="obj-title">Optimizar modelos de visión computacional</div>
+            <ul>
+              <li>Reducir el costo computacional</li>
+              <li>Preservar las métricas diagnósticas</li>
+              <li>Habilitar el despliegue en dispositivos de recursos limitados</li>
+            </ul>
           </div>
         </div>
         <div class="objetivos-list">
           <div class="obj-item">
-            <div class="obj-num">1</div>
-            <p>Diseñar el método de optimización integrando técnicas de compresión de modelos.</p>
+            <div class="obj-circle">
+              <img src="img/presentacion/goal-1.png" alt="Diseño del método">
+            </div>
+            <div class="obj-header">
+              <div class="obj-num">1</div>
+              <div class="obj-keyword">Diseño del método</div>
+            </div>
+            <p>Integrar técnicas de compresión de modelos.</p>
           </div>
           <div class="obj-item">
-            <div class="obj-num">2</div>
-            <p>Evaluar el impacto del pruning estructurado sobre Accuracy, F1, AUC-ROC y tamaño.</p>
+            <div class="obj-circle">
+              <img src="img/presentacion/goal-2.png" alt="Pruning estructurado">
+            </div>
+            <div class="obj-header">
+              <div class="obj-num">2</div>
+              <div class="obj-keyword">Pruning estructurado</div>
+            </div>
+            <p>Evaluar su impacto en Accuracy, F1, AUC-ROC y tamaño.</p>
           </div>
           <div class="obj-item">
-            <div class="obj-num">3</div>
-            <p>Validar la recuperación de métricas mediante fine-tuning post-pruning.</p>
+            <div class="obj-circle">
+              <img src="img/presentacion/goal-3.png" alt="Fine-tuning">
+            </div>
+            <div class="obj-header">
+              <div class="obj-num">3</div>
+              <div class="obj-keyword">Fine-tuning</div>
+            </div>
+            <p>Validar la recuperación de métricas post-pruning.</p>
           </div>
           <div class="obj-item">
-            <div class="obj-num">4</div>
-            <p>Comparar eficiencia del modelo cuantizado FP32 → INT8 en precisión, tamaño y latencia.</p>
+            <div class="obj-circle">
+              <img src="img/presentacion/goal-4.png" alt="Cuantización INT8">
+            </div>
+            <div class="obj-header">
+              <div class="obj-num">4</div>
+              <div class="obj-keyword">Cuantización INT8</div>
+            </div>
+            <p>Comparar eficiencia FP32 → INT8 en precisión, tamaño y latencia.</p>
           </div>
           <div class="obj-item highlight">
-            <div class="obj-num">5</div>
-            <p>Reducir el modelo a menos de 15 MB para ejecución local en móviles de recursos limitados.</p>
+            <div class="obj-circle">
+              <img src="img/presentacion/goal-5.png" alt="Modelo ligero">
+            </div>
+            <div class="obj-header">
+              <div class="obj-num">5</div>
+              <div class="obj-keyword">Modelo ligero</div>
+            </div>
+            <p>Reducir el modelo a menos de 15 MB para móviles de recursos limitados.</p>
           </div>
         </div>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
@@ -1160,94 +1343,28 @@
         </div>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
-    <!-- SLIDE 6: CUANTIZACIÓN -->
-    <section class="slide" id="slide-6">
+    <!-- SLIDE 6: RESULTADOS — MÉTRICAS Y COMPARACIÓN DIRECTA -->
+    <section class="slide slide-results-1" id="slide-6">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Fase 4 · Cuantización INT8: el corazón de la optimización</div>
-        <div class="cuant-grid">
-          <div class="cuant-col">
-            <ul>
-              <li>Los pesos se almacenan como números de 32 bits (<strong>FP32</strong>), haciendo los modelos grandes y lentos.</li>
-              <li>La cuantización convierte pesos a enteros de 8 bits (<strong>INT8</strong>), reduciendo el tamaño hasta <strong>4 veces</strong>.</li>
-              <li>Se usa <strong>SmoothQuant (PTQ)</strong> para calibrar la conversión con datos reales.</li>
-              <li>El modelo se exporta en <strong>ONNX</strong>, compatible con Android e iOS.</li>
-            </ul>
-          </div>
-          <div class="cuant-col">
-            <div class="viz-box">
-              <div class="bar-label">EfficientNetV2 sin optimizar · FP32</div>
-              <div class="bar"><div class="bar-fp32">82 MB</div></div>
-              <div class="bar-label">EfficientNetV2 optimizado · INT8</div>
-              <div class="bar"><div class="bar-int8">22 MB</div></div>
-              <div class="highlight-box">
-                <strong>−73%</strong><br>
-                <span style="font-size:.9rem;color:var(--text-secondary);">reducción de tamaño en YOLOv26m</span>
+        <div class="section-kicker">Resultados · Métricas destacadas y comparación directa</div>
+        <div class="results-layout">
+          <div class="results-main">
+            <div class="chart-section">
+              <h3>Reducción de tamaño: Fase 1 vs Fase 4 (MB)</h3>
+              <div class="chart-wrapper">
+                <canvas id="sizeChart"></canvas>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
-      </div>
-    </section>
-
-    <!-- SLIDE 7: RESULTADOS KPI -->
-    <section class="slide" id="slide-7">
-      <div class="bg-shapes">
-        <div class="shape-circle-tl"></div>
-        <div class="shape-triangle-br"></div>
-        <div class="shape-diamond-tr"></div>
-      </div>
-      <div class="slide-inner">
-        <div class="section-kicker">Resultados · Métricas destacadas del modelo optimizado</div>
-        <div class="kpis-row">
-          <div class="kpi-card gold">
-            <div class="kpi-val">~73%</div>
-            <div class="kpi-label">Reducción promedio de tamaño</div>
-            <div class="kpi-sub">41.6 MB → 10.9 MB</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-val">98.7%</div>
-            <div class="kpi-label">AUC en retinopatía</div>
-            <div class="kpi-sub">YOLOv26m post-optimización</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-val">1.98 MB</div>
-            <div class="kpi-label">Modelo más ligero</div>
-            <div class="kpi-sub">YOLOv26n · melanoma de piel</div>
-          </div>
-          <div class="kpi-card gold">
-            <div class="kpi-val">+1.4%</div>
-            <div class="kpi-label">Mejora de AUC post-cuantización</div>
-            <div class="kpi-sub">YOLOv26n en skin melanoma</div>
-          </div>
-        </div>
-      </div>
-      <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
-      </div>
-    </section>
-
-    <!-- SLIDE 8: TABLA COMPARATIVA -->
-    <section class="slide" id="slide-8">
-      <div class="bg-shapes">
-        <div class="shape-circle-tl"></div>
-        <div class="shape-triangle-br"></div>
-        <div class="shape-diamond-tr"></div>
-      </div>
-      <div class="slide-inner">
-        <div class="section-kicker">Resultados · Fase 1 (Base) vs Fase 4 (Optimizado)</div>
-        <div class="table-wrap">
+            <div class="table-wrap">
           <table class="results-table">
             <thead>
               <tr>
@@ -1259,74 +1376,329 @@
                 <th>AUC F1</th>
                 <th>AUC F4</th>
                 <th>Δ AUC</th>
+                <th>Acc F1</th>
+                <th>Acc F4</th>
+                <th>Δ Acc</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><span class="tag tag-ojo">Retinopatía</span></td>
+                <td><span class="tag tag-ojo">Retino.</span></td>
                 <td>YOLOv26m</td>
                 <td>41.64 MB</td>
                 <td>10.95 MB</td>
-                <td class="delta-pos">↓ 73.7%</td>
+                <td><span class="size-reduction">↓ 73.7%</span></td>
                 <td>0.9934</td>
                 <td>0.9873</td>
-                <td class="delta-neg">−0.006</td>
+                <td><span class="delta-neg">−0.006</span></td>
+                <td>95.1%</td>
+                <td>96.2%</td>
+                <td><span class="delta-pos">+1.1%</span></td>
               </tr>
               <tr>
-                <td><span class="tag tag-oral">Cáncer Oral</span></td>
+                <td><span class="tag tag-oral">Oral</span></td>
                 <td>YOLOv26m</td>
                 <td>41.64 MB</td>
                 <td>10.95 MB</td>
-                <td class="delta-pos">↓ 73.7%</td>
+                <td><span class="size-reduction">↓ 73.7%</span></td>
                 <td>0.9427</td>
                 <td>0.9323</td>
-                <td class="delta-neg">−0.010</td>
+                <td><span class="delta-neg">−0.010</span></td>
+                <td>90.9%</td>
+                <td>86.1%</td>
+                <td><span class="delta-neg">−4.9%</span></td>
               </tr>
               <tr>
-                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td><span class="tag tag-skin">Melan.</span></td>
                 <td>YOLOv26n</td>
                 <td>6.28 MB</td>
                 <td>1.98 MB</td>
-                <td class="delta-pos">↓ 68.5%</td>
+                <td><span class="size-reduction">↓ 68.5%</span></td>
                 <td>0.8837</td>
                 <td>0.8974</td>
-                <td class="delta-pos">+0.014</td>
+                <td><span class="delta-pos">+0.014</span></td>
+                <td>89.8%</td>
+                <td>90.0%</td>
+                <td><span class="delta-pos">+0.3%</span></td>
               </tr>
               <tr>
-                <td><span class="tag tag-ojo">Retinopatía</span></td>
-                <td>EfficientNetV2-S</td>
+                <td><span class="tag tag-ojo">Retino.</span></td>
+                <td>EffNetV2-S</td>
                 <td>81.57 MB</td>
                 <td>22.11 MB</td>
-                <td class="delta-pos">↓ 72.9%</td>
+                <td><span class="size-reduction">↓ 72.9%</span></td>
                 <td>0.9873</td>
                 <td>0.9575</td>
-                <td class="delta-neg">−0.030</td>
+                <td><span class="delta-neg">−0.030</span></td>
+                <td>96.2%</td>
+                <td>75.1%</td>
+                <td><span class="delta-neg">−21.1%</span></td>
               </tr>
               <tr>
-                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td><span class="tag tag-skin">Melan.</span></td>
                 <td>MobileNetV4-M</td>
                 <td>34.17 MB</td>
                 <td>8.95 MB</td>
-                <td class="delta-pos">↓ 73.8%</td>
+                <td><span class="size-reduction">↓ 73.8%</span></td>
                 <td>0.8896</td>
                 <td>0.4747</td>
-                <td class="delta-neg">−0.415</td>
+                <td><span class="delta-neg">−0.415</span></td>
+                <td>89.7%</td>
+                <td>88.8%</td>
+                <td><span class="delta-neg">−0.9%</span></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p style="margin-top:1.2rem;max-width:900px;">
-          <strong>Veredicto:</strong> YOLOv26m logra la mejor combinación de tamaño y precisión.
-          MobileNetV4 y EfficientNetV2 presentan degradación mayor en datos desbalanceados.
-        </p>
       </div>
+      <div class="results-sidebar">
+        <div class="results-highlight">
+          <div class="result-kpi gold">
+            <div class="kpi-val">~73%</div>
+            <div class="kpi-label">Reducción promedio en tamaño</div>
+            <div class="kpi-sub">41.6 MB → 10.9 MB (YOLOv26m)</div>
+          </div>
+          <div class="result-kpi">
+            <div class="kpi-val">98.7%</div>
+            <div class="kpi-label">AUC en detección de retinopatía</div>
+            <div class="kpi-sub">YOLOv26m · post-optimización</div>
+          </div>
+          <div class="result-kpi">
+            <div class="kpi-val">1.98 MB</div>
+            <div class="kpi-label">Modelo más ligero logrado</div>
+            <div class="kpi-sub">YOLOv26n · melanoma de piel</div>
+          </div>
+          <div class="result-kpi gold">
+            <div class="kpi-val">+1.4%</div>
+            <div class="kpi-label">Mejora real en AUC post-cuantización</div>
+            <div class="kpi-sub">YOLOv26n en skin melanoma</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
-    <!-- SLIDE 9: CONCLUSIONES -->
-    <section class="slide" id="slide-9">
+    <!-- SLIDE 7: RESULTADOS — BENCHMARK DE RENDIMIENTO -->
+    <section class="slide slide-results-2" id="slide-7">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Resultados · Benchmark Fase 1 (FP32) vs Fase 4 (INT8)</div>
+        <div class="kpis-row">
+          <div class="kpi-card gold">
+            <div class="kpi-val">3.2×</div>
+            <div class="kpi-label">Speedup de latencia</div>
+            <div class="kpi-sub">MobileNetV4: 22.7 → 7.2 ms</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">2.8×</div>
+            <div class="kpi-label">Speedup de throughput</div>
+            <div class="kpi-sub">MobileNetV4: 62 → 176 img/s</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-val">3.8×</div>
+            <div class="kpi-label">Compresión</div>
+            <div class="kpi-sub">MobileNetV4: 32.6 → 8.5 MB</div>
+          </div>
+          <div class="kpi-card gold">
+            <div class="kpi-val">⚠️</div>
+            <div class="kpi-label">Overhead en EfficientNetV2</div>
+            <div class="kpi-sub">Throughput baja 17% en INT8</div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Tamaño F1</th>
+                <th>Tamaño F4</th>
+                <th>Compresión</th>
+                <th>Latencia F1</th>
+                <th>Latencia F4</th>
+                <th>Speedup lat.</th>
+                <th>Throughput F1</th>
+                <th>Throughput F4</th>
+                <th>Speedup thr.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MobileNetV4-M</strong></td>
+                <td>32.6 MB</td>
+                <td>8.5 MB</td>
+                <td><span class="size-reduction">3.8×</span></td>
+                <td>22.7 ms</td>
+                <td>7.2 ms</td>
+                <td><span class="delta-pos">3.2×</span></td>
+                <td>62 img/s</td>
+                <td>176 img/s</td>
+                <td><span class="delta-pos">2.8×</span></td>
+              </tr>
+              <tr>
+                <td><strong>EfficientNetV2-S</strong></td>
+                <td>77.8 MB</td>
+                <td>21.1 MB</td>
+                <td><span class="size-reduction">3.7×</span></td>
+                <td>59.8 ms</td>
+                <td>49.7 ms</td>
+                <td><span class="delta-neutral">1.2×</span></td>
+                <td>21 img/s</td>
+                <td>18 img/s</td>
+                <td><span class="delta-neg">0.8×</span></td>
+              </tr>
+              <tr>
+                <td><strong>YOLOv26n-cls</strong> <span style="font-size:.7rem;color:#888">(melanoma)</span></td>
+                <td>6.0 MB</td>
+                <td>1.9 MB</td>
+                <td><span class="size-reduction">3.2×</span></td>
+                <td>8.6 ms</td>
+                <td>6.6 ms</td>
+                <td><span class="delta-neutral">1.3×</span></td>
+                <td>216 img/s</td>
+                <td>189 img/s</td>
+                <td><span class="delta-neg">0.9×</span></td>
+              </tr>
+              <tr>
+                <td><strong>YOLOv26m-cls</strong> <span style="font-size:.7rem;color:#888">(ojo/oral)</span></td>
+                <td>39.7 MB</td>
+                <td>10.4 MB</td>
+                <td><span class="size-reduction">3.8×</span></td>
+                <td>38.5 ms</td>
+                <td>38.2 ms</td>
+                <td><span class="delta-neutral">1.0×</span></td>
+                <td>28 img/s</td>
+                <td>24 img/s</td>
+                <td><span class="delta-neg">0.9×</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+          <div class="chart-wrapper">
+            <canvas id="latencyChart"></canvas>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="throughputChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 8: RESULTADOS — DESGLOSE POR DATASET -->
+    <section class="slide slide-results-3" id="slide-8">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Resultados · Desglose por dataset</div>
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Dataset</th>
+                <th>Modelo</th>
+                <th>Latencia F1</th>
+                <th>Latencia F4</th>
+                <th>Throughput F1</th>
+                <th>Throughput F4</th>
+                <th>Compresión</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tag tag-ojo">Retinopatía</span></td><td>MobileNetV4-M</td><td>23.1 ms</td><td>7.2 ms</td><td>61.4 img/s</td><td>184.6 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
+              <tr><td><span class="tag tag-oral">Cáncer oral</span></td><td>MobileNetV4-M</td><td>23.0 ms</td><td>7.1 ms</td><td>61.9 img/s</td><td>185.7 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
+              <tr><td><span class="tag tag-skin">Melanoma</span></td><td>MobileNetV4-M</td><td>22.0 ms</td><td>7.2 ms</td><td>62.7 img/s</td><td>158.3 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
+              <tr><td><span class="tag tag-ojo">Retinopatía</span></td><td>EfficientNetV2-S</td><td>65.4 ms</td><td>48.3 ms</td><td>17.3 img/s</td><td>17.4 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
+              <tr><td><span class="tag tag-oral">Cáncer oral</span></td><td>EfficientNetV2-S</td><td>56.9 ms</td><td>50.1 ms</td><td>21.3 img/s</td><td>18.3 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
+              <tr><td><span class="tag tag-skin">Melanoma</span></td><td>EfficientNetV2-S</td><td>56.9 ms</td><td>50.8 ms</td><td>24.9 img/s</td><td>17.4 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
+              <tr><td><span class="tag tag-skin">Melanoma</span></td><td>YOLOv26n-cls</td><td>8.6 ms</td><td>6.6 ms</td><td>215.8 img/s</td><td>189.0 img/s</td><td><span class="size-reduction">3.16×</span></td></tr>
+              <tr><td><span class="tag tag-ojo">Retinopatía</span></td><td>YOLOv26m-cls</td><td>39.3 ms</td><td>38.2 ms</td><td>25.9 img/s</td><td>23.6 img/s</td><td><span class="size-reduction">3.80×</span></td></tr>
+              <tr><td><span class="tag tag-oral">Cáncer oral</span></td><td>YOLOv26m-cls</td><td>37.6 ms</td><td>38.3 ms</td><td>29.5 img/s</td><td>23.7 img/s</td><td><span class="size-reduction">3.80×</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 9: RESULTADOS — VEREDICTO POR MODELO -->
+    <section class="slide slide-results-4" id="slide-9">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">Resultados · Veredicto por modelo</div>
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Compresión</th>
+                <th>Speedup latencia</th>
+                <th>Speedup throughput</th>
+                <th>Recomendación para móvil</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MobileNetV4-M</strong></td>
+                <td><span class="delta-pos">✅ 3.8×</span></td>
+                <td><span class="delta-pos">✅ 3.2×</span></td>
+                <td><span class="delta-pos">✅ 2.8×</span></td>
+                <td>Ideal para despliegue en edge</td>
+              </tr>
+              <tr>
+                <td><strong>EfficientNetV2-S</strong></td>
+                <td><span class="delta-pos">✅ 3.7×</span></td>
+                <td><span class="delta-neutral">⚠️ 1.2×</span></td>
+                <td><span class="delta-neg">❌ 0.8×</span></td>
+                <td>Solo si el espacio es crítico</td>
+              </tr>
+              <tr>
+                <td><strong>YOLOv26n-cls</strong></td>
+                <td><span class="delta-pos">✅ 3.2×</span></td>
+                <td><span class="delta-neutral">⚠️ 1.3×</span></td>
+                <td><span class="delta-neg">❌ 0.9×</span></td>
+                <td>Ya es suficientemente pequeño en FP32</td>
+              </tr>
+              <tr>
+                <td><strong>YOLOv26m-cls</strong></td>
+                <td><span class="delta-pos">✅ 3.8×</span></td>
+                <td><span class="delta-neutral">⚠️ 1.0×</span></td>
+                <td><span class="delta-neg">❌ 0.9×</span></td>
+                <td>Útil por compresión, no por velocidad</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note-box">
+          <strong>Conclusión de rendimiento:</strong> La efectividad de la cuantización INT8 depende de la arquitectura. <strong>MobileNetV4</strong> es la opción óptima para edge, <strong>EfficientNetV2</strong> sufre overhead de operaciones no fusionadas, y <strong>YOLOv26n</strong> ya es tan ligero que sus ganancias de velocidad son limitadas.
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 10: CONCLUSIONES -->
+    <section class="slide" id="slide-10">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1337,43 +1709,43 @@
         <div class="conclusiones-row">
           <div class="conclusion-card gold">
             <div class="icon">⚡</div>
-            <h4>La cuantización INT8 es viable</h4>
-            <p>Modelos cuantizados mantienen AUC > 0.93 en los mejores casos con reducción promedio del 73%.</p>
+            <h4>Reducción promedio del ~73% en tamaño</h4>
+            <p>El pipeline comprime modelos sin sacrificar diagnóstico: YOLOv26m pasa de <strong>41.6 MB a 10.9 MB</strong> y mantiene <strong>AUC 0.987</strong> en retinopatía.</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">🏆</div>
             <h4>YOLOv26 es la arquitectura más robusta</h4>
-            <p>Menor degradación de métricas tras el pipeline completo de optimización.</p>
+            <p>La familia YOLOv26 presenta la menor degradación. YOLOv26n incluso <strong>mejora AUC +1.4%</strong> en melanoma (0.8837 → 0.8974).</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">📱</div>
             <h4>Modelos de menos de 15 MB</h4>
-            <p>1.98 MB (YOLOv26n) con AUC 0.897 y 10.95 MB (YOLOv26m) con AUC 0.987.</p>
+            <p>Se alcanzaron <strong>1.98 MB</strong> (YOLOv26n, AUC 0.897) y <strong>10.95 MB</strong> (YOLOv26m, AUC 0.987), ejecutables en móviles de gama media.</p>
           </div>
           <div class="conclusion-card gold">
-            <div class="icon">🇵🇪</div>
-            <h4>Impacto en salud pública peruana</h4>
-            <p>Herramientas de alerta temprana operables en postas rurales sin internet.</p>
+            <div class="icon">🚀</div>
+            <h4>El speedup depende de la arquitectura</h4>
+            <p><strong>MobileNetV4-M</strong> lidera con 3.2× latencia y 2.8× throughput. <strong>EfficientNetV2-S</strong> sufre overhead (0.8× throughput) por operaciones no fusionadas.</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">🔁</div>
             <h4>Fine-tuning post-pruning es indispensable</h4>
-            <p>La secuencia completa es necesaria para resultados clínicamente aceptables.</p>
+            <p>La secuencia completa <strong>Pruning → Fine-tuning → Cuantización</strong> es necesaria para mantener métricas clínicamente aceptables.</p>
           </div>
           <div class="conclusion-card">
-            <div class="icon">🚀</div>
-            <h4>Trabajo futuro</h4>
-            <p>Validación clínica real, interfaz móvil e integración con registros de salud.</p>
+            <div class="icon">🇵🇪</div>
+            <h4>Impacto en salud pública peruana</h4>
+            <p>Habilita herramientas de alerta temprana para cáncer de piel, oral y retinopatía en postas rurales <strong>sin internet ni GPU</strong>.</p>
           </div>
         </div>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
-    <!-- SLIDE 10: CIERRE -->
-    <section class="slide" id="slide-10">
+    <!-- SLIDE 11: CIERRE -->
+    <section class="slide" id="slide-11">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1385,27 +1757,13 @@
           El método propuesto demuestra que es posible llevar modelos de deep learning a dispositivos de
           recursos limitados, abriendo la puerta a sistemas de salud más equitativos y accesibles.
         </p>
-        <div class="future-list">
-          <div class="future-item">
-            <span>🏥</span>
-            <p>Validación clínica en establecimientos de salud reales</p>
-          </div>
-          <div class="future-item">
-            <span>📱</span>
-            <p>Desarrollo de interfaz móvil de captura y alerta</p>
-          </div>
-          <div class="future-item">
-            <span>🔗</span>
-            <p>Integración con registros de salud electrónicos rurales</p>
-          </div>
-        </div>
         <p class="advisors" style="margin-top:2rem;">
           Universidad Peruana Unión · Facultad de Ingeniería y Arquitectura<br>
           Escuela Profesional de Ingeniería de Sistemas · 2026
         </p>
       </div>
       <div class="slide-footer">
-        XV Jornada Científica - EP. Ing. Sistemas
+        XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
@@ -1435,6 +1793,7 @@
         }
       });
       current = index;
+      initChartsForSlide(index);
     }
 
     function nextSlide() {
@@ -1503,6 +1862,143 @@
 
     faseModalClose.addEventListener('click', closeFaseModal);
     faseModalBackdrop.addEventListener('click', closeFaseModal);
+
+    // ── Chart.js: gráficos de resultados ──
+    const chartInstances = {};
+    const PRIMARY = '#003865';
+    const SECONDARY = '#F8A900';
+    const SURFACE = 'rgba(0,56,101,.12)';
+
+    const commonChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: PRIMARY, font: { size: 11 }, boxWidth: 12 }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#4A4A4A', font: { size: 10 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 },
+          grid: { color: 'rgba(0,56,101,.08)' }
+        },
+        y: {
+          ticks: { color: '#4A4A4A', font: { size: 10 } },
+          grid: { color: 'rgba(0,56,101,.08)' }
+        }
+      }
+    };
+
+    const benchChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: PRIMARY, font: { size: 11 }, boxWidth: 12 }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#4A4A4A', font: { size: 10 } },
+          grid: { color: 'rgba(0,56,101,.08)' }
+        },
+        y: {
+          ticks: { color: '#4A4A4A', font: { size: 10 } },
+          grid: { color: 'rgba(0,56,101,.08)' },
+          beginAtZero: true
+        }
+      }
+    };
+
+    function initSizeChart() {
+      if (chartInstances.sizeChart) return;
+      const ctx = document.getElementById('sizeChart').getContext('2d');
+      chartInstances.sizeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['YOLOv26m\nOjo', 'YOLOv26m\nOral', 'YOLOv26n\nMelan.', 'EffNetV2\nOjo', 'MobileNetV4\nOral', 'MobileNetV4\nMelan.'],
+          datasets: [
+            { label: 'Fase 1 — Base (MB)', data: [39.71, 39.71, 5.98, 77.79, 32.58, 32.58], backgroundColor: SURFACE, borderColor: 'rgba(0,56,101,.2)', borderWidth: 1, borderRadius: 4 },
+            { label: 'Fase 4 — INT8 (MB)', data: [10.44, 10.44, 1.89, 21.09, 8.53, 8.53], backgroundColor: SECONDARY, borderRadius: 4 }
+          ]
+        },
+        options: {
+          ...commonChartOptions,
+          plugins: {
+            ...commonChartOptions.plugins,
+            tooltip: {
+              callbacks: {
+                afterBody: (items) => {
+                  const base = items[0]?.raw || 0;
+                  const opt  = items[1]?.raw || 0;
+                  if (opt) {
+                    const pct = (((base - opt) / base) * 100).toFixed(1);
+                    return [`Reducción: ${pct}%`];
+                  }
+                }
+              }
+            }
+          },
+          scales: {
+            ...commonChartOptions.scales,
+            y: { ...commonChartOptions.scales.y, beginAtZero: true, title: { display: true, text: 'Tamaño (MB)', color: '#4A4A4A', font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    function initLatencyChart() {
+      if (chartInstances.latencyChart) return;
+      const ctx = document.getElementById('latencyChart').getContext('2d');
+      chartInstances.latencyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['MobileNetV4', 'EffNetV2', 'YOLOv26n', 'YOLOv26m'],
+          datasets: [
+            { label: 'Fase 1 — FP32 (ms)', data: [22.7, 59.8, 8.6, 38.5], backgroundColor: SURFACE, borderColor: 'rgba(0,56,101,.2)', borderWidth: 1, borderRadius: 4 },
+            { label: 'Fase 4 — INT8 (ms)', data: [7.2, 49.7, 6.6, 38.2], backgroundColor: SECONDARY, borderRadius: 4 }
+          ]
+        },
+        options: benchChartOptions
+      });
+    }
+
+    function initThroughputChart() {
+      if (chartInstances.throughputChart) return;
+      const ctx = document.getElementById('throughputChart').getContext('2d');
+      chartInstances.throughputChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['MobileNetV4', 'EffNetV2', 'YOLOv26n', 'YOLOv26m'],
+          datasets: [
+            { label: 'Fase 1 — FP32 (img/s)', data: [62, 21, 216, 28], backgroundColor: SURFACE, borderColor: 'rgba(0,56,101,.2)', borderWidth: 1, borderRadius: 4 },
+            { label: 'Fase 4 — INT8 (img/s)', data: [176, 18, 189, 24], backgroundColor: SECONDARY, borderRadius: 4 }
+          ]
+        },
+        options: {
+          ...benchChartOptions,
+          scales: {
+            ...benchChartOptions.scales,
+            y: { ...benchChartOptions.scales.y, title: { display: true, text: 'img/s', color: '#4A4A4A', font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    function initChartsForSlide(index) {
+      const slide = slides[index];
+      if (!slide) return;
+      if (slide.id === 'slide-6') initSizeChart();
+      if (slide.id === 'slide-7') {
+        initLatencyChart();
+        initThroughputChart();
+      }
+    }
+
+    // Inicializar gráficos del slide activo al cargar
+    initChartsForSlide(current);
 
   </script>
 
