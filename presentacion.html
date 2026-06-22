@@ -135,6 +135,29 @@
       color: #fff;
     }
 
+    /* Numeración de diapositivas (excepto carátula) */
+    .slides-container { counter-reset: slide-num 1; }
+    .slide:not(#slide-1)::after {
+      counter-increment: slide-num;
+      content: counter(slide-num);
+      position: absolute;
+      bottom: .8rem;
+      right: 1.5rem;
+      z-index: 3;
+      font-size: .85rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      padding: .35rem .85rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 14px rgba(0,56,101,.1);
+    }
+    #slide-11::after {
+      color: #fff;
+      background: rgba(255,255,255,.15);
+    }
+
     .section-kicker {
       display: inline-flex;
       align-items: center;
