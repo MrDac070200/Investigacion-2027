@@ -140,20 +140,25 @@
     .section-kicker {
       display: inline-flex;
       align-items: center;
-      gap: .5rem;
-      color: var(--blue-bright);
-      font-size: .75rem;
+      gap: .7rem;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      color: var(--blue-dark);
+      font-size: 1rem;
       font-weight: 800;
-      letter-spacing: .12em;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      padding: .65rem 1.4rem;
+      border-radius: 50px;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 18px rgba(0,56,101,.08);
     }
     .section-kicker::before {
       content: '';
-      width: 24px;
-      height: 2px;
+      width: 10px;
+      height: 10px;
       background: var(--gold);
-      border-radius: 2px;
+      border-radius: 50%;
     }
 
     .slide h1 {
@@ -368,43 +373,121 @@
     /* ════════════════════════════════════════
        SLIDE 3 · PROBLEMÁTICA
     ════════════════════════════════════════ */
-    .brechas-row {
+    .problem-intro-text {
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,56,101,.15);
+      border-left: 4px solid var(--blue-dark);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 8px 30px rgba(0,56,101,.08);
+      font-size: clamp(1rem, 1.7vw, 1.15rem);
+      color: var(--text-secondary);
+      max-width: 950px;
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .problem-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2rem;
+      gap: 1.4rem;
+      margin-top: .5rem;
+      align-items: start;
     }
-    .brecha-slide {
-      background: rgba(255,255,255,.7);
-      backdrop-filter: blur(8px);
+
+    .problem-card {
+      --diag-offset: 0px;
+      position: relative;
       border-radius: var(--radius);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      border: 1px solid rgba(0,56,101,.08);
-      box-shadow: 0 8px 30px rgba(0,56,101,.06);
-      border-top: 4px solid var(--blue-dark);
-      transition: transform .2s;
+      box-shadow: 0 8px 30px rgba(0,56,101,.08);
+      transform: translateY(var(--diag-offset));
+      transition: transform .25s ease, box-shadow .25s ease;
+      z-index: 1;
     }
-    .brecha-slide:hover { transform: translateY(-5px); }
-    .brecha-slide.infra { border-top-color: #C62828; }
-    .brecha-slide.esp   { border-top-color: var(--blue-bright); }
-    .brecha-slide.con   { border-top-color: var(--blue-corp); }
-    .brecha-icon { font-size: 2.8rem; margin-bottom: .6rem; }
-    .brecha-number {
-      font-size: 2.6rem;
+    .problem-card:nth-child(1) { --diag-offset: 0px; }
+    .problem-card:nth-child(2) { --diag-offset: 30px; }
+    .problem-card:nth-child(3) { --diag-offset: 60px; }
+    .problem-card:hover {
+      transform: translateY(calc(var(--diag-offset) - 6px));
+      box-shadow: 0 14px 40px rgba(0,56,101,.14);
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(0,56,101,.1);
+      overflow: hidden;
+    }
+
+    .problem-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid rgba(0,56,101,.08);
+    }
+
+    .card-source {
+      padding: .7rem 1rem;
+      background: var(--blue-soft);
+    }
+    .card-source-tag {
+      display: inline-block;
+      background: var(--gold-soft);
+      color: var(--blue-dark);
+      font-size: .6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: .18rem .55rem;
+      border-radius: 50px;
+      margin-bottom: .35rem;
+    }
+    .card-source-title {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      line-height: 1.35;
+      margin-bottom: .15rem;
+    }
+    .card-source-org {
+      font-size: .68rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .card-data {
+      padding: 1rem;
+      text-align: center;
+    }
+    .card-number {
+      font-size: 2.4rem;
       font-weight: 900;
       line-height: 1;
       color: var(--blue-dark);
-      margin-bottom: .4rem;
+      margin-bottom: .2rem;
     }
-    .brecha-slide.infra .brecha-number { color: #C62828; }
-    .brecha-slide.esp   .brecha-number { color: var(--blue-bright); }
-    .brecha-slide.con   .brecha-number { color: var(--blue-corp); }
-    .brecha-title { font-weight: 700; color: var(--text); font-size: 1rem; margin-bottom: .25rem; }
-    .brecha-sub { font-size: .82rem; color: var(--text-secondary); }
+    .problem-card.infra .card-number { color: #C62828; }
+    .problem-card.esp   .card-number { color: #1565C0; }
+    .problem-card.con   .card-number { color: #2E7D32; }
+    .card-label {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .card-sub {
+      font-size: .72rem;
+      color: var(--text-secondary);
+      margin-top: .15rem;
+    }
 
     /* ════════════════════════════════════════
-       SLIDE 3 · OBJETIVOS
+       SLIDE 4 · OBJETIVOS
     ════════════════════════════════════════ */
     .objetivo-gral {
       background: linear-gradient(135deg, var(--blue-dark), var(--blue-corp));
@@ -708,10 +791,6 @@
       right: -120px;
       border-radius: 42px;
     }
-    #slide-10 .section-kicker { color: var(--gold); }
-    #slide-10 .section-kicker::before { background: #fff; }
-    #slide-10 h2 { color: #fff; }
-    #slide-10 h2 em { color: var(--gold); font-style: normal; }
     #slide-10 p { color: rgba(255,255,255,.82); }
     #slide-10 .future-list {
       display: flex;
@@ -742,7 +821,9 @@
       .team-photos-row { grid-template-columns: 1fr; gap: 1.5rem; }
       .team-photo { width: 160px; height: 200px; }
       .advisors-box { flex-direction: column; gap: 1rem; }
-      .brechas-row { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .problem-card { --diag-offset: 0px !important; }
+      .problem-card img { height: 160px; }
       .objetivos-list { grid-template-columns: 1fr; }
       .fases-row { flex-direction: column; }
       .fase-card { min-width: auto; }
@@ -782,8 +863,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Equipo de Investigación</div>
-        <h2>Quienes conducen esta investigación</h2>
+        <div class="section-kicker">Equipo de Investigación · Quienes conducen esta investigación</div>
         <div class="team-photos-row">
           <div class="team-member">
             <div class="team-photo">
@@ -831,31 +911,60 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">El Problema</div>
-        <h2>Tres brechas simultáneas en salud rural del Perú</h2>
-        <p style="max-width:800px;">
+        <div class="section-kicker">El Problema · Tres brechas en salud rural del Perú</div>
+        <p class="problem-intro-text">
           En las zonas rurales del Perú, <strong>tres brechas simultáneas</strong> impiden que el personal de
           salud diagnostique a tiempo enfermedades identificables por imagen. Los modelos de IA actuales
           <strong>no pueden desplegarse</strong> sin ser previamente optimizados.
         </p>
-        <div class="brechas-row">
-          <div class="brecha-slide infra">
-            <div class="brecha-icon">🏥</div>
-            <div class="brecha-number">97.4%</div>
-            <div class="brecha-title">Infraestructura inadecuada</div>
-            <div class="brecha-sub">Primer nivel de atención · MINSA 2025</div>
+
+        <div class="problem-grid">
+          <div class="problem-card infra">
+            <div class="card-inner">
+              <img src="img/Brecha_infraestructura.png" alt="Avance del cierre de brechas en infraestructura del sector salud — ComexPerú">
+              <div class="card-source">
+                <span class="card-source-tag">Fuente oficial</span>
+                <div class="card-source-title">Infraestructura del sector salud</div>
+                <div class="card-source-org">MINSA / ComexPerú · 2025</div>
+              </div>
+              <div class="card-data">
+                <div class="card-number">97.4%</div>
+                <div class="card-label">Infraestructura inadecuada</div>
+                <div class="card-sub">del primer nivel de atención</div>
+              </div>
+            </div>
           </div>
-          <div class="brecha-slide esp">
-            <div class="brecha-icon">👨‍⚕️</div>
-            <div class="brecha-number">7.3</div>
-            <div class="brecha-title">Especialistas / 10,000 hab.</div>
-            <div class="brecha-sub">El más bajo de Sudamérica · OPS 2026</div>
+
+          <div class="problem-card esp">
+            <div class="card-inner">
+              <img src="img/Brecha_personal_salud.png" alt="La OPS advierte sobre brechas críticas en el mercado laboral de la salud">
+              <div class="card-source">
+                <span class="card-source-tag">Fuente oficial</span>
+                <div class="card-source-title">Mercado laboral de la salud</div>
+                <div class="card-source-org">OPS · 2026</div>
+              </div>
+              <div class="card-data">
+                <div class="card-number">7.3</div>
+                <div class="card-label">Especialistas / 10,000 hab.</div>
+                <div class="card-sub">el más bajo de Sudamérica</div>
+              </div>
+            </div>
           </div>
-          <div class="brecha-slide con">
-            <div class="brecha-icon">📡</div>
-            <div class="brecha-number">80%</div>
-            <div class="brecha-title">Hogares rurales sin internet</div>
-            <div class="brecha-sub">Imposibilita soluciones en la nube · PRONATEL 2025</div>
+
+          <div class="problem-card con">
+            <div class="card-inner">
+              <img src="img/Brecha_pronabel.png" alt="Brecha digital en el Perú — PRONATEL 2025">
+              <div class="card-source">
+                <span class="card-source-tag">Fuente oficial</span>
+                <div class="card-source-title">Brecha digital en el Perú</div>
+                <div class="card-source-org">PRONATEL / ENAHO-INEI · 2025</div>
+              </div>
+              <div class="card-data">
+                <div class="card-number">80%</div>
+                <div class="card-label">Hogares rurales sin internet</div>
+                <div class="card-sub">impide soluciones en la nube</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -920,8 +1029,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Metodología</div>
-        <h2>Pipeline de 5 fases</h2>
+        <div class="section-kicker">Metodología · Pipeline de 5 fases</div>
         <p style="max-width:800px;">
           Secuencia completa: entrenamiento base → pruning → fine-tuning → cuantización → evaluación.
         </p>
@@ -976,8 +1084,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Fase 4 · Núcleo</div>
-        <h2>Cuantización INT8: el corazón de la optimización</h2>
+        <div class="section-kicker">Fase 4 · Cuantización INT8: el corazón de la optimización</div>
         <div class="cuant-grid">
           <div class="cuant-col">
             <ul>
@@ -1014,8 +1121,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados</div>
-        <h2>Métricas destacadas del modelo optimizado</h2>
+        <div class="section-kicker">Resultados · Métricas destacadas del modelo optimizado</div>
         <div class="kpis-row">
           <div class="kpi-card gold">
             <div class="kpi-val">~73%</div>
@@ -1052,8 +1158,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados</div>
-        <h2>Fase 1 (Base) vs Fase 4 (Optimizado)</h2>
+        <div class="section-kicker">Resultados · Fase 1 (Base) vs Fase 4 (Optimizado)</div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
@@ -1140,8 +1245,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Conclusiones</div>
-        <h2>Principales hallazgos</h2>
+        <div class="section-kicker">Conclusiones · Principales hallazgos</div>
         <div class="conclusiones-row">
           <div class="conclusion-card gold">
             <div class="icon">⚡</div>
@@ -1188,8 +1292,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Gracias</div>
-        <h2>IA local para diagnóstico médico <em>en zonas rurales</em></h2>
+        <div class="section-kicker">Gracias · IA local para diagnóstico médico en zonas rurales</div>
         <p style="max-width:720px;margin:0 auto 1.5rem;">
           El método propuesto demuestra que es posible llevar modelos de deep learning a dispositivos de
           recursos limitados, abriendo la puerta a sistemas de salud más equitativos y accesibles.
