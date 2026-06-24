@@ -195,12 +195,38 @@
       box-shadow: 0 4px 18px rgba(0, 56, 101, .08);
     }
 
+    /* Excluir slides 2, 2b, 3-5 del estilo base */
+    #slide-2 .section-kicker,
+    #slide-2b .section-kicker,
+    #slide-3 .section-kicker,
+    #slide-4 .section-kicker,
+    #slide-5 .section-kicker {
+      display: flex;
+      justify-content: center;
+      width: fit-content;
+      margin: 0 auto 1.8rem auto;
+      background: var(--blue-dark);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(0,56,101,.22);
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      padding: 1rem 2.4rem;
+      text-align: center;
+    }
+
     .section-kicker::before {
       content: '';
       width: 10px;
       height: 10px;
       background: var(--gold);
       border-radius: 50%;
+    }
+
+    #slide-2 .section-kicker::before,
+    #slide-2b .section-kicker::before,
+    #slide-3 .section-kicker::before,
+    #slide-4 .section-kicker::before,
+    #slide-5 .section-kicker::before {
+      display: none;
     }
 
     .slide h1 {
@@ -2687,11 +2713,23 @@
     #slide-24 .slide-inner::before {
       display: none;
     }
-    /* Slides 2-5: títulos de sección centrados, grandes y sin texto posterior */
-    #slide-2 .section-kicker,
-    #slide-3 .section-kicker,
-    #slide-4 .section-kicker,
-    #slide-5 .section-kicker {
+    /* Slide 20: mantiene el estilo original de sección */
+    #slide-20 .section-kicker {
+      background: var(--blue-dark);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(0,56,101,.22);
+      font-size: 1.05rem;
+      padding: .75rem 1.6rem;
+    }
+    #slide-20 .section-kicker::before {
+      display: none;
+    }
+
+    /* Slides 21-24: títulos de sección centrados, grandes y sin texto posterior */
+    #slide-21 .section-kicker,
+    #slide-22 .section-kicker,
+    #slide-23 .section-kicker,
+    #slide-24 .section-kicker {
       display: flex;
       justify-content: center;
       width: fit-content;
@@ -2703,26 +2741,6 @@
       padding: 1rem 2.4rem;
       text-align: center;
     }
-    #slide-2 .section-kicker::before,
-    #slide-3 .section-kicker::before,
-    #slide-4 .section-kicker::before,
-    #slide-5 .section-kicker::before {
-      display: none;
-    }
-
-    /* Slides 20-24: mantienen el estilo original de sección */
-    #slide-20 .section-kicker,
-    #slide-21 .section-kicker,
-    #slide-22 .section-kicker,
-    #slide-23 .section-kicker,
-    #slide-24 .section-kicker {
-      background: var(--blue-dark);
-      color: #fff;
-      box-shadow: 0 6px 22px rgba(0,56,101,.22);
-      font-size: 1.05rem;
-      padding: .75rem 1.6rem;
-    }
-    #slide-20 .section-kicker::before,
     #slide-21 .section-kicker::before,
     #slide-22 .section-kicker::before,
     #slide-23 .section-kicker::before,
@@ -2917,7 +2935,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">El Problema · Tres brechas en salud rural del Perú</div>
+        <div class="section-kicker">El Problema</div>
         <div class="problem-grid">
           <div class="problem-card infra">
             <div class="card-inner">
@@ -4294,7 +4312,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados · Benchmark Fase 1 (FP32) vs Fase 4 (INT8)</div>
+        <div class="section-kicker">Resultados</div>
         <div class="kpis-row">
           <div class="kpi-card gold">
             <div class="kpi-val">3.2×</div>
@@ -4407,7 +4425,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados · Desglose por dataset</div>
+        <div class="section-kicker">Resultados</div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
@@ -4520,7 +4538,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados · Mejor modelo</div>
+        <div class="section-kicker">Resultados</div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
@@ -4584,7 +4602,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Conclusiones · Principales hallazgos</div>
+        <div class="section-kicker">Conclusiones</div>
         <div class="conclusiones-row">
           <div class="conclusion-card gold">
             <div class="icon">⚡</div>
