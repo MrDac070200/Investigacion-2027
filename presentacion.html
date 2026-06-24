@@ -2713,34 +2713,24 @@
     #slide-24 .slide-inner::before {
       display: none;
     }
-    /* Slide 20: mantiene el estilo original de sección */
-    #slide-20 .section-kicker {
-      background: var(--blue-dark);
-      color: #fff;
-      box-shadow: 0 6px 22px rgba(0,56,101,.22);
-      font-size: 1.05rem;
-      padding: .75rem 1.6rem;
-    }
-    #slide-20 .section-kicker::before {
-      display: none;
-    }
-
-    /* Slides 21-24: títulos de sección centrados, grandes y sin texto posterior */
+    /* Slide 20-24: títulos de sección centrados, grandes y sin texto posterior */
+    #slide-20 .section-kicker,
     #slide-21 .section-kicker,
     #slide-22 .section-kicker,
     #slide-23 .section-kicker,
     #slide-24 .section-kicker {
-      display: flex;
-      justify-content: center;
-      width: fit-content;
-      margin: 0 auto 1.8rem auto;
-      background: var(--blue-dark);
-      color: #fff;
-      box-shadow: 0 6px 22px rgba(0,56,101,.22);
-      font-size: clamp(1.4rem, 2.6vw, 2rem);
-      padding: 1rem 2.4rem;
-      text-align: center;
+      display: flex !important;
+      justify-content: center !important;
+      width: fit-content !important;
+      margin: 0 auto 1.8rem auto !important;
+      background: var(--blue-dark) !important;
+      color: #fff !important;
+      box-shadow: 0 6px 22px rgba(0,56,101,.22) !important;
+      font-size: clamp(1.4rem, 2.6vw, 2rem) !important;
+      padding: 1rem 2.4rem !important;
+      text-align: center !important;
     }
+    #slide-20 .section-kicker::before,
     #slide-21 .section-kicker::before,
     #slide-22 .section-kicker::before,
     #slide-23 .section-kicker::before,
@@ -2804,6 +2794,58 @@
       font-size: clamp(2rem, 4vw, 2.8rem);
       color: var(--gold);
       font-weight: 900;
+    }
+
+    /* ════════════════════════════════════════
+       AUMENTO DE TAMAÑO PARA SLIDES 7, 13, 16
+    ════════════════════════════════════════ */
+    /* Slide 7: Datasets - aumentar títulos */
+    #slide-7 .dataset-card h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-top: .5rem;
+    }
+
+    /* Slide 7: Datasets - aumentar títulos */
+    #slide-7 .dataset-card h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-top: .75rem;
+      line-height: 1.2;
+    }
+
+    /* Slide 13 (HTML id slide-15): Knowledge Distillation - aumentar emoji y texto */
+    #slide-15 .kd-box-ppt .kd-icon {
+      font-size: 2.8rem;
+      margin-bottom: .4rem;
+    }
+
+    #slide-15 .kd-box-ppt h4 {
+      font-size: 1.05rem;
+      margin-bottom: .3rem;
+    }
+
+    #slide-15 .kd-box-ppt p {
+      font-size: .85rem;
+      line-height: 1.45;
+    }
+
+    /* Slide 16: Resultados fase 3 - aumentar KPIs */
+    #slide-16 .result-kpi .kpi-val {
+      font-size: 3.4rem;
+      font-weight: 900;
+      margin-bottom: .35rem;
+    }
+
+    #slide-16 .result-kpi .kpi-label {
+      font-size: 1.15rem;
+      font-weight: 700;
+      opacity: .95;
+    }
+
+    #slide-16 .result-kpi .kpi-sub {
+      font-size: .9rem;
+      opacity: .8;
     }
   </style>
 </head>
@@ -4177,7 +4219,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Resultados · Métricas destacadas y comparación directa</div>
+        <div class="section-kicker">Resultados</div>
         <div class="results-layout">
           <div class="results-main">
             <div class="chart-section">
