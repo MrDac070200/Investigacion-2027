@@ -147,7 +147,7 @@
       text-transform: uppercase;
     }
 
-    #slide-25 .slide-footer {
+    #slide-28 .slide-footer {
       color: #fff;
     }
 
@@ -173,7 +173,7 @@
       box-shadow: 0 4px 14px rgba(0, 56, 101, .1);
     }
 
-    #slide-25::after {
+    #slide-28::after {
       color: #fff;
       background: rgba(255, 255, 255, .15);
     }
@@ -1573,13 +1573,13 @@
     /* ════════════════════════════════════════
        SLIDE 11 · CIERRE
     ════════════════════════════════════════ */
-    #slide-25 {
+    #slide-28 {
       background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-corp) 50%, #245C8A 100%);
       color: var(--white);
       text-align: center;
     }
 
-    #slide-25 .bg-shapes .shape-circle-tl {
+    #slide-28 .bg-shapes .shape-circle-tl {
       background: var(--gold);
       width: 380px;
       height: 380px;
@@ -1587,7 +1587,7 @@
       left: -150px;
     }
 
-    #slide-25 .bg-shapes .shape-triangle-br {
+    #slide-28 .bg-shapes .shape-triangle-br {
       border-bottom-color: rgba(255,255,255,.12);
       border-left-width: 320px;
       border-bottom-width: 320px;
@@ -1595,7 +1595,7 @@
       right: -30px;
     }
 
-    #slide-25 .bg-shapes .shape-diamond-tr {
+    #slide-28 .bg-shapes .shape-diamond-tr {
       background: rgba(255,255,255,.1);
       width: 400px;
       height: 400px;
@@ -1604,7 +1604,7 @@
       border-radius: 42px;
     }
 
-    #slide-25 p { color: rgba(255,255,255,.82); }
+    #slide-28 p { color: rgba(255,255,255,.82); }
 
     /* ════════════════════════════════════════
        PUNTERO LÁSER
@@ -1663,9 +1663,7 @@
     #slide-10 .fase-subtitle,
     #slide-12 .fase-subtitle,
     #slide-13 .fase-subtitle,
-    #slide-15 .fase-subtitle,
-    #slide-17 .fase-subtitle,
-    #slide-18 .fase-subtitle {
+    #slide-15 .fase-subtitle {
       display: none;
     }
 
@@ -2436,6 +2434,40 @@
       color: #1B5E20;
     }
 
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, .9);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .compare-table thead th {
+      background: var(--blue-dark);
+      color: #fff;
+      padding: .55rem .6rem;
+      text-align: left;
+      font-weight: 700;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .compare-table tbody td {
+      padding: .45rem .6rem;
+      border-bottom: 1px solid rgba(0, 56, 101, .08);
+      color: var(--text-secondary);
+      font-size: .72rem;
+    }
+
+    .compare-table tbody tr:nth-child(even) {
+      background: var(--blue-soft);
+    }
+
+    .compare-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
     .quant-anim-ppt {
       background: rgba(255, 255, 255, .75);
       border-radius: var(--radius);
@@ -2706,19 +2738,19 @@
     #slide-3 .slide-inner::before,
     #slide-4 .slide-inner::before,
     #slide-5 .slide-inner::before,
-    #slide-20 .slide-inner::before,
-    #slide-21 .slide-inner::before,
-    #slide-22 .slide-inner::before,
     #slide-23 .slide-inner::before,
-    #slide-24 .slide-inner::before {
+    #slide-24 .slide-inner::before,
+    #slide-25 .slide-inner::before,
+    #slide-26 .slide-inner::before,
+    #slide-27 .slide-inner::before {
       display: none;
     }
     /* Slide 20-24: títulos de sección centrados, grandes y sin texto posterior */
-    #slide-20 .section-kicker,
-    #slide-21 .section-kicker,
-    #slide-22 .section-kicker,
     #slide-23 .section-kicker,
-    #slide-24 .section-kicker {
+    #slide-24 .section-kicker,
+    #slide-25 .section-kicker,
+    #slide-26 .section-kicker,
+    #slide-27 .section-kicker {
       display: flex !important;
       justify-content: center !important;
       width: fit-content !important;
@@ -2730,11 +2762,11 @@
       padding: 1rem 2.4rem !important;
       text-align: center !important;
     }
-    #slide-20 .section-kicker::before,
-    #slide-21 .section-kicker::before,
-    #slide-22 .section-kicker::before,
     #slide-23 .section-kicker::before,
-    #slide-24 .section-kicker::before {
+    #slide-24 .section-kicker::before,
+    #slide-25 .section-kicker::before,
+    #slide-26 .section-kicker::before,
+    #slide-27 .section-kicker::before {
       display: none;
     }
 
@@ -3047,7 +3079,7 @@
         <div class="objetivo-gral">
           <div>
             <h3>Objetivo General</h3>
-            <div class="obj-title">Optimizar modelos de visión computacional</div>
+            <div class="obj-title">Desarrollar un método de optimización de modelos de visión computacional</div>
             <ul>
               <li>Reducir el costo computacional</li>
               <li>Preservar las métricas diagnósticas</li>
@@ -3104,7 +3136,7 @@
               <div class="obj-num">5</div>
               <div class="obj-keyword">Modelo ligero</div>
             </div>
-            <p>Reducir el modelo a menos de 15 MB para móviles de recursos limitados.</p>
+            <p>Reducir el tamaño del modelo (MB) para dispositivos de recursos limitados.</p>
           </div>
         </div>
       </div>
@@ -4027,7 +4059,6 @@
         XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
-
     <!-- SLIDE 15: FASE 4 — CUANTIZACIÓN INT8 -->
     <section class="slide fase-slide" id="slide-17">
       <div class="bg-shapes">
@@ -4042,56 +4073,60 @@
           de gama media.</p>
         <div class="quant-grid-ppt">
           <div class="quant-card-ppt">
-            <h4>🔢 FP32</h4>
-            <p>32 bits: 1 signo + 8 exponente + 23 mantisa. Ocupa 4 bytes y alcanza ~7 decimales.</p>
-            <div class="bit-row-ppt">
-              <div class="bit-ppt sign">0</div>
-              <div class="bit-ppt exp">0</div>
-              <div class="bit-ppt exp">1</div>
-              <div class="bit-ppt exp">1</div>
-              <div class="bit-ppt exp">1</div>
-              <div class="bit-ppt exp">1</div>
-              <div class="bit-ppt exp">0</div>
-              <div class="bit-ppt exp">1</div>
-              <div class="bit-ppt exp">1</div>
-              <div class="bit-ppt mant">0</div>
-              <div class="bit-ppt mant">0</div>
-              <div class="bit-ppt mant">1</div>
-              <div class="bit-ppt mant">0</div>
-              <div class="bit-ppt mant">0</div>
-              <div class="bit-ppt mant">1</div>
-              <div class="bit-ppt mant">...</div>
-            </div>
+            <h4>🔌 ¿Qué es un bit?</h4>
+            <p>Una computadora solo entiende dos estados: encendido (1) y apagado (0). Con <em>n</em> bits se representan
+              2<sup>n</sup> valores distintos:</p>
+            <ul>
+              <li>8 bits → 256 valores</li>
+              <li>32 bits → ~4,300 millones de valores</li>
+            </ul>
           </div>
           <div class="quant-card-ppt">
-            <h4>🚀 INT8</h4>
-            <p>8 bits: 256 valores enteros (−128 a +127). Ocupa 1 byte y permite operaciones enteras rápidas.</p>
-            <div class="bit-row-ppt">
-              <div class="bit-ppt int">0</div>
-              <div class="bit-ppt int">0</div>
-              <div class="bit-ppt int">0</div>
-              <div class="bit-ppt int">0</div>
-              <div class="bit-ppt int">1</div>
-              <div class="bit-ppt int">0</div>
-              <div class="bit-ppt int">1</div>
-              <div class="bit-ppt int">0</div>
-            </div>
+            <h4>🔢 FP32 vs INT8</h4>
+            <table class="compare-table" style="font-size:.72rem;width:100%;margin:0;">
+              <thead>
+                <tr>
+                  <th>Característica</th>
+                  <th>FP32</th>
+                  <th>INT8</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Bits usados</td><td>32</td><td>8</td></tr>
+                <tr><td>Bytes/número</td><td>4</td><td>1</td></tr>
+                <tr><td>Valores distintos</td><td>~4,300 M</td><td>256</td></tr>
+                <tr><td>Rango típico</td><td>10⁻³⁸ a 10³⁸</td><td>−128 a +127</td></tr>
+                <tr><td>Uso típico</td><td>Entrenamiento</td><td>Inferencia móvil</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="formula-box-ppt">
-          <div class="formula-title-ppt">Fórmula de cuantización</div>
-          <div class="formula-ppt">
-            <span class="var">Q</span><span>= round(</span><span class="var">R</span><span>/</span><span
-              class="var">S</span><span> + </span><span class="var">Z</span><span>)</span>
-          </div>
+        <div class="bit-row-ppt" style="justify-content:center;margin:1rem 0 .4rem;">
+          <div class="bit-ppt sign">0</div>
+          <div class="bit-ppt exp">0</div>
+          <div class="bit-ppt exp">1</div>
+          <div class="bit-ppt exp">1</div>
+          <div class="bit-ppt exp">1</div>
+          <div class="bit-ppt exp">1</div>
+          <div class="bit-ppt exp">0</div>
+          <div class="bit-ppt exp">1</div>
+          <div class="bit-ppt exp">1</div>
+          <div class="bit-ppt mant">0</div>
+          <div class="bit-ppt mant">0</div>
+          <div class="bit-ppt mant">1</div>
+          <div class="bit-ppt mant">0</div>
+          <div class="bit-ppt mant">0</div>
+          <div class="bit-ppt mant">1</div>
+          <div class="bit-ppt mant">...</div>
         </div>
+        <p style="font-size:.82rem;color:var(--text-secondary);text-align:center;">Estructura FP32: 1 bit signo + 8 bits exponente + 23 bits mantisa</p>
       </div>
       <div class="slide-footer">
         XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
-    <!-- SLIDE 16: FASE 4 — DE FP32 A INT8 -->
+    <!-- SLIDE 16: FASE 4 — MATEMÁTICA DE LA CUANTIZACIÓN -->
     <section class="slide fase-slide" id="slide-18">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
@@ -4100,55 +4135,33 @@
       </div>
       <div class="slide-inner">
         <div class="fase-big-label">Fase 4</div>
-        <h2>¿Cómo se comprime un peso?</h2>
-        <p class="fase-subtitle">Se calculan escala (S) y punto cero (Z) por capa, y cada peso real se mapea a un entero
-          de 8 bits.</p>
-        <div class="quant-anim-ppt">
-          <div class="quant-step-flow">
-            <div class="quant-step-box">
-              <div class="qs-icon">🔢</div>
-              <h5>Peso FP32</h5>
-              <p>w = 0.037</p>
-            </div>
-            <div class="quant-step-arrow">→</div>
-            <div class="quant-step-box">
-              <div class="qs-icon">📏</div>
-              <h5>Calibrar S, Z</h5>
-              <p>Observar rango real</p>
-            </div>
-            <div class="quant-step-arrow">→</div>
-            <div class="quant-step-box">
-              <div class="qs-icon">🎯</div>
-              <h5>Cuantizar</h5>
-              <p>Q = round(w/S + Z)</p>
-            </div>
-            <div class="quant-step-arrow">→</div>
-            <div class="quant-step-box">
-              <div class="qs-icon">🚀</div>
-              <h5>INT8</h5>
-              <p>00001010</p>
-            </div>
-          </div>
-          <div class="weight-anim-box">
-            <div class="weight-card active">
-              <h5>FP32</h5>
-              <div class="weight-value">0.037</div>
-            </div>
-            <div class="anim-arrow">→</div>
-            <div class="weight-card">
-              <h5>Escala + Punto cero</h5>
-              <div class="weight-value">S, Z</div>
-            </div>
-            <div class="anim-arrow">→</div>
-            <div class="weight-card active">
-              <h5>INT8</h5>
-              <div class="weight-value int">10</div>
-            </div>
+        <h2>Matemática de la cuantización</h2>
+        <p class="fase-subtitle">Se calculan dos parámetros por capa durante la calibración: escala (S) y punto cero
+          (Z).</p>
+        <div class="formula-box-ppt">
+          <div class="formula-title-ppt">Fórmula de cuantización</div>
+          <div class="formula-ppt">
+            <span class="var">Q</span><span>= round(</span><span class="var">R</span><span>/</span><span
+              class="var">S</span><span> + </span><span class="var">Z</span><span>)</span>
           </div>
         </div>
-        <div class="note-box">
-          <strong>Resultado real:</strong> 41.62 MB (FP32) → 10.61 MB (INT8), ~3.9× de compresión, con AUC prácticamente
-          sin cambio (0.8777 → 0.8781).
+        <div class="formula-box-ppt">
+          <div class="formula-title-ppt">Fórmula de recuperación</div>
+          <div class="formula-ppt">
+            <span class="var">R′</span><span>=</span><span class="var">S</span><span>·(</span><span class="var">Q</span><span>−</span><span class="var">Z</span><span>)</span>
+          </div>
+        </div>
+        <div class="quant-grid-ppt" style="margin-top:1.2rem;">
+          <div class="quant-card-ppt">
+            <h4>📏 Escala (S)</h4>
+            <p>Qué "salto" representa cada nivel entero. Se calcula a partir del rango real de valores observados en la
+              capa.</p>
+          </div>
+          <div class="quant-card-ppt">
+            <h4>🎯 Punto cero (Z)</h4>
+            <p>Qué valor entero corresponde al 0.0 real. Permite representar valores positivos y negativos de forma
+              balanceada.</p>
+          </div>
         </div>
       </div>
       <div class="slide-footer">
@@ -4156,8 +4169,154 @@
       </div>
     </section>
 
-    <!-- SLIDE 19: RESULTADOS FASE 4 -->
+    <!-- SLIDE 17: FASE 4 — EJEMPLO NUMÉRICO -->
     <section class="slide fase-slide" id="slide-19">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="fase-big-label">Fase 4</div>
+        <h2>Ejemplo numérico concreto</h2>
+        <p class="fase-subtitle">Cómo un peso real se comprime a INT8 y se recupera con pérdida mínima.</p>
+        <div class="quant-anim-ppt">
+          <div class="quant-step-flow">
+            <div class="quant-step-box">
+              <div class="qs-icon">1</div>
+              <h5>Rango real</h5>
+              <p>[−1.2, +2.8]</p>
+            </div>
+            <div class="quant-step-arrow">→</div>
+            <div class="quant-step-box">
+              <div class="qs-icon">2</div>
+              <h5>Escala</h5>
+              <p>S = 4.0 / 256</p>
+            </div>
+            <div class="quant-step-arrow">→</div>
+            <div class="quant-step-box">
+              <div class="qs-icon">3</div>
+              <h5>Cuantizar</h5>
+              <p>Q = round(w/S + Z)</p>
+            </div>
+            <div class="quant-step-arrow">→</div>
+            <div class="quant-step-box">
+              <div class="qs-icon">4</div>
+              <h5>Recuperar</h5>
+              <p>R′ = S·(Q−Z)</p>
+            </div>
+          </div>
+          <div class="weight-anim-box">
+            <div class="weight-card active">
+              <h5>Peso FP32</h5>
+              <div class="weight-value">0.001738291</div>
+            </div>
+            <div class="anim-arrow">→</div>
+            <div class="weight-card">
+              <h5>S = 0.015625, Z = 128</h5>
+              <div class="weight-value">Q = 128</div>
+            </div>
+            <div class="anim-arrow">→</div>
+            <div class="weight-card active">
+              <h5>Recuperado</h5>
+              <div class="weight-value int">0.0</div>
+            </div>
+          </div>
+        </div>
+        <div class="note-box">
+          <strong>Error insignificante:</strong> El redondeo es despreciable frente a millones de conexiones. La decisión
+          final del clasificador (≥ 0.5) casi no cambia.
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 18: FASE 4 — ¿POR QUÉ NO SE DESTRUYE? -->
+    <section class="slide fase-slide" id="slide-20">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="fase-big-label">Fase 4</div>
+        <h2>¿Por qué no se destruye el modelo?</h2>
+        <p class="fase-subtitle">Pasar de 32 a 8 bits parece agresivo, pero la red neuronal es inherentemente robusta.
+        </p>
+        <div class="quant-grid-ppt" style="grid-template-columns:repeat(3,1fr);">
+          <div class="quant-card-ppt">
+            <h4>🧠 La información está en la configuración</h4>
+            <p>El modelo "sabe" que una lesión es melanoma porque miles de pesos están configurados de cierta manera. No
+              importa si un peso es 0.037 o 0.031.</p>
+          </div>
+          <div class="quant-card-ppt">
+            <h4>🎲 El entrenamiento ya fue ruidoso</h4>
+            <p>Durante el entrenamiento el modelo toleró dropout, augmentations y gradientes ruidosos. Aprendió a ignorar
+              pequeñas perturbaciones.</p>
+          </div>
+          <div class="quant-card-ppt">
+            <h4>✅ La decisión final es discreta</h4>
+            <p>El modelo no dice "0.8473291", sino <span style="font-family:monospace;">≥ 0.5 → melanoma</span>. Si FP32
+              dice 0.8473 e INT8 dice 0.8451, ambos dan la misma decisión.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 19: FASE 4 — PIPELINE PTQ -->
+    <section class="slide fase-slide" id="slide-21">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="fase-big-label">Fase 4</div>
+        <h2>Pipeline PTQ Estática</h2>
+        <p class="fase-subtitle">Post-Training Quantization: no se reentrena el modelo, solo se observa y comprime.</p>
+        <div class="quant-step-flow">
+          <div class="quant-step-box">
+            <div class="qs-icon">📤</div>
+            <h5>Exportar a ONNX</h5>
+            <p>Modelo PyTorch → formato estándar FP32.</p>
+          </div>
+          <div class="quant-step-arrow">→</div>
+          <div class="quant-step-box">
+            <div class="qs-icon">📊</div>
+            <h5>Calibración</h5>
+            <p>15 batches × 32 imágenes = 480 imgs.</p>
+          </div>
+          <div class="quant-step-arrow">→</div>
+          <div class="quant-step-box">
+            <div class="qs-icon">🎯</div>
+            <h5>Quantizar</h5>
+            <p>Pesos FP32 → INT8 con S y Z.</p>
+          </div>
+          <div class="quant-step-arrow">→</div>
+          <div class="quant-step-box">
+            <div class="qs-icon">⚡</div>
+            <h5>Formato QDQ</h5>
+            <p>Nodos Quantize-Dequantize para CPU/NPU.</p>
+          </div>
+        </div>
+        <div class="note-box">
+          <strong>Justificación de ingeniería:</strong> Se calibra el modelo entrenado con un subconjunto representativo
+          del dataset (480 imágenes) y se cuantiza a INT8 sin reentrenamiento. Con esto se logra una compresión de ~3.9×
+          con pérdida mínima de precisión, habilitando el despliegue en dispositivos móviles con recursos limitados.
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 20: FASE 4 — RESULTADOS DE COMPRESIÓN -->
+    <section class="slide fase-slide" id="slide-22">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4202,17 +4361,15 @@
             <div class="kpi-sub">15 batches × 32</div>
           </div>
         </div>
-        <div class="note-box">
-          <strong>Justificación:</strong> PTQ estático permite comprimir ~3.9× con pérdida mínima de precisión, habilitando el despliegue en dispositivos móviles con recursos limitados.
-        </div>
       </div>
       <div class="slide-footer">
         XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
 
+
     <!-- SLIDE 17: RESULTADOS — MÉTRICAS Y COMPARACIÓN DIRECTA -->
-    <section class="slide slide-results-1" id="slide-20">
+    <section class="slide slide-results-1" id="slide-23">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4347,7 +4504,7 @@
     </section>
 
     <!-- SLIDE 18: RESULTADOS — BENCHMARK DE RENDIMIENTO -->
-    <section class="slide slide-results-2" id="slide-21">
+    <section class="slide slide-results-2" id="slide-24">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4460,7 +4617,7 @@
     </section>
 
     <!-- SLIDE 19: RESULTADOS — DESGLOSE POR DATASET -->
-    <section class="slide slide-results-3" id="slide-22">
+    <section class="slide slide-results-3" id="slide-25">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4573,7 +4730,7 @@
     </section>
 
     <!-- SLIDE 20: RESULTADOS — MEJOR MODELO -->
-    <section class="slide slide-results-4" id="slide-23">
+    <section class="slide slide-results-4" id="slide-26">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4637,7 +4794,7 @@
     </section>
 
     <!-- SLIDE 21: CONCLUSIONES -->
-    <section class="slide" id="slide-24">
+    <section class="slide" id="slide-27">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4660,8 +4817,8 @@
           </div>
           <div class="conclusion-card">
             <div class="icon">📱</div>
-            <h4>Modelos de menos de 15 MB</h4>
-            <p>Se alcanzaron <strong>1.98 MB</strong> (YOLOv26n, AUC 0.897) y <strong>10.95 MB</strong> (YOLOv26m, AUC
+            <h4>Reducción del tamaño del modelo (MB)</h4>
+            <p>Se lograron reducciones significativas: <strong>1.98 MB</strong> (YOLOv26n, AUC 0.897) y <strong>10.95 MB</strong> (YOLOv26m, AUC
               0.987), ejecutables en móviles de gama media.</p>
           </div>
           <div class="conclusion-card gold">
@@ -4690,7 +4847,7 @@
     </section>
 
     <!-- SLIDE 22: CIERRE -->
-    <section class="slide" id="slide-25">
+    <section class="slide" id="slide-28">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -4984,8 +5141,8 @@
     function initChartsForSlide(index) {
       const slide = slides[index];
       if (!slide) return;
-      if (slide.id === 'slide-20') initSizeChart();
-      if (slide.id === 'slide-21') {
+      if (slide.id === 'slide-23') initSizeChart();
+      if (slide.id === 'slide-24') {
         initLatencyChart();
         initThroughputChart();
       }
