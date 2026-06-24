@@ -4109,17 +4109,33 @@
             <div class="kpi-label">Mejor que el base</div>
             <div class="kpi-sub">YOLOv26n · melanoma</div>
           </div>
-          <div class="result-kpi">
-            <div class="kpi-val">±0 MB</div>
-            <div class="kpi-label">Tamaño sin cambio</div>
-            <div class="kpi-sub">Pruning no estructural</div>
-          </div>
           <div class="result-kpi gold">
             <div class="kpi-val">YOLOv26</div>
             <div class="kpi-label">Familia más robusta</div>
             <div class="kpi-sub">Diferencia &lt; 0.007 vs Fase 1</div>
           </div>
         </div>
+        <div class="chart-section">
+          <h3>Recuperación de AUC: Fase 1 → Fase 2 → Fase 3</h3>
+          <div class="chart-wrapper">
+            <canvas id="recoveryChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 16b: FASE 3 — TABLA DETALLADA -->
+    <section class="slide fase-slide" id="slide-16b">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="fase-big-label">Fase 3 · Tabla detallada</div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
@@ -4226,6 +4242,7 @@
         XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
+
     <!-- SLIDE 15: FASE 4 — CUANTIZACIÓN INT8 -->
     <section class="slide fase-slide" id="slide-17">
       <div class="bg-shapes">
@@ -5349,6 +5366,61 @@
       });
     }
 
+    function initRecoveryChart() {
+      if (chartInstances.recoveryChart) return;
+      const canvas = document.getElementById('recoveryChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const isMobileLocal = window.innerWidth < 768;
+      const labels = isMobileLocal
+        ? ['EffV2\nOjo', 'MNv4\nOjo', 'YOLO\nOjo', 'EffV2\nOral', 'MNv4\nOral', 'YOLO\nOral', 'EffV2\nPiel', 'MNv4\nPiel', 'YOLO\nPiel']
+        : ['EfficientNetV2-S · Ojo', 'MobileNetV4-Conv-Medium · Ojo', 'YOLOv26m-cls · Ojo', 'EfficientNetV2-S · Oral', 'MobileNetV4-Conv-Medium · Oral', 'YOLOv26m-cls · Oral', 'EfficientNetV2-S · Piel', 'MobileNetV4-Conv-Medium · Piel', 'YOLOv26n-cls · Piel'];
+
+      chartInstances.recoveryChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Fase 1 — AUC base',
+              data: [0.9873, 0.9754, 0.9934, 0.9189, 0.8580, 0.9427, 0.8925, 0.8896, 0.8837],
+              backgroundColor: SURFACE,
+              borderColor: 'rgba(0,56,101,.2)',
+              borderWidth: 1,
+              borderRadius: 4,
+              barPercentage: isMobileLocal ? 0.6 : 0.7
+            },
+            {
+              label: 'Fase 2 — AUC podado',
+              data: [0.7262, 0.7499, 0.9784, 0.4766, 0.4698, 0.8825, 0.7544, 0.8451, 0.8362],
+              backgroundColor: '#C62828',
+              borderRadius: 4,
+              barPercentage: isMobileLocal ? 0.6 : 0.7
+            },
+            {
+              label: 'Fase 3 — AUC recuperado',
+              data: [0.9851, 0.9572, 0.9871, 0.8646, 0.6471, 0.9363, 0.8605, 0.8725, 0.8966],
+              backgroundColor: SECONDARY,
+              borderRadius: 4,
+              barPercentage: isMobileLocal ? 0.6 : 0.7
+            }
+          ]
+        },
+        options: {
+          ...commonChartOptions,
+          scales: {
+            ...commonChartOptions.scales,
+            y: {
+              ...commonChartOptions.scales.y,
+              min: 0.3,
+              max: 1.0,
+              title: { display: true, text: 'AUC', color: '#4A4A4A', font: { size: isMobileLocal ? 10 : 11 } }
+            }
+          }
+        }
+      });
+    }
+
     function initChartsForSlide(index) {
       const slide = slides[index];
       if (!slide) return;
@@ -5359,6 +5431,7 @@
       }
       /* no chart to init for slide-11b */
       if (slide.id === 'slide-14') initFase2AucDropChart();
+      if (slide.id === 'slide-16') initRecoveryChart();
     }
 
     // Inicializar gráficos del slide activo al cargar
