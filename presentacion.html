@@ -1850,6 +1850,17 @@
       animation: pulseLayer 3s ease-in-out infinite;
       transform-origin: center; transform-box: fill-box;
     }
+    /* Slide 11b: ajustar cm-grid para presentación (flex ampliado) */
+    #slide-11b .cm-grid {
+      display: flex;
+      gap: 1.4rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 980px;
+      margin: 0 auto 0.8rem auto;
+    }
+    #slide-11b .cm-card { flex: 0 0 420px; text-align: center; }
+    #slide-11b .cm-card img { width: 100%; max-width: 420px; height: auto; border-radius: 8px; display:block; margin:0 auto; }
 
     .arch-node-ppt .n-dim {
       font-size: .6rem;
@@ -3610,7 +3621,6 @@
         XVII Jornada Científica - EP. Ing. Sistemas
       </div>
     </section>
-
     <!-- SLIDE 11: RESULTADOS FASE 1 -->
     <section class="slide fase-slide" id="slide-11">
       <div class="bg-shapes">
@@ -3756,6 +3766,33 @@
       </div>
     </section>
 
+    <!-- SLIDE 11B: RESULTADOS FASE 1 — MATRICES Y AUC -->
+    <section class="slide fase-slide" id="slide-11b">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="fase-big-label">Fase 1 · Matrices y AUC</div>
+        <!-- subtítulo eliminado a petición del equipo -->
+        <div class="cm-grid">
+          <div class="cm-card">
+            <img src="img/metodologia/fase1/matriz_efficienet_ojo.png" alt="Matriz de confusión EfficientNetV2 en retinopatía diabética" loading="lazy">
+            <p>EfficientNetV2-S · Retinopatía diabética</p>
+          </div>
+          <div class="cm-card">
+            <img src="img/metodologia/fase1/matriz_mobilinet_oral.png" alt="Matriz de confusión MobileNetV4 en cáncer oral" loading="lazy">
+            <p>MobileNetV4-Conv-Medium · Cáncer oral</p>
+          </div>
+        </div>
+        <!-- Se removió el chart-wrapper; la cm-grid ocupa más espacio -->
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
     <!-- SLIDE 11: FASE 2 — PRUNING NO ESTRUCTURAL -->
     <section class="slide fase-slide" id="slide-12">
       <div class="bg-shapes">
@@ -3883,6 +3920,27 @@
             <div class="kpi-sub">Caídas menores al 7%</div>
           </div>
         </div>
+        <div class="chart-section">
+          <h3>Caída de AUC tras el pruning (F1 → F2)</h3>
+          <div class="chart-wrapper">
+            <canvas id="fase2AucDropChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 14b: RESULTADOS FASE 2 — TABLA DETALLADA -->
+    <section class="slide fase-slide" id="slide-14b">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="fase-big-label">Fase 2 · Tabla detallada</div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
@@ -5185,6 +5243,112 @@
       });
     }
 
+    function initFase1AucChart() {
+      if (chartInstances.fase1AucChart) return;
+      const canvas = document.getElementById('fase1AucChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const isMobileLocal = window.innerWidth < 768;
+      const labelsDesktop = [
+        'EffV2-S\nRetinopatía', 'MobileNetV4-M\nRetinopatía', 'YOLOv26m-cls\nRetinopatía',
+        'EffV2-S\nCáncer oral', 'MobileNetV4-M\nCáncer oral', 'YOLOv26m-cls\nCáncer oral',
+        'EffV2-S\nMelanoma', 'MobileNetV4-M\nMelanoma', 'YOLOv26n-cls\nMelanoma'
+      ];
+      const labelsMobile = [
+        'EffV2\nRetino.', 'MNv4\nRetino.', 'YOLO\nRetino.',
+        'EffV2\nOral', 'MNv4\nOral', 'YOLO\nOral',
+        'EffV2\nSkin', 'MNv4\nSkin', 'YOLO\nSkin'
+      ];
+
+      chartInstances.fase1AucChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: isMobileLocal ? labelsMobile : labelsDesktop,
+          datasets: [{
+            label: 'AUC Fase 1',
+            data: [0.9873, 0.9754, 0.9934, 0.9189, 0.858, 0.9427, 0.8925, 0.8896, 0.8837],
+            backgroundColor: [
+              PRIMARY, PRIMARY, PRIMARY,
+              '#1565C0', '#1565C0', '#1565C0',
+              '#2E7D32', '#2E7D32', '#2E7D32'
+            ],
+            borderRadius: 6,
+            barPercentage: isMobileLocal ? 0.55 : 0.65
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'AUC por modelo y dataset (Fase 1)',
+              color: PRIMARY,
+              font: { size: isMobileLocal ? 13 : 15 }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#4A4A4A', font: { size: isMobileLocal ? 8 : 10 }, maxRotation: isMobileLocal ? 55 : 0 },
+              grid: { display: false }
+            },
+            y: {
+              min: 0.5, max: 1.0,
+              ticks: { color: '#4A4A4A', font: { size: isMobileLocal ? 10 : 11 } },
+              grid: { color: 'rgba(0,56,101,.08)' },
+              title: { display: true, text: 'AUC', color: '#4A4A4A', font: { size: 11 } }
+            }
+          }
+        }
+      });
+    }
+
+    function initFase2AucDropChart() {
+      if (chartInstances.fase2AucDropChart) return;
+      const canvas = document.getElementById('fase2AucDropChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const isMobileLocal = window.innerWidth < 768;
+      const labels = isMobileLocal
+        ? ["EffNetV2\nOjo", "MobileNetV4\nOjo", "YOLOv26\nOjo", "EffNetV2\nOral", "MobileNetV4\nOral", "YOLOv26\nOral", "EffNetV2\nPiel", "MobileNetV4\nPiel", "YOLOv26\nPiel"]
+        : ["EffNetV2\nOjo", "MobileNetV4\nOjo", "YOLOv26\nOjo", "EffNetV2\nOral", "MobileNetV4\nOral", "YOLOv26\nOral", "EffNetV2\nPiel", "MobileNetV4\nPiel", "YOLOv26\nPiel"];
+      const data = [-0.2611, -0.2255, -0.015, -0.4423, -0.3882, -0.0602, -0.1381, -0.0445, -0.0475];
+      chartInstances.fase2AucDropChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Caída de AUC (F1 → F2)',
+            data: data,
+            backgroundColor: data.map(v => v < -0.15 ? '#C62828' : (v < -0.05 ? SECONDARY : '#2E7D32')),
+            borderRadius: 4,
+            barPercentage: isMobileLocal ? 0.6 : 0.7
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: (item) => `Δ AUC: ${item.raw}` } }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#4A4A4A', font: { size: isMobileLocal ? 8 : 10 }, maxRotation: isMobileLocal ? 55 : 0, minRotation: isMobileLocal ? 55 : 0 },
+              grid: { color: 'rgba(0,56,101,.08)' }
+            },
+            y: {
+              ticks: { color: '#4A4A4A', font: { size: isMobileLocal ? 10 : 11 } },
+              grid: { color: 'rgba(0,56,101,.08)' },
+              beginAtZero: false,
+              title: { display: true, text: 'Δ AUC', color: '#4A4A4A', font: { size: isMobileLocal ? 10 : 11 } }
+            }
+          }
+        }
+      });
+    }
+
     function initChartsForSlide(index) {
       const slide = slides[index];
       if (!slide) return;
@@ -5193,6 +5357,8 @@
         initLatencyChart();
         initThroughputChart();
       }
+      /* no chart to init for slide-11b */
+      if (slide.id === 'slide-14') initFase2AucDropChart();
     }
 
     // Inicializar gráficos del slide activo al cargar
