@@ -4169,69 +4169,7 @@
       </div>
     </section>
 
-    <!-- SLIDE 17: FASE 4 — EJEMPLO NUMÉRICO -->
-    <section class="slide fase-slide" id="slide-19">
-      <div class="bg-shapes">
-        <div class="shape-circle-tl"></div>
-        <div class="shape-triangle-br"></div>
-        <div class="shape-diamond-tr"></div>
-      </div>
-      <div class="slide-inner">
-        <div class="fase-big-label">Fase 4</div>
-        <h2>Ejemplo numérico concreto</h2>
-        <p class="fase-subtitle">Cómo un peso real se comprime a INT8 y se recupera con pérdida mínima.</p>
-        <div class="quant-anim-ppt">
-          <div class="quant-step-flow">
-            <div class="quant-step-box">
-              <div class="qs-icon">1</div>
-              <h5>Rango real</h5>
-              <p>[−1.2, +2.8]</p>
-            </div>
-            <div class="quant-step-arrow">→</div>
-            <div class="quant-step-box">
-              <div class="qs-icon">2</div>
-              <h5>Escala</h5>
-              <p>S = 4.0 / 256</p>
-            </div>
-            <div class="quant-step-arrow">→</div>
-            <div class="quant-step-box">
-              <div class="qs-icon">3</div>
-              <h5>Cuantizar</h5>
-              <p>Q = round(w/S + Z)</p>
-            </div>
-            <div class="quant-step-arrow">→</div>
-            <div class="quant-step-box">
-              <div class="qs-icon">4</div>
-              <h5>Recuperar</h5>
-              <p>R′ = S·(Q−Z)</p>
-            </div>
-          </div>
-          <div class="weight-anim-box">
-            <div class="weight-card active">
-              <h5>Peso FP32</h5>
-              <div class="weight-value">0.001738291</div>
-            </div>
-            <div class="anim-arrow">→</div>
-            <div class="weight-card">
-              <h5>S = 0.015625, Z = 128</h5>
-              <div class="weight-value">Q = 128</div>
-            </div>
-            <div class="anim-arrow">→</div>
-            <div class="weight-card active">
-              <h5>Recuperado</h5>
-              <div class="weight-value int">0.0</div>
-            </div>
-          </div>
-        </div>
-        <div class="note-box">
-          <strong>Error insignificante:</strong> El redondeo es despreciable frente a millones de conexiones. La decisión
-          final del clasificador (≥ 0.5) casi no cambia.
-        </div>
-      </div>
-      <div class="slide-footer">
-        XVII Jornada Científica - EP. Ing. Sistemas
-      </div>
-    </section>
+    <!-- SLIDE 17: FASE 4 — EJEMPLO NUMÉRICO (eliminado) -->
 
     <!-- SLIDE 18: FASE 4 — ¿POR QUÉ NO SE DESTRUYE? -->
     <section class="slide fase-slide" id="slide-20">
