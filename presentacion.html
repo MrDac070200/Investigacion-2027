@@ -1856,11 +1856,30 @@
       gap: 1.4rem;
       justify-content: center;
       flex-wrap: wrap;
-      max-width: 980px;
+      max-width: 1100px;
       margin: 0 auto 0.8rem auto;
     }
-    #slide-11b .cm-card { flex: 0 0 420px; text-align: center; }
-    #slide-11b .cm-card img { width: 100%; max-width: 420px; height: auto; border-radius: 8px; display:block; margin:0 auto; }
+    #slide-11b .cm-card {
+      flex: 1 1 280px;
+      max-width: 320px;
+      text-align: center;
+      position: relative;
+    }
+    #slide-11b .cm-card:first-child {
+      padding-right: 1.4rem;
+    }
+    #slide-11b .cm-card:first-child::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 5%;
+      height: 90%;
+      width: 2px;
+      background: var(--blue-dark);
+      opacity: 0.2;
+      border-radius: 1px;
+    }
+    #slide-11b .cm-card img { width: 100%; height: auto; border-radius: 8px; display:block; margin:0 auto; }
 
     .arch-node-ppt .n-dim {
       font-size: .6rem;
@@ -3815,6 +3834,10 @@
         <div class="fase-big-label">Fase 1 · Matrices y AUC</div>
         <!-- subtítulo eliminado a petición del equipo -->
         <div class="cm-grid">
+          <div class="cm-card">
+            <img src="img/presentacion/confusion_cero.png" alt="Matriz de confusión MobileNetV4-Conv-Medium cuantizado INT8 en retinopatía diabética" loading="lazy">
+            <p>Clasificación deficiente</p>
+          </div>
           <div class="cm-card">
             <img src="img/metodologia/fase1/matriz_efficienet_ojo.png" alt="Matriz de confusión EfficientNetV2 en retinopatía diabética" loading="lazy">
             <p>EfficientNetV2-S · Retinopatía diabética</p>
