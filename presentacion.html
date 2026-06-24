@@ -2900,6 +2900,29 @@
       line-height: 1.2;
     }
 
+    /* Slide 7: Datasets - bloques de fuente al estilo card-source */
+    #slide-7 .dataset-card .card-source {
+      text-align: left;
+      border-top: 1px solid rgba(0, 56, 101, .08);
+    }
+
+    #slide-7 .dataset-card .card-source-title {
+      color: var(--blue-dark);
+      text-decoration: none;
+      display: block;
+    }
+
+    #slide-7 .dataset-card .card-source-title:hover {
+      color: var(--blue-bright);
+      text-decoration: underline;
+    }
+
+    #slide-7 .dataset-card .card-source-title::after {
+      content: ' ↗';
+      font-size: .7em;
+      opacity: .6;
+    }
+
     /* Slide 13 (HTML id slide-15): Knowledge Distillation - aumentar emoji y texto */
     #slide-15 .kd-box-ppt .kd-icon {
       font-size: 2.8rem;
@@ -3318,17 +3341,32 @@
             <div class="dataset-img-wrap">
               <img src="img/presentacion/retinopatia.jpg" alt="Retinopatía diabética">
             </div>
+            <div class="card-source">
+              <span class="card-source-tag">Dataset público</span>
+              <a href="https://www.kaggle.com/datasets/eishkaran/diabetes-using-retinopathy-prediction" target="_blank" rel="noopener" class="card-source-title">Diabetes using Retinopathy Prediction</a>
+              <div class="card-source-org">Kaggle · Eishkaran Singh</div>
+            </div>
             <h3>Retinopatía diabética</h3>
           </div>
           <div class="dataset-card">
             <div class="dataset-img-wrap">
               <img src="img/presentacion/cancer-oral.png" alt="Cáncer oral">
             </div>
+            <div class="card-source">
+              <span class="card-source-tag">Dataset público</span>
+              <a href="https://zenodo.org/records/10664056" target="_blank" rel="noopener" class="card-source-title">Annotated Oral Cavity Images for Oral Cancer Detection</a>
+              <div class="card-source-org">Zenodo · Piyarathne et al. · 2024</div>
+            </div>
             <h3>Cáncer oral</h3>
           </div>
           <div class="dataset-card">
             <div class="dataset-img-wrap">
               <img src="img/presentacion/melanoma.jpg" alt="Melanoma de piel">
+            </div>
+            <div class="card-source">
+              <span class="card-source-tag">Dataset público</span>
+              <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T" target="_blank" rel="noopener" class="card-source-title">Skin Cancer MNIST: HAM10000</a>
+              <div class="card-source-org">Harvard Dataverse · Tschandl et al.</div>
             </div>
             <h3>Melanoma de piel</h3>
           </div>
