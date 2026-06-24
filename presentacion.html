@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,21 +8,31 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --blue-dark:     #003865;
-      --blue-corp:     #1A5276;
-      --blue-bright:   #4A90E2;
-      --blue-light:    #EAF3FB;
-      --blue-soft:     #F4F8FC;
-      --gold:          #F8A900;
-      --gold-soft:     #FFF5DE;
-      --text:          #003865;
-      --text-secondary:#4A6572;
-      --white:         #FFFFFF;
-      --radius:        18px;
+      --blue-dark: #003865;
+      --blue-corp: #1A5276;
+      --blue-bright: #4A90E2;
+      --blue-light: #EAF3FB;
+      --blue-soft: #F4F8FC;
+      --gold: #F8A900;
+      --gold-soft: #FFF5DE;
+      --text: #003865;
+      --text-secondary: #4A6572;
+      --white: #FFFFFF;
+      --radius: 18px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--white);
@@ -38,6 +49,7 @@
       height: 100vh;
       background: var(--white);
     }
+
     .slide {
       position: absolute;
       inset: 0;
@@ -53,12 +65,14 @@
       overflow: hidden;
       background: var(--white);
     }
+
     .slide.active {
       opacity: 1;
       pointer-events: auto;
       transform: translateX(0);
       z-index: 2;
     }
+
     .slide.prev {
       transform: translateX(-50px);
       z-index: 1;
@@ -72,7 +86,8 @@
       pointer-events: none;
       overflow: hidden;
     }
-    .bg-shapes > * {
+
+    .bg-shapes>* {
       position: absolute;
       pointer-events: none;
     }
@@ -131,12 +146,16 @@
       letter-spacing: .1em;
       text-transform: uppercase;
     }
+
     #slide-22 .slide-footer {
       color: #fff;
     }
 
     /* Numeración de diapositivas (excepto carátula) */
-    .slides-container { counter-reset: slide-num 1; }
+    .slides-container {
+      counter-reset: slide-num 1;
+    }
+
     .slide:not(#slide-1)::after {
       counter-increment: slide-num;
       content: counter(slide-num);
@@ -147,22 +166,23 @@
       font-size: .85rem;
       font-weight: 800;
       color: var(--blue-dark);
-      background: rgba(255,255,255,.72);
+      background: rgba(255, 255, 255, .72);
       backdrop-filter: blur(10px);
       padding: .35rem .85rem;
       border-radius: 50px;
-      box-shadow: 0 4px 14px rgba(0,56,101,.1);
+      box-shadow: 0 4px 14px rgba(0, 56, 101, .1);
     }
+
     #slide-22::after {
       color: #fff;
-      background: rgba(255,255,255,.15);
+      background: rgba(255, 255, 255, .15);
     }
 
     .section-kicker {
       display: inline-flex;
       align-items: center;
       gap: .7rem;
-      background: rgba(255,255,255,.72);
+      background: rgba(255, 255, 255, .72);
       backdrop-filter: blur(10px);
       color: var(--blue-dark);
       font-size: 1rem;
@@ -172,8 +192,9 @@
       padding: .65rem 1.4rem;
       border-radius: 50px;
       margin-bottom: 1.8rem;
-      box-shadow: 0 4px 18px rgba(0,56,101,.08);
+      box-shadow: 0 4px 18px rgba(0, 56, 101, .08);
     }
+
     .section-kicker::before {
       content: '';
       width: 10px;
@@ -189,10 +210,12 @@
       line-height: 1.1;
       margin-bottom: 1rem;
     }
+
     .slide h1 em {
       font-style: normal;
       color: var(--gold);
     }
+
     .slide h2 {
       font-size: clamp(1.6rem, 3.2vw, 2.6rem);
       font-weight: 800;
@@ -200,18 +223,27 @@
       margin-bottom: 1rem;
       line-height: 1.2;
     }
+
     .slide h3 {
       font-size: 1.1rem;
       font-weight: 700;
       color: var(--blue-dark);
       margin-bottom: .4rem;
     }
-    .slide p, .slide li {
+
+    .slide p,
+    .slide li {
       font-size: clamp(1rem, 1.6vw, 1.2rem);
       color: var(--text-secondary);
     }
-    .slide ul { padding-left: 1.4rem; }
-    .slide li { margin-bottom: .55rem; }
+
+    .slide ul {
+      padding-left: 1.4rem;
+    }
+
+    .slide li {
+      margin-bottom: .55rem;
+    }
 
     /* ════════════════════════════════════════
        SLIDE 1 · PORTADA
@@ -221,6 +253,7 @@
       color: var(--blue-dark);
       text-align: left;
     }
+
     #slide-1 .bg-shapes .shape-circle-tl,
     #slide-1 .bg-shapes .shape-triangle-br,
     #slide-1 .bg-shapes .shape-diamond-tr {
@@ -239,29 +272,38 @@
       pointer-events: none;
     }
 
-    #slide-1 h1 { color: var(--blue-dark); }
-    #slide-1 h1 em { color: var(--gold); }
+    #slide-1 h1 {
+      color: var(--blue-dark);
+    }
+
+    #slide-1 h1 em {
+      color: var(--gold);
+    }
+
     #slide-1 .subtitle {
       color: var(--blue-dark);
       font-size: clamp(1.05rem, 2vw, 1.35rem);
       max-width: 720px;
       margin: 0;
     }
+
     #slide-1 .slide-footer {
       background: transparent;
       color: var(--blue-dark);
     }
+
     .slide-inner-left {
       align-self: flex-start;
       text-align: left;
       max-width: min(820px, 90vw);
     }
+
     .portada-badge {
       display: inline-flex;
       align-items: center;
       gap: .6rem;
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .2);
       border-radius: 50px;
       padding: .5rem 1.2rem;
       color: #fff;
@@ -271,14 +313,22 @@
       margin-bottom: 1.5rem;
       backdrop-filter: blur(4px);
     }
+
     .portada-badge-dot {
-      width: 8px; height: 8px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--gold);
     }
-    .portada-icon { font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 6px 20px rgba(0,0,0,.25)); }
+
+    .portada-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 6px 20px rgba(0, 0, 0, .25));
+    }
+
     .advisors {
-      color: rgba(255,255,255,.65);
+      color: rgba(255, 255, 255, .65);
       font-size: .85rem;
       margin-top: .5rem;
     }
@@ -292,6 +342,7 @@
       gap: 2.5rem;
       margin-top: 2.5rem;
     }
+
     .team-member {
       text-align: center;
       position: relative;
@@ -309,25 +360,31 @@
       background: var(--blue-soft);
       border: 4px solid var(--gold);
       box-shadow:
-        0 0 0 6px rgba(0,56,101,.08),
-        0 12px 40px rgba(0,56,101,.15);
+        0 0 0 6px rgba(0, 56, 101, .08),
+        0 12px 40px rgba(0, 56, 101, .15);
       display: flex;
       align-items: center;
       justify-content: center;
       transition: transform .25s ease;
     }
-    .team-photo:hover { transform: scale(1.05); }
+
+    .team-photo:hover {
+      transform: scale(1.05);
+    }
+
     .team-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
+
     .team-photo:empty::before {
       content: '👤';
       font-size: 3rem;
       opacity: .35;
     }
+
     .team-photo img[src=""] {
       display: none;
     }
@@ -358,7 +415,7 @@
       bottom: -34px;
       left: 50%;
       transform: translateX(-50%);
-      box-shadow: 0 0 0 4px rgba(248,169,0,.2);
+      box-shadow: 0 0 0 4px rgba(248, 169, 0, .2);
     }
 
     /* Línea decorativa debajo del nombre */
@@ -370,6 +427,7 @@
       display: inline-block;
       padding-bottom: .6rem;
     }
+
     .team-member h3::after {
       content: '';
       position: absolute;
@@ -381,6 +439,7 @@
       transform: translateX(-50%);
       border-radius: 2px;
     }
+
     .team-member p {
       font-size: .88rem;
       color: var(--text-secondary);
@@ -401,26 +460,30 @@
       margin-top: 2rem;
       width: 100%;
     }
+
     .dataset-card {
-      background: rgba(255,255,255,.75);
+      background: rgba(255, 255, 255, .75);
       backdrop-filter: blur(6px);
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0,56,101,.08);
-      border: 1px solid rgba(0,56,101,.08);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .08);
+      border: 1px solid rgba(0, 56, 101, .08);
       text-align: center;
       transition: transform .25s ease, box-shadow .25s ease;
     }
+
     .dataset-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 14px 40px rgba(0,56,101,.14);
+      box-shadow: 0 14px 40px rgba(0, 56, 101, .14);
     }
+
     .dataset-img-wrap {
       width: 100%;
       aspect-ratio: 4 / 3;
       overflow: hidden;
       position: relative;
     }
+
     .dataset-img-wrap img {
       width: 100%;
       height: 100%;
@@ -428,9 +491,11 @@
       display: block;
       transition: transform .4s ease;
     }
+
     .dataset-card:hover .dataset-img-wrap img {
       transform: scale(1.05);
     }
+
     .dataset-card h3 {
       padding: 1rem;
       font-size: 1rem;
@@ -442,13 +507,13 @@
        SLIDE 3 · PROBLEMÁTICA
     ════════════════════════════════════════ */
     .problem-intro-text {
-      background: rgba(255,255,255,.78);
+      background: rgba(255, 255, 255, .78);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,56,101,.15);
+      border: 1px solid rgba(0, 56, 101, .15);
       border-left: 4px solid var(--blue-dark);
       border-radius: var(--radius);
       padding: 1.2rem 1.5rem;
-      box-shadow: 0 8px 30px rgba(0,56,101,.08);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .08);
       font-size: clamp(1rem, 1.7vw, 1.15rem);
       color: var(--text-secondary);
       max-width: 950px;
@@ -468,26 +533,36 @@
       --diag-offset: 0px;
       position: relative;
       border-radius: var(--radius);
-      box-shadow: 0 8px 30px rgba(0,56,101,.08);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .08);
       transform: translateY(var(--diag-offset));
       transition: transform .25s ease, box-shadow .25s ease;
       z-index: 1;
     }
-    .problem-card:nth-child(1) { --diag-offset: 0px; }
-    .problem-card:nth-child(2) { --diag-offset: 30px; }
-    .problem-card:nth-child(3) { --diag-offset: 60px; }
+
+    .problem-card:nth-child(1) {
+      --diag-offset: 0px;
+    }
+
+    .problem-card:nth-child(2) {
+      --diag-offset: 30px;
+    }
+
+    .problem-card:nth-child(3) {
+      --diag-offset: 60px;
+    }
+
     .problem-card:hover {
       transform: translateY(calc(var(--diag-offset) - 6px));
-      box-shadow: 0 14px 40px rgba(0,56,101,.14);
+      box-shadow: 0 14px 40px rgba(0, 56, 101, .14);
     }
 
     .card-inner {
       position: relative;
       z-index: 1;
-      background: rgba(255,255,255,.78);
+      background: rgba(255, 255, 255, .78);
       backdrop-filter: blur(6px);
       border-radius: var(--radius);
-      border: 1px solid rgba(0,56,101,.1);
+      border: 1px solid rgba(0, 56, 101, .1);
       overflow: hidden;
     }
 
@@ -496,13 +571,14 @@
       height: 130px;
       object-fit: cover;
       display: block;
-      border-bottom: 1px solid rgba(0,56,101,.08);
+      border-bottom: 1px solid rgba(0, 56, 101, .08);
     }
 
     .card-source {
       padding: .7rem 1rem;
       background: var(--blue-soft);
     }
+
     .card-source-tag {
       display: inline-block;
       background: var(--gold-soft);
@@ -515,6 +591,7 @@
       border-radius: 50px;
       margin-bottom: .35rem;
     }
+
     .card-source-title {
       font-size: .78rem;
       font-weight: 700;
@@ -522,6 +599,7 @@
       line-height: 1.35;
       margin-bottom: .15rem;
     }
+
     .card-source-org {
       font-size: .68rem;
       color: var(--text-secondary);
@@ -532,6 +610,7 @@
       padding: 1rem;
       text-align: center;
     }
+
     .card-number {
       font-size: 2.4rem;
       font-weight: 900;
@@ -539,19 +618,130 @@
       color: var(--blue-dark);
       margin-bottom: .2rem;
     }
-    .problem-card.infra .card-number { color: #C62828; }
-    .problem-card.esp   .card-number { color: #1565C0; }
-    .problem-card.con   .card-number { color: #2E7D32; }
+
+    .problem-card.infra .card-number {
+      color: #C62828;
+    }
+
+    .problem-card.esp .card-number {
+      color: #1565C0;
+    }
+
+    .problem-card.con .card-number {
+      color: #2E7D32;
+    }
+
     .card-label {
       font-size: .82rem;
       font-weight: 700;
       color: var(--text);
       line-height: 1.3;
     }
+
     .card-sub {
       font-size: .72rem;
       color: var(--text-secondary);
       margin-top: .15rem;
+    }
+
+    /* ════════════════════════════════════════
+       SLIDE 2b · BRECHAS INTRO (imágenes)
+    ════════════════════════════════════════ */
+    .brecha-intro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      margin-top: .6rem;
+    }
+
+    .brecha-intro-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .1);
+      background: rgba(255, 255, 255, .88);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 56, 101, .1);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .brecha-intro-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 42px rgba(0, 56, 101, .18);
+    }
+
+    .brecha-intro-card img {
+      width: 100%;
+      height: 195px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brecha-intro-body {
+      padding: 1.1rem 1.3rem 1.3rem;
+    }
+
+    .brecha-num {
+      display: inline-block;
+      font-size: .65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: .22rem .65rem;
+      border-radius: 50px;
+      margin-bottom: .55rem;
+    }
+
+    .brecha-intro-card.brecha-infra .brecha-num {
+      background: #FFEBEE;
+      color: #C62828;
+    }
+
+    .brecha-intro-card.brecha-esp .brecha-num {
+      background: #E3F2FD;
+      color: #1565C0;
+    }
+
+    .brecha-intro-card.brecha-con .brecha-num {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+
+    .brecha-intro-body h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: .45rem;
+      padding-left: .65rem;
+    }
+
+    .brecha-intro-card.brecha-infra .brecha-intro-body h3 {
+      border-left: 3px solid #C62828;
+    }
+
+    .brecha-intro-card.brecha-esp .brecha-intro-body h3 {
+      border-left: 3px solid #1565C0;
+    }
+
+    .brecha-intro-card.brecha-con .brecha-intro-body h3 {
+      border-left: 3px solid #2E7D32;
+    }
+
+    .brecha-intro-body p {
+      font-size: .84rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .brecha-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .brecha-intro-card img {
+        height: 160px;
+      }
     }
 
     /* ════════════════════════════════════════
@@ -563,9 +753,10 @@
       border-radius: var(--radius);
       padding: 1.6rem 2.2rem;
       margin-bottom: 1.4rem;
-      box-shadow: 0 12px 40px rgba(0,56,101,.18);
+      box-shadow: 0 12px 40px rgba(0, 56, 101, .18);
       border: 3px solid var(--white);
     }
+
     .objetivo-gral h3 {
       color: var(--gold);
       font-size: .8rem;
@@ -573,12 +764,14 @@
       letter-spacing: .08em;
       margin-bottom: .4rem;
     }
+
     .objetivo-gral .obj-title {
       font-size: clamp(1.3rem, 2.5vw, 1.8rem);
       font-weight: 800;
       margin-bottom: .8rem;
       line-height: 1.25;
     }
+
     .objetivo-gral ul {
       list-style: none;
       padding: 0;
@@ -586,12 +779,14 @@
       flex-wrap: wrap;
       gap: .5rem 1.2rem;
     }
+
     .objetivo-gral li {
       position: relative;
       padding-left: 1.1rem;
       font-size: .95rem;
-      color: rgba(255,255,255,.9);
+      color: rgba(255, 255, 255, .9);
     }
+
     .objetivo-gral li::before {
       content: '';
       position: absolute;
@@ -609,6 +804,7 @@
       gap: 1rem;
       justify-content: center;
     }
+
     .obj-item {
       flex: 1 1 calc(20% - 1rem);
       min-width: 170px;
@@ -616,34 +812,41 @@
       background: var(--blue-soft);
       border-radius: 14px;
       padding: 1rem;
-      border: 1px solid rgba(0,56,101,.06);
+      border: 1px solid rgba(0, 56, 101, .06);
       text-align: center;
       transition: transform .2s ease;
     }
-    .obj-item:hover { transform: translateY(-4px); }
+
+    .obj-item:hover {
+      transform: translateY(-4px);
+    }
+
     .obj-circle {
       width: 110px;
       height: 110px;
       margin: 0 auto .9rem;
       border-radius: 50%;
-      border: 3px solid rgba(0,56,101,.12);
+      border: 3px solid rgba(0, 56, 101, .12);
       background: var(--white);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
     .obj-circle img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
     }
+
     .obj-circle:empty::before {
       content: '🖼️';
       font-size: 1.6rem;
       opacity: .3;
     }
+
     .obj-header {
       display: flex;
       align-items: center;
@@ -651,6 +854,7 @@
       gap: .5rem;
       margin-bottom: .4rem;
     }
+
     .obj-num {
       background: var(--blue-dark);
       color: #fff;
@@ -664,19 +868,29 @@
       flex-shrink: 0;
       font-size: .8rem;
     }
+
     .obj-keyword {
       font-size: .95rem;
       font-weight: 800;
       color: var(--blue-dark);
       line-height: 1.2;
     }
+
     .obj-item p {
       font-size: .8rem;
       color: var(--text-secondary);
       line-height: 1.4;
     }
-    .obj-item.highlight { background: var(--gold-soft); border-color: rgba(248,169,0,.2); }
-    .obj-item.highlight .obj-num { background: var(--gold); color: var(--blue-dark); }
+
+    .obj-item.highlight {
+      background: var(--gold-soft);
+      border-color: rgba(248, 169, 0, .2);
+    }
+
+    .obj-item.highlight .obj-num {
+      background: var(--gold);
+      color: var(--blue-dark);
+    }
 
     /* ════════════════════════════════════════
        SLIDE 4 · METODOLOGÍA
@@ -688,23 +902,29 @@
       align-items: stretch;
       justify-content: center;
     }
+
     .fase-card {
       flex: 1;
       min-width: 150px;
       max-width: 210px;
-      background: rgba(255,255,255,.75);
+      background: rgba(255, 255, 255, .75);
       backdrop-filter: blur(6px);
-      border: 1px solid rgba(0,56,101,.08);
+      border: 1px solid rgba(0, 56, 101, .08);
       border-radius: var(--radius);
       padding: 1.1rem;
       position: relative;
-      box-shadow: 0 6px 24px rgba(0,56,101,.05);
+      box-shadow: 0 6px 24px rgba(0, 56, 101, .05);
       transition: transform .2s, border-color .2s;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .fase-card:hover { transform: translateY(-5px); border-color: rgba(0,56,101,.18); }
+
+    .fase-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 56, 101, .18);
+    }
+
     .fase-header {
       display: flex;
       align-items: center;
@@ -712,6 +932,7 @@
       width: 100%;
       margin-bottom: .8rem;
     }
+
     .fase-num {
       width: 32px;
       height: 32px;
@@ -725,12 +946,14 @@
       justify-content: center;
       flex-shrink: 0;
     }
+
     .fase-card h4 {
       font-size: .9rem;
       color: var(--blue-dark);
       line-height: 1.25;
       text-align: left;
     }
+
     .fase-img {
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -742,6 +965,7 @@
       justify-content: center;
       position: relative;
     }
+
     .fase-img img {
       width: 100%;
       height: 100%;
@@ -750,14 +974,21 @@
       position: relative;
       z-index: 1;
     }
+
     .fase-placeholder {
       position: absolute;
       font-size: 2rem;
       opacity: .35;
       pointer-events: none;
     }
-    .fase-img img[src]:not([src=""]) ~ .fase-placeholder { display: none; }
-    .fase-card { cursor: pointer; }
+
+    .fase-img img[src]:not([src=""])~.fase-placeholder {
+      display: none;
+    }
+
+    .fase-card {
+      cursor: pointer;
+    }
 
     /* ════════════════════════════════════════
        MODAL DE FASES
@@ -771,13 +1002,18 @@
       justify-content: center;
       padding: 2rem;
     }
-    .fase-modal.active { display: flex; }
+
+    .fase-modal.active {
+      display: flex;
+    }
+
     .fase-modal-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(0,56,101,.78);
+      background: rgba(0, 56, 101, .78);
       backdrop-filter: blur(5px);
     }
+
     .fase-modal-content {
       position: relative;
       width: 92vw;
@@ -785,12 +1021,13 @@
       max-width: 1200px;
       background: var(--white);
       border-radius: var(--radius);
-      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       z-index: 1;
     }
+
     .fase-modal-close {
       position: absolute;
       top: 1rem;
@@ -810,16 +1047,33 @@
       justify-content: center;
       transition: background .2s, color .2s;
     }
-    .fase-modal-close:hover { background: var(--gold); color: var(--blue-dark); }
+
+    .fase-modal-close:hover {
+      background: var(--gold);
+      color: var(--blue-dark);
+    }
+
     .fase-modal-content iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
+
     @media (max-width: 900px) {
-      .fase-modal { padding: 1rem; }
-      .fase-modal-content { width: 96vw; height: 92vh; }
-      .fase-modal-close { width: 38px; height: 38px; font-size: 1.5rem; }
+      .fase-modal {
+        padding: 1rem;
+      }
+
+      .fase-modal-content {
+        width: 96vw;
+        height: 92vh;
+      }
+
+      .fase-modal-close {
+        width: 38px;
+        height: 38px;
+        font-size: 1.5rem;
+      }
     }
 
     /* ════════════════════════════════════════
@@ -832,7 +1086,12 @@
       margin-top: 2rem;
       align-items: center;
     }
-    .cuant-col ul { list-style: none; padding: 0; }
+
+    .cuant-col ul {
+      list-style: none;
+      padding: 0;
+    }
+
     .cuant-col li {
       display: flex;
       gap: .8rem;
@@ -844,6 +1103,7 @@
       border-radius: 12px;
       border-left: 4px solid var(--gold);
     }
+
     .cuant-col li::before {
       content: '•';
       color: var(--gold);
@@ -851,14 +1111,16 @@
       font-size: 1.2rem;
       line-height: 1;
     }
+
     .viz-box {
-      background: rgba(255,255,255,.7);
+      background: rgba(255, 255, 255, .7);
       backdrop-filter: blur(8px);
       border-radius: var(--radius);
       padding: 2rem;
-      border: 1px solid rgba(0,56,101,.08);
-      box-shadow: 0 8px 30px rgba(0,56,101,.06);
+      border: 1px solid rgba(0, 56, 101, .08);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .06);
     }
+
     .bar {
       display: flex;
       height: 44px;
@@ -868,9 +1130,31 @@
       font-size: .82rem;
       font-weight: 700;
     }
-    .bar-fp32 { background: #CFD8DC; color: var(--blue-dark); display: flex; align-items: center; justify-content: center; flex: 82; }
-    .bar-int8 { background: var(--gold); color: var(--blue-dark); display: flex; align-items: center; justify-content: center; flex: 22; }
-    .bar-label { font-size: .8rem; color: var(--text-secondary); margin-bottom: .5rem; }
+
+    .bar-fp32 {
+      background: #CFD8DC;
+      color: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 82;
+    }
+
+    .bar-int8 {
+      background: var(--gold);
+      color: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 22;
+    }
+
+    .bar-label {
+      font-size: .8rem;
+      color: var(--text-secondary);
+      margin-bottom: .5rem;
+    }
+
     .highlight-box {
       background: var(--blue-light);
       border-radius: 12px;
@@ -878,6 +1162,7 @@
       text-align: center;
       margin-top: 1.2rem;
     }
+
     .highlight-box strong {
       font-size: 2rem;
       color: var(--blue-dark);
@@ -892,18 +1177,38 @@
       gap: 1.2rem;
       margin-bottom: 2rem;
     }
+
     .result-kpi {
       background: var(--blue-dark);
-      color: #fff; border-radius: var(--radius);
-      padding: 1.8rem 1.2rem; text-align: center;
-      box-shadow: 0 8px 30px rgba(0,56,101,.1);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .1);
     }
-    .result-kpi.gold { background: var(--gold); color: var(--blue-dark); }
+
+    .result-kpi.gold {
+      background: var(--gold);
+      color: var(--blue-dark);
+    }
+
     .result-kpi .kpi-val {
-      font-size: 2.2rem; font-weight: 900; line-height: 1;
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1;
     }
-    .result-kpi .kpi-label { font-size: .82rem; opacity: .85; margin-top: .4rem; }
-    .result-kpi .kpi-sub { font-size: .72rem; opacity: .65; margin-top: .2rem; }
+
+    .result-kpi .kpi-label {
+      font-size: .82rem;
+      opacity: .85;
+      margin-top: .4rem;
+    }
+
+    .result-kpi .kpi-sub {
+      font-size: .72rem;
+      opacity: .65;
+      margin-top: .2rem;
+    }
 
     .kpis-row {
       display: grid;
@@ -911,60 +1216,96 @@
       gap: 1.2rem;
       margin-bottom: 2rem;
     }
+
     .kpi-card {
-      background: rgba(255,255,255,.75);
+      background: rgba(255, 255, 255, .75);
       backdrop-filter: blur(6px);
       color: var(--blue-dark);
       border-radius: var(--radius);
       padding: 1.6rem 1rem;
       text-align: center;
-      border: 1px solid rgba(0,56,101,.08);
-      box-shadow: 0 8px 30px rgba(0,56,101,.06);
+      border: 1px solid rgba(0, 56, 101, .08);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .06);
       border-top: 4px solid var(--blue-bright);
     }
-    .kpi-card.gold { border-top-color: var(--gold); background: var(--gold-soft); }
-    .kpi-card .kpi-val { font-size: 2rem; font-weight: 900; line-height: 1; color: var(--blue-dark); }
-    .kpi-card.gold .kpi-val { color: var(--blue-dark); }
-    .kpi-card .kpi-label { font-size: .82rem; color: var(--text-secondary); margin-top: .5rem; }
-    .kpi-card .kpi-sub { font-size: .72rem; color: var(--text-secondary); opacity: .8; margin-top: .2rem; }
 
-    .chart-section { margin-bottom: 1.5rem; }
+    .kpi-card.gold {
+      border-top-color: var(--gold);
+      background: var(--gold-soft);
+    }
+
+    .kpi-card .kpi-val {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--blue-dark);
+    }
+
+    .kpi-card.gold .kpi-val {
+      color: var(--blue-dark);
+    }
+
+    .kpi-card .kpi-label {
+      font-size: .82rem;
+      color: var(--text-secondary);
+      margin-top: .5rem;
+    }
+
+    .kpi-card .kpi-sub {
+      font-size: .72rem;
+      color: var(--text-secondary);
+      opacity: .8;
+      margin-top: .2rem;
+    }
+
+    .chart-section {
+      margin-bottom: 1.5rem;
+    }
+
     .chart-section h3 {
-      font-size: 1rem; color: var(--blue-dark);
-      font-weight: 700; margin-bottom: .8rem;
+      font-size: 1rem;
+      color: var(--blue-dark);
+      font-weight: 700;
+      margin-bottom: .8rem;
       display: inline-block;
-      background: rgba(255,255,255,.78);
+      background: rgba(255, 255, 255, .78);
       backdrop-filter: blur(10px);
       padding: .55rem 1.2rem;
       border-radius: 50px;
-      box-shadow: 0 4px 14px rgba(0,56,101,.1);
+      box-shadow: 0 4px 14px rgba(0, 56, 101, .1);
     }
+
     .chart-wrapper {
-      background: rgba(255,255,255,.7);
+      background: rgba(255, 255, 255, .7);
       border-radius: var(--radius);
       padding: 1.2rem;
-      box-shadow: 0 8px 30px rgba(0,56,101,.06);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .06);
       position: relative;
       height: 260px;
-      border: 1px solid rgba(0,56,101,.08);
+      border: 1px solid rgba(0, 56, 101, .08);
     }
-    .chart-wrapper canvas { max-height: 100% !important; }
+
+    .chart-wrapper canvas {
+      max-height: 100% !important;
+    }
 
     .table-wrap {
       overflow-x: auto;
       border-radius: var(--radius);
-      border: 1px solid rgba(0,56,101,.1);
+      border: 1px solid rgba(0, 56, 101, .1);
       margin-bottom: 1.5rem;
-      background: rgba(255,255,255,.7);
+      background: rgba(255, 255, 255, .7);
       backdrop-filter: blur(6px);
-      box-shadow: 0 8px 30px rgba(0,56,101,.06);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .06);
     }
+
     .results-table {
       width: 100%;
       border-collapse: collapse;
       font-size: .8rem;
       background: transparent;
     }
+
     .results-table th {
       background: var(--blue-dark);
       color: #fff;
@@ -973,23 +1314,36 @@
       font-weight: 700;
       white-space: nowrap;
     }
+
     .results-table td {
       padding: .5rem .8rem;
-      border-bottom: 1px solid rgba(0,56,101,.08);
+      border-bottom: 1px solid rgba(0, 56, 101, .08);
       color: var(--text-secondary);
       white-space: nowrap;
     }
-    .results-table tr:nth-child(even) { background: var(--blue-soft); }
-    .results-table tr:hover { background: var(--blue-light); }
+
+    .results-table tr:nth-child(even) {
+      background: var(--blue-soft);
+    }
+
+    .results-table tr:hover {
+      background: var(--blue-light);
+    }
+
     .results-table tr.best-model {
       background: var(--gold-soft) !important;
       box-shadow: inset 0 0 0 2px var(--gold);
     }
+
     .results-table tr.best-model td {
       color: var(--blue-dark);
       font-weight: 700;
     }
-    .results-table tr.best-model:hover { background: var(--gold-soft) !important; }
+
+    .results-table tr.best-model:hover {
+      background: var(--gold-soft) !important;
+    }
+
     .best-badge {
       display: inline-block;
       background: var(--gold);
@@ -1002,15 +1356,34 @@
       border-radius: 50px;
       margin-left: .5rem;
     }
-    .delta-pos { color: #2E7D32; font-weight: 700; }
-    .delta-neg { color: #C62828; font-weight: 700; }
-    .delta-neutral { color: var(--text-secondary); font-weight: 700; }
-    .size-reduction {
-      display: inline-flex; align-items: center; gap: .2rem;
-      background: var(--blue-light); color: var(--blue-dark);
-      border-radius: 4px; padding: .1rem .4rem;
-      font-weight: 700; font-size: .75rem;
+
+    .delta-pos {
+      color: #2E7D32;
+      font-weight: 700;
     }
+
+    .delta-neg {
+      color: #C62828;
+      font-weight: 700;
+    }
+
+    .delta-neutral {
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+
+    .size-reduction {
+      display: inline-flex;
+      align-items: center;
+      gap: .2rem;
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      border-radius: 4px;
+      padding: .1rem .4rem;
+      font-weight: 700;
+      font-size: .75rem;
+    }
+
     .tag {
       display: inline-block;
       padding: .2rem .55rem;
@@ -1018,16 +1391,35 @@
       font-size: .72rem;
       font-weight: 600;
     }
-    .tag-ojo { background: #E3F2FD; color: #1565C0; }
-    .tag-oral { background: #FCE4EC; color: #880E4F; }
-    .tag-skin { background: #E8F5E9; color: #1B5E20; }
+
+    .tag-ojo {
+      background: #E3F2FD;
+      color: #1565C0;
+    }
+
+    .tag-oral {
+      background: #FCE4EC;
+      color: #880E4F;
+    }
+
+    .tag-skin {
+      background: #E8F5E9;
+      color: #1B5E20;
+    }
 
     .note-box {
-      background: var(--blue-light); border-left: 4px solid var(--blue-dark);
-      border-radius: 0 8px 8px 0; padding: 1rem 1.2rem;
-      font-size: .85rem; color: var(--text-secondary); margin-top: 1rem;
+      background: var(--blue-light);
+      border-left: 4px solid var(--blue-dark);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.2rem;
+      font-size: .85rem;
+      color: var(--text-secondary);
+      margin-top: 1rem;
     }
-    .note-box strong { color: var(--blue-dark); }
+
+    .note-box strong {
+      color: var(--blue-dark);
+    }
 
     /* Layouts específicos por slide de resultados */
     .results-layout {
@@ -1036,21 +1428,33 @@
       gap: 1.5rem;
       align-items: start;
     }
+
     .results-main {
       min-width: 0;
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
     }
-    .results-main .chart-section { margin-bottom: 0; }
-    .results-main .chart-wrapper { height: 220px; }
-    .results-main .table-wrap { margin-bottom: 0; }
+
+    .results-main .chart-section {
+      margin-bottom: 0;
+    }
+
+    .results-main .chart-wrapper {
+      height: 220px;
+    }
+
+    .results-main .table-wrap {
+      margin-bottom: 0;
+    }
+
     .results-sidebar .results-highlight {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       margin-bottom: 0;
     }
+
     .results-sidebar .result-kpi {
       padding: 1.4rem 1rem;
       flex: 1;
@@ -1059,16 +1463,39 @@
       justify-content: center;
       min-height: 120px;
     }
-    .results-sidebar .result-kpi .kpi-val { font-size: 1.8rem; }
-    .results-sidebar .result-kpi .kpi-label { font-size: .78rem; }
-    .results-sidebar .result-kpi .kpi-sub { font-size: .68rem; }
 
-    .slide-results-2 .kpis-row { margin-bottom: 1.2rem; }
-    .slide-results-2 .chart-wrapper { height: 200px; }
+    .results-sidebar .result-kpi .kpi-val {
+      font-size: 1.8rem;
+    }
 
-    .slide-results-3 .table-wrap { max-height: 440px; overflow-y: auto; }
-    .slide-results-4 .table-wrap { margin-bottom: 1.2rem; }
-    .slide-results-4 .note-box { margin-top: 0; }
+    .results-sidebar .result-kpi .kpi-label {
+      font-size: .78rem;
+    }
+
+    .results-sidebar .result-kpi .kpi-sub {
+      font-size: .68rem;
+    }
+
+    .slide-results-2 .kpis-row {
+      margin-bottom: 1.2rem;
+    }
+
+    .slide-results-2 .chart-wrapper {
+      height: 200px;
+    }
+
+    .slide-results-3 .table-wrap {
+      max-height: 440px;
+      overflow-y: auto;
+    }
+
+    .slide-results-4 .table-wrap {
+      margin-bottom: 1.2rem;
+    }
+
+    .slide-results-4 .note-box {
+      margin-top: 0;
+    }
 
     /* ════════════════════════════════════════
        SLIDE 8 · CONCLUSIONES
@@ -1079,21 +1506,43 @@
       gap: 1.2rem;
       margin-top: 2rem;
     }
+
     .conclusion-card {
-      background: rgba(255,255,255,.75);
+      background: rgba(255, 255, 255, .75);
       backdrop-filter: blur(6px);
       border-radius: var(--radius);
       padding: 1.8rem;
-      border: 1px solid rgba(0,56,101,.08);
-      box-shadow: 0 8px 30px rgba(0,56,101,.06);
+      border: 1px solid rgba(0, 56, 101, .08);
+      box-shadow: 0 8px 30px rgba(0, 56, 101, .06);
       border-top: 4px solid var(--blue-bright);
       transition: transform .2s;
     }
-    .conclusion-card:hover { transform: translateY(-5px); }
-    .conclusion-card.gold { border-top-color: var(--gold); background: var(--gold-soft); }
-    .conclusion-card .icon { font-size: 2.2rem; margin-bottom: .6rem; }
-    .conclusion-card h4 { font-size: 1.05rem; color: var(--blue-dark); margin-bottom: .5rem; }
-    .conclusion-card p { font-size: .9rem; color: var(--text-secondary); line-height: 1.55; }
+
+    .conclusion-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .conclusion-card.gold {
+      border-top-color: var(--gold);
+      background: var(--gold-soft);
+    }
+
+    .conclusion-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: .6rem;
+    }
+
+    .conclusion-card h4 {
+      font-size: 1.05rem;
+      color: var(--blue-dark);
+      margin-bottom: .5rem;
+    }
+
+    .conclusion-card p {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
 
     /* ════════════════════════════════════════
        SLIDE 11 · CIERRE
@@ -1103,6 +1552,7 @@
       color: var(--white);
       text-align: center;
     }
+
     #slide-22 .bg-shapes .shape-circle-tl {
       background: var(--gold);
       width: 380px;
@@ -1110,22 +1560,27 @@
       top: -150px;
       left: -150px;
     }
+
     #slide-22 .bg-shapes .shape-triangle-br {
-      border-bottom-color: rgba(255,255,255,.12);
+      border-bottom-color: rgba(255, 255, 255, .12);
       border-left-width: 320px;
       border-bottom-width: 320px;
       bottom: -30px;
       right: -30px;
     }
+
     #slide-22 .bg-shapes .shape-diamond-tr {
-      background: rgba(255,255,255,.1);
+      background: rgba(255, 255, 255, .1);
       width: 400px;
       height: 400px;
       top: -120px;
       right: -120px;
       border-radius: 42px;
     }
-    #slide-22 p { color: rgba(255,255,255,.82); }
+
+    #slide-22 p {
+      color: rgba(255, 255, 255, .82);
+    }
 
     /* ════════════════════════════════════════
        PUNTERO LÁSER
@@ -1135,11 +1590,11 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ff1a1a 0%, #ff0000 45%, rgba(255,0,0,.55) 65%, transparent 72%);
+      background: radial-gradient(circle, #ff1a1a 0%, #ff0000 45%, rgba(255, 0, 0, .55) 65%, transparent 72%);
       box-shadow:
-        0 0 8px 2px rgba(255,0,0,.8),
-        0 0 18px 6px rgba(255,0,0,.5),
-        0 0 28px 10px rgba(255,0,0,.25);
+        0 0 8px 2px rgba(255, 0, 0, .8),
+        0 0 18px 6px rgba(255, 0, 0, .5),
+        0 0 28px 10px rgba(255, 0, 0, .25);
       pointer-events: none;
       z-index: 9999;
       opacity: 0;
@@ -1148,12 +1603,24 @@
       top: -100px;
       left: -100px;
     }
-    body.laser-active #laser-pointer { opacity: 1; }
-    body.laser-active .slides-container { cursor: none; }
-    body.laser-active .fase-modal.active { cursor: none; }
+
+    body.laser-active #laser-pointer {
+      opacity: 1;
+    }
+
+    body.laser-active .slides-container {
+      cursor: none;
+    }
+
+    body.laser-active .fase-modal.active {
+      cursor: none;
+    }
+
     body.laser-active button,
     body.laser-active a,
-    body.laser-active .fase-card { cursor: none; }
+    body.laser-active .fase-card {
+      cursor: none;
+    }
 
     /* ════════════════════════════════════════
        SLIDES DE FASES DETALLADAS (6-15)
@@ -1165,6 +1632,7 @@
       margin-bottom: 1.2rem;
       text-align: center;
     }
+
     #slide-6 .fase-subtitle,
     #slide-6 .fase-subtitle,
     #slide-8 .fase-subtitle,
@@ -1177,124 +1645,280 @@
     #slide-16 .fase-subtitle {
       display: none;
     }
+
     #slide-8 h2,
     #slide-9 h2,
     #slide-10 h2 {
-      background: rgba(255,255,255,.78);
+      background: rgba(255, 255, 255, .78);
       backdrop-filter: blur(6px);
       padding: .4rem 1.6rem;
       border-radius: 50px;
-      box-shadow: 0 4px 14px rgba(0,56,101,.1);
+      box-shadow: 0 4px 14px rgba(0, 56, 101, .1);
     }
 
     /* --- Fase 1: Portada --- */
     .fase1-flow {
-      display: flex; align-items: center; justify-content: center;
-      gap: 1.2rem; flex-wrap: wrap; margin: 1rem 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin: 1rem 0 1.5rem;
     }
+
     .fase1-card {
-      background: rgba(255,255,255,.78);
+      background: rgba(255, 255, 255, .78);
       backdrop-filter: blur(6px);
-      border: 1px solid rgba(0,56,101,.1);
+      border: 1px solid rgba(0, 56, 101, .1);
       border-radius: var(--radius);
       padding: 1.2rem 1rem;
-      min-width: 170px; max-width: 240px;
+      min-width: 170px;
+      max-width: 240px;
       text-align: center;
-      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      box-shadow: 0 6px 24px rgba(0, 56, 101, .06);
     }
-    .fase1-card .fase1-icon { font-size: 2.2rem; margin-bottom: .5rem; }
-    .fase1-card h4 { color: var(--blue-dark); font-size: .95rem; margin-bottom: .3rem; }
-    .fase1-card p { color: var(--text-secondary); font-size: .78rem; line-height: 1.4; }
-    .fase1-arrow { font-size: 2rem; color: var(--gold); font-weight: 900; }
+
+    .fase1-card .fase1-icon {
+      font-size: 2.2rem;
+      margin-bottom: .5rem;
+    }
+
+    .fase1-card h4 {
+      color: var(--blue-dark);
+      font-size: .95rem;
+      margin-bottom: .3rem;
+    }
+
+    .fase1-card p {
+      color: var(--text-secondary);
+      font-size: .78rem;
+      line-height: 1.4;
+    }
+
+    .fase1-arrow {
+      font-size: 2rem;
+      color: var(--gold);
+      font-weight: 900;
+    }
+
     .model-minis {
-      display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap;
-      margin-bottom: 1.2rem; width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+      width: 100%;
     }
+
     .model-mini-fase {
-      background: var(--blue-dark); color: #fff;
-      border-radius: 12px; padding: .8rem 1rem;
-      min-width: 150px; text-align: left;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: 12px;
+      padding: .8rem 1rem;
+      min-width: 150px;
+      text-align: left;
     }
-    .model-mini-fase .m-name { font-weight: 800; font-size: .85rem; color: var(--gold); margin-bottom: .2rem; }
-    .model-mini-fase .m-desc { font-size: .72rem; color: rgba(255,255,255,.85); line-height: 1.35; }
+
+    .model-mini-fase .m-name {
+      font-weight: 800;
+      font-size: .85rem;
+      color: var(--gold);
+      margin-bottom: .2rem;
+    }
+
+    .model-mini-fase .m-desc {
+      font-size: .72rem;
+      color: rgba(255, 255, 255, .85);
+      line-height: 1.35;
+    }
+
     .fase-bullets {
-      list-style: none; max-width: 900px; text-align: left;
-      display: flex; flex-direction: column; gap: .6rem;
-      padding: 0; margin: 0;
+      list-style: none;
+      max-width: 900px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      padding: 0;
+      margin: 0;
     }
+
     .fase-bullets li {
-      background: rgba(255,255,255,.7);
-      border: 1px solid rgba(0,56,101,.08);
-      border-radius: 12px; padding: .75rem 1rem;
-      color: var(--text-secondary); font-size: .88rem;
+      background: rgba(255, 255, 255, .7);
+      border: 1px solid rgba(0, 56, 101, .08);
+      border-radius: 12px;
+      padding: .75rem 1rem;
+      color: var(--text-secondary);
+      font-size: .88rem;
     }
-    .fase-bullets li strong { color: var(--blue-dark); }
+
+    .fase-bullets li strong {
+      color: var(--blue-dark);
+    }
 
     /* --- Diagramas de arquitectura --- */
     .arch-flow-ppt {
-      display: flex; align-items: center; gap: .5rem;
-      justify-content: center; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      justify-content: center;
+      flex-wrap: wrap;
       margin-bottom: 1rem;
     }
+
     .arch-node-ppt {
-      background: var(--blue-light); border: 1px solid rgba(0,56,101,.12);
-      border-radius: 10px; padding: .6rem .5rem; text-align: center;
+      background: var(--blue-light);
+      border: 1px solid rgba(0, 56, 101, .12);
+      border-radius: 10px;
+      padding: .6rem .5rem;
+      text-align: center;
       min-width: 72px;
     }
-    .arch-node-ppt .n-icon { font-size: 1.3rem; margin-bottom: .15rem; }
-    .arch-node-ppt .n-name { font-size: .68rem; font-weight: 800; color: var(--blue-dark); text-transform: uppercase; }
-    .arch-node-ppt .n-dim { font-size: .6rem; color: var(--text-secondary); margin-top: .15rem; font-family: monospace; }
-    .arch-arrow-ppt { font-size: 1.2rem; color: var(--gold); font-weight: 900; }
+
+    .arch-node-ppt .n-icon {
+      font-size: 1.3rem;
+      margin-bottom: .15rem;
+    }
+
+    .arch-node-ppt .n-name {
+      font-size: .68rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+    }
+
+    .arch-node-ppt .n-dim {
+      font-size: .6rem;
+      color: var(--text-secondary);
+      margin-top: .15rem;
+      font-family: monospace;
+    }
+
+    .arch-arrow-ppt {
+      font-size: 1.2rem;
+      color: var(--gold);
+      font-weight: 900;
+    }
 
     .stack-diagram-ppt {
-      background: rgba(255,255,255,.75);
+      background: rgba(255, 255, 255, .75);
       backdrop-filter: blur(6px);
       border-radius: var(--radius);
       padding: 1.2rem;
-      box-shadow: 0 6px 24px rgba(0,56,101,.06);
-      width: 100%; max-width: 760px;
-      display: flex; flex-direction: column; gap: .6rem;
+      box-shadow: 0 6px 24px rgba(0, 56, 101, .06);
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
       margin-bottom: 1rem;
     }
+
     .stack-row-ppt {
-      display: flex; align-items: center; gap: .8rem; text-align: left;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      text-align: left;
     }
+
     .stack-row-ppt .stage-label {
-      width: 100px; flex-shrink: 0;
-      font-size: .65rem; font-weight: 800; color: var(--blue-dark);
-      text-transform: uppercase; letter-spacing: .04em;
+      width: 100px;
+      flex-shrink: 0;
+      font-size: .65rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      letter-spacing: .04em;
     }
+
     .stack-row-ppt .stage-bar {
-      flex: 1; border-radius: 8px; padding: .55rem .8rem;
-      color: var(--blue-dark); font-size: .78rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,.05);
+      flex: 1;
+      border-radius: 8px;
+      padding: .55rem .8rem;
+      color: var(--blue-dark);
+      font-size: .78rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
     }
-    .stack-row-ppt .stage-bar strong { display: block; font-size: .82rem; margin-bottom: .1rem; }
-    .stack-row-ppt .stage-bar small { display: block; font-size: .62rem; opacity: .85; margin-top: .1rem; }
-    .stage-bar.eff-fused { background: #74b9ff; }
-    .stage-bar.eff-mbconv { background: #55efc4; }
-    .stage-bar.eff-se { background: #fab1a0; }
-    .stage-bar.eff-head { background: #ffeaa7; }
-    .stage-bar.mb-uib { background: #74b9ff; }
-    .stage-bar.mb-mqa { background: #a29bfe; color: #fff; }
-    .stage-bar.mb-mqa strong { color: #fff; }
-    .stage-bar.mb-mqa small { color: rgba(255,255,255,.9); }
-    .stage-bar.input-bar { background: #dfe6e9; }
+
+    .stack-row-ppt .stage-bar strong {
+      display: block;
+      font-size: .82rem;
+      margin-bottom: .1rem;
+    }
+
+    .stack-row-ppt .stage-bar small {
+      display: block;
+      font-size: .62rem;
+      opacity: .85;
+      margin-top: .1rem;
+    }
+
+    .stage-bar.eff-fused {
+      background: #74b9ff;
+    }
+
+    .stage-bar.eff-mbconv {
+      background: #55efc4;
+    }
+
+    .stage-bar.eff-se {
+      background: #fab1a0;
+    }
+
+    .stage-bar.eff-head {
+      background: #ffeaa7;
+    }
+
+    .stage-bar.mb-uib {
+      background: #74b9ff;
+    }
+
+    .stage-bar.mb-mqa {
+      background: #a29bfe;
+      color: #fff;
+    }
+
+    .stage-bar.mb-mqa strong {
+      color: #fff;
+    }
+
+    .stage-bar.mb-mqa small {
+      color: rgba(255, 255, 255, .9);
+    }
+
+    .stage-bar.input-bar {
+      background: #dfe6e9;
+    }
 
     .legend-row-ppt {
-      display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap;
-      margin-bottom: .8rem; font-size: .72rem;
+      display: flex;
+      justify-content: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: .8rem;
+      font-size: .72rem;
     }
-    .legend-item-ppt { display: flex; align-items: center; gap: .3rem; }
+
+    .legend-item-ppt {
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+
     .legend-color-ppt {
-      width: 12px; height: 12px; border-radius: 3px;
-      border: 1px solid rgba(0,0,0,.1);
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1px solid rgba(0, 0, 0, .1);
     }
 
     .tech-grid-ppt {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: .8rem; width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .8rem;
+      width: 100%;
     }
+
     .fase-layout {
       display: grid;
       grid-template-columns: 1.2fr .8fr;
@@ -1302,304 +1926,757 @@
       width: 100%;
       align-items: stretch;
     }
-    .fase-layout .stack-diagram-ppt { margin-bottom: 0; }
+
+    .fase-layout .stack-diagram-ppt {
+      margin-bottom: 0;
+    }
+
     .tech-grid-ppt.vertical {
       grid-template-columns: 1fr;
       height: 100%;
     }
+
     .tech-grid-ppt.vertical .tech-card-ppt {
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
+
     .tech-card-ppt {
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(0,56,101,.08);
-      border-radius: 12px; padding: .8rem;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(0, 56, 101, .08);
+      border-radius: 12px;
+      padding: .8rem;
       text-align: left;
     }
-    .tech-card-ppt h4 { color: var(--blue-dark); font-size: .78rem; margin-bottom: .3rem; }
-    .tech-card-ppt p { color: var(--text-secondary); font-size: .72rem; line-height: 1.45; }
+
+    .tech-card-ppt h4 {
+      color: var(--blue-dark);
+      font-size: .78rem;
+      margin-bottom: .3rem;
+    }
+
+    .tech-card-ppt p {
+      color: var(--text-secondary);
+      font-size: .72rem;
+      line-height: 1.45;
+    }
+
     .tech-card-ppt code {
-      background: var(--blue-light); color: var(--blue-dark);
-      padding: .1rem .25rem; border-radius: 3px; font-size: .68rem;
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      padding: .1rem .25rem;
+      border-radius: 3px;
+      font-size: .68rem;
     }
 
     /* --- Fase 2: Pruning --- */
     .prune-context-flow {
-      display: flex; align-items: center; justify-content: center;
-      gap: .8rem; flex-wrap: wrap; margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
     }
+
     .prune-context-card {
-      background: rgba(255,255,255,.78);
+      background: rgba(255, 255, 255, .78);
       border-radius: var(--radius);
-      padding: 1rem .8rem; min-width: 140px; max-width: 190px;
+      padding: 1rem .8rem;
+      min-width: 140px;
+      max-width: 190px;
       text-align: center;
-      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      box-shadow: 0 6px 24px rgba(0, 56, 101, .06);
     }
-    .prune-context-card .pc-icon { font-size: 2rem; margin-bottom: .4rem; }
-    .prune-context-card h4 { color: var(--blue-dark); font-size: .85rem; margin-bottom: .2rem; }
-    .prune-context-card p { color: var(--text-secondary); font-size: .72rem; line-height: 1.4; }
-    .prune-context-arrow { font-size: 1.8rem; color: var(--gold); font-weight: 900; }
+
+    .prune-context-card .pc-icon {
+      font-size: 2rem;
+      margin-bottom: .4rem;
+    }
+
+    .prune-context-card h4 {
+      color: var(--blue-dark);
+      font-size: .85rem;
+      margin-bottom: .2rem;
+    }
+
+    .prune-context-card p {
+      color: var(--text-secondary);
+      font-size: .72rem;
+      line-height: 1.4;
+    }
+
+    .prune-context-arrow {
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-weight: 900;
+    }
 
     .prune-viz-ppt {
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(0,56,101,.1);
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(0, 56, 101, .1);
       border-radius: var(--radius);
       padding: 1rem;
-      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      box-shadow: 0 6px 24px rgba(0, 56, 101, .06);
       text-align: center;
       width: 100%;
     }
+
     .prune-controls-ppt {
-      display: flex; flex-wrap: wrap; gap: .4rem;
-      justify-content: center; margin-bottom: .6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      justify-content: center;
+      margin-bottom: .6rem;
     }
+
     .prune-btn-ppt {
-      background: var(--blue-light); color: var(--blue-dark);
-      border: 2px solid var(--blue-dark); border-radius: 50px;
-      padding: .35rem .9rem; font-weight: 800; font-size: .75rem;
-      cursor: pointer; transition: all .2s;
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      border: 2px solid var(--blue-dark);
+      border-radius: 50px;
+      padding: .35rem .9rem;
+      font-weight: 800;
+      font-size: .75rem;
+      cursor: pointer;
+      transition: all .2s;
     }
-    .prune-btn-ppt:hover, .prune-btn-ppt.active { background: var(--blue-dark); color: #fff; }
+
+    .prune-btn-ppt:hover,
+    .prune-btn-ppt.active {
+      background: var(--blue-dark);
+      color: #fff;
+    }
+
     .prune-stats-ppt {
-      display: flex; flex-wrap: wrap; gap: .6rem;
-      justify-content: center; margin-bottom: .6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      justify-content: center;
+      margin-bottom: .6rem;
     }
+
     .prune-stat-ppt {
-      background: var(--blue-light); border-radius: 8px;
-      padding: .4rem .8rem; min-width: 90px;
+      background: var(--blue-light);
+      border-radius: 8px;
+      padding: .4rem .8rem;
+      min-width: 90px;
     }
-    .prune-stat-ppt .num { font-size: 1.2rem; font-weight: 900; color: var(--blue-dark); }
-    .prune-stat-ppt .lbl { font-size: .65rem; color: var(--text-secondary); }
-    .prune-viz-ppt svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+
+    .prune-stat-ppt .num {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+    }
+
+    .prune-stat-ppt .lbl {
+      font-size: .65rem;
+      color: var(--text-secondary);
+    }
+
+    .prune-viz-ppt svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
     .prune-viz-ppt .node {
-      fill: #fff; stroke: var(--blue-dark); stroke-width: 2.5;
-      transition: all .45s cubic-bezier(.4,0,.2,1);
+      fill: #fff;
+      stroke: var(--blue-dark);
+      stroke-width: 2.5;
+      transition: all .45s cubic-bezier(.4, 0, .2, 1);
     }
+
     .prune-viz-ppt .node.pruned {
-      fill: #ECEFF1; stroke: #B0BEC5; opacity: .22; filter: grayscale(100%);
+      fill: #ECEFF1;
+      stroke: #B0BEC5;
+      opacity: .22;
+      filter: grayscale(100%);
     }
+
     .prune-viz-ppt .connection {
-      fill: none; stroke: rgba(0,56,101,.13); stroke-width: 1.2;
-      transition: all .45s cubic-bezier(.4,0,.2,1);
+      fill: none;
+      stroke: rgba(0, 56, 101, .13);
+      stroke-width: 1.2;
+      transition: all .45s cubic-bezier(.4, 0, .2, 1);
     }
-    .prune-viz-ppt .connection.pruned { stroke: rgba(176,190,197,.12); stroke-width: .6; }
+
+    .prune-viz-ppt .connection.pruned {
+      stroke: rgba(176, 190, 197, .12);
+      stroke-width: .6;
+    }
+
     .prune-viz-ppt .connection.flow {
-      stroke: url(#pruneFlowGradient); stroke-width: 2;
-      stroke-dasharray: 7 7; animation: pruneDashFlow 2.2s linear infinite;
-      opacity: .85; pointer-events: none;
+      stroke: url(#pruneFlowGradient);
+      stroke-width: 2;
+      stroke-dasharray: 7 7;
+      animation: pruneDashFlow 2.2s linear infinite;
+      opacity: .85;
+      pointer-events: none;
     }
-    .prune-viz-ppt .connection.flow.pruned { opacity: 0; }
+
+    .prune-viz-ppt .connection.flow.pruned {
+      opacity: 0;
+    }
+
     .prune-viz-ppt .traveler {
-      fill: var(--gold); filter: drop-shadow(0 0 3px var(--gold));
-      opacity: .9; pointer-events: none;
+      fill: var(--gold);
+      filter: drop-shadow(0 0 3px var(--gold));
+      opacity: .9;
+      pointer-events: none;
     }
-    .prune-viz-ppt .traveler.pruned { opacity: 0; }
-    @keyframes pruneDashFlow { to { stroke-dashoffset: -14; } }
+
+    .prune-viz-ppt .traveler.pruned {
+      opacity: 0;
+    }
+
+    @keyframes pruneDashFlow {
+      to {
+        stroke-dashoffset: -14;
+      }
+    }
+
     .prune-viz-ppt .layer-label {
-      font-size: 10px; fill: var(--blue-dark); font-weight: 800;
-      text-anchor: middle; text-transform: uppercase;
+      font-size: 10px;
+      fill: var(--blue-dark);
+      font-weight: 800;
+      text-anchor: middle;
+      text-transform: uppercase;
     }
 
     /* --- Fase 3: KD --- */
     .kd-flow-ppt {
-      display: flex; align-items: center; justify-content: center;
-      gap: 1rem; flex-wrap: wrap; margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
     }
+
     .kd-box-ppt {
-      background: var(--blue-light); border: 2px solid var(--blue-dark);
-      border-radius: var(--radius); padding: 1rem;
-      min-width: 150px; text-align: center;
+      background: var(--blue-light);
+      border: 2px solid var(--blue-dark);
+      border-radius: var(--radius);
+      padding: 1rem;
+      min-width: 150px;
+      text-align: center;
     }
-    .kd-box-ppt.teacher { border-color: var(--gold); background: var(--gold-soft); }
-    .kd-box-ppt .kd-icon { font-size: 2rem; margin-bottom: .3rem; }
-    .kd-box-ppt h4 { color: var(--blue-dark); font-size: .9rem; margin-bottom: .2rem; }
-    .kd-box-ppt p { font-size: .72rem; color: var(--text-secondary); line-height: 1.35; }
-    .kd-arrow-ppt { font-size: 1.8rem; color: var(--gold); font-weight: 900; }
+
+    .kd-box-ppt.teacher {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+    }
+
+    .kd-box-ppt .kd-icon {
+      font-size: 2rem;
+      margin-bottom: .3rem;
+    }
+
+    .kd-box-ppt h4 {
+      color: var(--blue-dark);
+      font-size: .9rem;
+      margin-bottom: .2rem;
+    }
+
+    .kd-box-ppt p {
+      font-size: .72rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    .kd-arrow-ppt {
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-weight: 900;
+    }
+
     .kd-loss-ppt {
-      background: var(--blue-dark); color: #fff;
-      border-radius: var(--radius); padding: .8rem 1.2rem;
-      display: inline-block; margin-top: .6rem;
+      background: var(--blue-dark);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: .8rem 1.2rem;
+      display: inline-block;
+      margin-top: .6rem;
     }
-    .kd-loss-ppt h5 { color: var(--gold); font-size: .8rem; margin-bottom: .2rem; }
-    .kd-loss-ppt p { font-size: .75rem; opacity: .9; color: #fff; }
+
+    .kd-loss-ppt h5 {
+      color: var(--gold);
+      font-size: .8rem;
+      margin-bottom: .2rem;
+    }
+
+    .kd-loss-ppt p {
+      font-size: .75rem;
+      opacity: .9;
+      color: #fff;
+    }
 
     .formula-box-ppt {
-      background: var(--blue-light); border-left: 4px solid var(--gold);
+      background: var(--blue-light);
+      border-left: 4px solid var(--gold);
       border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1rem 1.2rem; margin: .8rem 0;
+      padding: 1rem 1.2rem;
+      margin: .8rem 0;
     }
+
     .formula-title-ppt {
-      font-size: .7rem; font-weight: 800; color: var(--blue-dark);
-      text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem;
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
     }
+
     .formula-ppt {
-      display: inline-flex; align-items: center; gap: .5rem;
-      font-size: 1.1rem; color: var(--text);
-      font-family: 'Georgia', serif; flex-wrap: wrap;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.1rem;
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      flex-wrap: wrap;
     }
-    .formula-ppt .var { font-style: italic; color: var(--blue-dark); font-weight: 700; }
+
+    .formula-ppt .var {
+      font-style: italic;
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
 
     .concept-grid-ppt {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: .8rem; margin: .8rem 0; width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .8rem;
+      margin: .8rem 0;
+      width: 100%;
     }
+
     .concept-card-ppt {
-      background: rgba(255,255,255,.75); border: 1px solid rgba(0,56,101,.08);
-      border-radius: 12px; padding: .9rem;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(0, 56, 101, .08);
+      border-radius: 12px;
+      padding: .9rem;
       text-align: left;
     }
+
     .concept-card-ppt::before {
-      content: ''; display: block; height: 3px;
-      background: var(--gold); border-radius: 2px;
+      content: '';
+      display: block;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
       margin: -.9rem -.9rem .6rem -.9rem;
       width: calc(100% + 1.8rem);
     }
-    .concept-card-ppt.glow::before { background: var(--blue-dark); }
-    .concept-card-ppt h4 { font-size: .85rem; color: var(--blue-dark); margin-bottom: .3rem; }
-    .concept-card-ppt p { font-size: .75rem; color: var(--text-secondary); line-height: 1.45; }
+
+    .concept-card-ppt.glow::before {
+      background: var(--blue-dark);
+    }
+
+    .concept-card-ppt h4 {
+      font-size: .85rem;
+      color: var(--blue-dark);
+      margin-bottom: .3rem;
+    }
+
+    .concept-card-ppt p {
+      font-size: .75rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
 
     .step-list-ppt {
-      display: flex; flex-direction: column; gap: .5rem;
-      margin: .6rem 0; width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      margin: .6rem 0;
+      width: 100%;
     }
+
     .step-item-ppt {
-      display: flex; gap: .7rem; align-items: flex-start;
-      background: rgba(255,255,255,.75);
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, .75);
       border-left: 3px solid var(--gold);
       border-radius: 0 10px 10px 0;
       padding: .6rem .8rem;
     }
+
     .step-num-ppt {
-      background: var(--gold); color: var(--blue-dark);
-      width: 24px; height: 24px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: .75rem; flex-shrink: 0;
+      background: var(--gold);
+      color: var(--blue-dark);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: .75rem;
+      flex-shrink: 0;
     }
-    .step-item-ppt h4 { color: var(--blue-dark); font-size: .8rem; margin-bottom: .15rem; }
-    .step-item-ppt p { font-size: .72rem; color: var(--text-secondary); line-height: 1.4; }
+
+    .step-item-ppt h4 {
+      color: var(--blue-dark);
+      font-size: .8rem;
+      margin-bottom: .15rem;
+    }
+
+    .step-item-ppt p {
+      font-size: .72rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
 
     /* --- Fase 4: Quantization --- */
     .quant-grid-ppt {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.2rem; width: 100%; margin: .8rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      width: 100%;
+      margin: .8rem 0;
     }
+
     .quant-card-ppt {
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(0,56,101,.08);
-      border-radius: var(--radius); padding: 1rem;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(0, 56, 101, .08);
+      border-radius: var(--radius);
+      padding: 1rem;
       text-align: left;
     }
-    .quant-card-ppt h4 { font-size: .9rem; color: var(--blue-dark); margin-bottom: .4rem; }
-    .quant-card-ppt p { font-size: .78rem; color: var(--text-secondary); line-height: 1.5; }
-    .quant-card-ppt ul { padding-left: 1rem; margin-top: .3rem; }
-    .quant-card-ppt li { font-size: .75rem; margin-bottom: .2rem; }
+
+    .quant-card-ppt h4 {
+      font-size: .9rem;
+      color: var(--blue-dark);
+      margin-bottom: .4rem;
+    }
+
+    .quant-card-ppt p {
+      font-size: .78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .quant-card-ppt ul {
+      padding-left: 1rem;
+      margin-top: .3rem;
+    }
+
+    .quant-card-ppt li {
+      font-size: .75rem;
+      margin-bottom: .2rem;
+    }
 
     .bit-row-ppt {
-      display: inline-flex; gap: 3px; margin: .6rem 0;
-      flex-wrap: wrap; justify-content: center;
+      display: inline-flex;
+      gap: 3px;
+      margin: .6rem 0;
+      flex-wrap: wrap;
+      justify-content: center;
     }
+
     .bit-ppt {
-      width: 28px; height: 36px;
-      display: flex; align-items: center; justify-content: center;
+      width: 28px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Fira Code', monospace;
-      font-weight: 700; font-size: .75rem;
-      border-radius: 4px; border: 1px solid #CCC;
+      font-weight: 700;
+      font-size: .75rem;
+      border-radius: 4px;
+      border: 1px solid #CCC;
     }
-    .bit-ppt.sign { background: #FFCDD2; color: #B71C1C; }
-    .bit-ppt.exp { background: #E3F2FD; color: #1565C0; }
-    .bit-ppt.mant { background: #FFF9C4; color: #F57F17; }
-    .bit-ppt.int { background: #E8F5E9; color: #1B5E20; }
+
+    .bit-ppt.sign {
+      background: #FFCDD2;
+      color: #B71C1C;
+    }
+
+    .bit-ppt.exp {
+      background: #E3F2FD;
+      color: #1565C0;
+    }
+
+    .bit-ppt.mant {
+      background: #FFF9C4;
+      color: #F57F17;
+    }
+
+    .bit-ppt.int {
+      background: #E8F5E9;
+      color: #1B5E20;
+    }
 
     .quant-anim-ppt {
-      background: rgba(255,255,255,.75);
+      background: rgba(255, 255, 255, .75);
       border-radius: var(--radius);
       padding: 1.2rem;
-      box-shadow: 0 6px 24px rgba(0,56,101,.06);
+      box-shadow: 0 6px 24px rgba(0, 56, 101, .06);
       width: 100%;
     }
+
     .quant-step-flow {
-      display: flex; align-items: center; justify-content: center;
-      gap: .8rem; flex-wrap: wrap; margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
     }
+
     .quant-step-box {
-      background: var(--blue-light); border: 2px solid var(--blue-dark);
-      border-radius: 12px; padding: .8rem 1rem; text-align: center;
+      background: var(--blue-light);
+      border: 2px solid var(--blue-dark);
+      border-radius: 12px;
+      padding: .8rem 1rem;
+      text-align: center;
       min-width: 130px;
     }
-    .quant-step-box .qs-icon { font-size: 1.8rem; margin-bottom: .2rem; }
-    .quant-step-box h5 { color: var(--blue-dark); font-size: .8rem; margin-bottom: .1rem; }
-    .quant-step-box p { font-size: .68rem; color: var(--text-secondary); }
-    .quant-step-arrow { font-size: 1.8rem; color: var(--gold); font-weight: 900; }
+
+    .quant-step-box .qs-icon {
+      font-size: 1.8rem;
+      margin-bottom: .2rem;
+    }
+
+    .quant-step-box h5 {
+      color: var(--blue-dark);
+      font-size: .8rem;
+      margin-bottom: .1rem;
+    }
+
+    .quant-step-box p {
+      font-size: .68rem;
+      color: var(--text-secondary);
+    }
+
+    .quant-step-arrow {
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-weight: 900;
+    }
 
     .weight-anim-box {
-      display: flex; align-items: center; justify-content: center;
-      gap: 1rem; flex-wrap: wrap; margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
     }
+
     .weight-card {
-      background: #fff; border: 1px solid rgba(0,56,101,.12);
-      border-radius: 12px; padding: 1rem; text-align: center;
+      background: #fff;
+      border: 1px solid rgba(0, 56, 101, .12);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
       min-width: 140px;
     }
-    .weight-card h5 { font-size: .75rem; color: var(--blue-dark); margin-bottom: .4rem; }
+
+    .weight-card h5 {
+      font-size: .75rem;
+      color: var(--blue-dark);
+      margin-bottom: .4rem;
+    }
+
     .weight-value {
       font-family: 'Fira Code', monospace;
-      font-size: 1.1rem; font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--blue-dark);
     }
-    .weight-value.int { color: #1B5E20; }
-    .anim-arrow { font-size: 1.5rem; color: var(--gold); }
+
+    .weight-value.int {
+      color: #1B5E20;
+    }
+
+    .anim-arrow {
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
 
     @keyframes quantPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(248,169,0,.4); }
-      50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(248,169,0,0); }
+
+      0%,
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(248, 169, 0, .4);
+      }
+
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(248, 169, 0, 0);
+      }
     }
-    .weight-card.active { animation: quantPulse 2s infinite; border-color: var(--gold); }
+
+    .weight-card.active {
+      animation: quantPulse 2s infinite;
+      border-color: var(--gold);
+    }
 
     /* Responsive para fases */
     @media (max-width: 900px) {
-      .datasets-row { grid-template-columns: 1fr; }
-      .tech-grid-ppt { grid-template-columns: repeat(2, 1fr); }
-      .concept-grid-ppt { grid-template-columns: 1fr; }
-      .quant-grid-ppt { grid-template-columns: 1fr; }
-      .stack-row-ppt { flex-direction: column; align-items: flex-start; gap: .2rem; }
-      .stack-row-ppt .stage-label { width: auto; }
-      .arch-flow-ppt { flex-direction: column; gap: .3rem; }
-      .arch-arrow-ppt { transform: rotate(90deg); }
-      .fase1-flow, .prune-context-flow, .kd-flow-ppt { flex-direction: column; }
-      .fase1-arrow, .prune-context-arrow, .kd-arrow-ppt { transform: rotate(90deg); }
-      .fase-layout { grid-template-columns: 1fr; }
-      .tech-grid-ppt.vertical { height: auto; }
+      .datasets-row {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-grid-ppt {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .concept-grid-ppt {
+        grid-template-columns: 1fr;
+      }
+
+      .quant-grid-ppt {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-row-ppt {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .2rem;
+      }
+
+      .stack-row-ppt .stage-label {
+        width: auto;
+      }
+
+      .arch-flow-ppt {
+        flex-direction: column;
+        gap: .3rem;
+      }
+
+      .arch-arrow-ppt {
+        transform: rotate(90deg);
+      }
+
+      .fase1-flow,
+      .prune-context-flow,
+      .kd-flow-ppt {
+        flex-direction: column;
+      }
+
+      .fase1-arrow,
+      .prune-context-arrow,
+      .kd-arrow-ppt {
+        transform: rotate(90deg);
+      }
+
+      .fase-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-grid-ppt.vertical {
+        height: auto;
+      }
     }
 
     /* ════════════════════════════════════════
        RESPONSIVE
     ════════════════════════════════════════ */
     @media (max-width: 900px) {
-      .slide { padding: 2rem 1.5rem; }
-      .team-photos-row { grid-template-columns: 1fr; gap: 1.5rem; }
-      .team-photo { width: 160px; height: 200px; }
-      .advisors-box { flex-direction: column; gap: 1rem; }
-      .problem-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .problem-card { --diag-offset: 0px !important; }
-      .problem-card img { height: 160px; }
-      .objetivos-list { flex-direction: column; align-items: center; }
-      .obj-item { flex: 1 1 100%; max-width: 320px; }
-      .fases-row { flex-direction: column; align-items: center; gap: 2rem; }
-      .fase-card { min-width: auto; max-width: 320px; width: 100%; }
-      .cuant-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .results-highlight { grid-template-columns: repeat(2, 1fr); }
-      .kpis-row { grid-template-columns: repeat(2, 1fr); }
-      .chart-wrapper { height: 240px; padding: 1rem; }
-      .results-layout { grid-template-columns: 1fr; }
-      .results-sidebar .results-highlight { flex-direction: row; }
-      .results-sidebar .result-kpi { min-height: auto; }
-      .slide-results-3 .table-wrap { max-height: none; }
-      .conclusiones-grid { grid-template-columns: 1fr; }
+      .slide {
+        padding: 2rem 1.5rem;
+      }
+
+      .team-photos-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .team-photo {
+        width: 160px;
+        height: 200px;
+      }
+
+      .advisors-box {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .problem-card {
+        --diag-offset: 0px !important;
+      }
+
+      .problem-card img {
+        height: 160px;
+      }
+
+      .objetivos-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .obj-item {
+        flex: 1 1 100%;
+        max-width: 320px;
+      }
+
+      .fases-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .fase-card {
+        min-width: auto;
+        max-width: 320px;
+        width: 100%;
+      }
+
+      .cuant-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .results-highlight {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .kpis-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .chart-wrapper {
+        height: 240px;
+        padding: 1rem;
+      }
+
+      .results-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .results-sidebar .results-highlight {
+        flex-direction: row;
+      }
+
+      .results-sidebar .result-kpi {
+        min-height: auto;
+      }
+
+      .slide-results-3 .table-wrap {
+        max-height: none;
+      }
+
+      .conclusiones-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div class="slides-container">
@@ -1610,7 +2687,8 @@
         <img src="img/presentacion/bg-caratula.png" alt="" class="bg-caratula">
       </div>
       <div class="slide-inner slide-inner-left">
-        <h1>Método de Optimización en <em>modelos CNN</em> para clasificación de imágenes médicas en dispositivos de recursos limitados</h1>
+        <h1>Método de Optimización en <em>modelos CNN</em> para clasificación de imágenes médicas en dispositivos de
+          recursos limitados</h1>
       </div>
       <div class="slide-footer">
         XVII Jornada Científica - EP. Ing. Sistemas
@@ -1665,8 +2743,8 @@
       </div>
     </section>
 
-    <!-- SLIDE 3: PROBLEMÁTICA -->
-    <section class="slide" id="slide-3">
+    <!-- SLIDE 2b: BRECHAS INTRO -->
+    <section class="slide" id="slide-2b">
       <div class="bg-shapes">
         <div class="shape-circle-tl"></div>
         <div class="shape-triangle-br"></div>
@@ -1679,11 +2757,59 @@
           salud diagnostique a tiempo enfermedades identificables por imagen. Los modelos de IA actuales
           <strong>no pueden desplegarse</strong> sin ser previamente optimizados.
         </p>
+        <div class="brecha-intro-grid">
 
+          <div class="brecha-intro-card brecha-infra">
+            <img src="img/presentacion/infra_salud.png" alt="Brecha de infraestructura en salud rural">
+            <div class="brecha-intro-body">
+              <div class="brecha-num">Brecha 1</div>
+              <h3>Infraestructura</h3>
+              <p>La mayoría de establecimientos de primer nivel carecen de equipos y condiciones adecuadas para la
+                atención especializada en zonas alejadas.</p>
+            </div>
+          </div>
+
+          <div class="brecha-intro-card brecha-esp">
+            <img src="img/presentacion/personal_salud.png" alt="Brecha de personal de salud especializado">
+            <div class="brecha-intro-body">
+              <div class="brecha-num">Brecha 2</div>
+              <h3>Personal de Salud</h3>
+              <p>La escasez de especialistas médicos en zonas rurales limita el diagnóstico oportuno de enfermedades
+                identificables por imagen.</p>
+            </div>
+          </div>
+
+          <div class="brecha-intro-card brecha-con">
+            <img src="img/presentacion/conectivida_rural.png" alt="Brecha de conectividad en zonas rurales">
+            <div class="brecha-intro-body">
+              <div class="brecha-num">Brecha 3</div>
+              <h3>Conectividad</h3>
+              <p>La falta de internet en hogares rurales imposibilita el uso de soluciones diagnósticas basadas en la
+                nube o que requieran conexión continua.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="slide-footer">
+        XVII Jornada Científica - EP. Ing. Sistemas
+      </div>
+    </section>
+
+    <!-- SLIDE 3: PROBLEMÁTICA (datos estadísticos) -->
+    <section class="slide" id="slide-3">
+      <div class="bg-shapes">
+        <div class="shape-circle-tl"></div>
+        <div class="shape-triangle-br"></div>
+        <div class="shape-diamond-tr"></div>
+      </div>
+      <div class="slide-inner">
+        <div class="section-kicker">El Problema · Tres brechas en salud rural del Perú</div>
         <div class="problem-grid">
           <div class="problem-card infra">
             <div class="card-inner">
-              <img src="img/Brecha_infraestructura.png" alt="Avance del cierre de brechas en infraestructura del sector salud — ComexPerú">
+              <img src="img/Brecha_infraestructura.png"
+                alt="Avance del cierre de brechas en infraestructura del sector salud — ComexPerú">
               <div class="card-source">
                 <span class="card-source-tag">Fuente oficial</span>
                 <div class="card-source-title">Infraestructura del sector salud</div>
@@ -1699,7 +2825,8 @@
 
           <div class="problem-card esp">
             <div class="card-inner">
-              <img src="img/Brecha_personal_salud.png" alt="La OPS advierte sobre brechas críticas en el mercado laboral de la salud">
+              <img src="img/Brecha_personal_salud.png"
+                alt="La OPS advierte sobre brechas críticas en el mercado laboral de la salud">
               <div class="card-source">
                 <span class="card-source-tag">Fuente oficial</span>
                 <div class="card-source-title">Mercado laboral de la salud</div>
@@ -1890,7 +3017,8 @@
       <div class="slide-inner">
         <div class="section-kicker">Fase 1 — Entrenamiento Baseline</div>
         <h2>Fase 1: Entrenamiento desde cero sobre imágenes médicas</h2>
-        <p class="fase-subtitle">Entrenamos tres familias de modelos de clasificación durante 150 épocas. Sus checkpoints sirven como referencia y como teachers para la Fase 3.</p>
+        <p class="fase-subtitle">Entrenamos tres familias de modelos de clasificación durante 150 épocas. Sus
+          checkpoints sirven como referencia y como teachers para la Fase 3.</p>
         <div class="fase1-flow">
           <div class="fase1-card">
             <div class="fase1-icon">📁</div>
@@ -1962,25 +3090,62 @@
       <div class="slide-inner">
         <div class="section-kicker">Arquitectura 1 / 3 · YOLOv26-cls</div>
         <h2>YOLOv26-cls</h2>
-        <p class="fase-subtitle">Rama de clasificación de YOLOv26: backbone de detección reutilizado como extractor de características.</p>
+        <p class="fase-subtitle">Rama de clasificación de YOLOv26: backbone de detección reutilizado como extractor de
+          características.</p>
         <div class="arch-flow-ppt">
-          <div class="arch-node-ppt"><div class="n-icon">🖼️</div><div class="n-name">Input</div><div class="n-dim">[B,3,224,224]</div></div>
+          <div class="arch-node-ppt">
+            <div class="n-icon">🖼️</div>
+            <div class="n-name">Input</div>
+            <div class="n-dim">[B,3,224,224]</div>
+          </div>
           <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt"><div class="n-icon">🔲</div><div class="n-name">Conv</div><div class="n-dim">[B,32,112,112]</div></div>
+          <div class="arch-node-ppt">
+            <div class="n-icon">🔲</div>
+            <div class="n-name">Conv</div>
+            <div class="n-dim">[B,32,112,112]</div>
+          </div>
           <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt"><div class="n-icon">🧱</div><div class="n-name">C3 × N</div><div class="n-dim">[B,256,14,14]</div></div>
+          <div class="arch-node-ppt">
+            <div class="n-icon">🧱</div>
+            <div class="n-name">C3 × N</div>
+            <div class="n-dim">[B,256,14,14]</div>
+          </div>
           <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt"><div class="n-icon">🔺</div><div class="n-name">SPPF</div><div class="n-dim">[B,256,14,14]</div></div>
+          <div class="arch-node-ppt">
+            <div class="n-icon">🔺</div>
+            <div class="n-name">SPPF</div>
+            <div class="n-dim">[B,256,14,14]</div>
+          </div>
           <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt"><div class="n-icon">📊</div><div class="n-name">GAP</div><div class="n-dim">[B,256]</div></div>
+          <div class="arch-node-ppt">
+            <div class="n-icon">📊</div>
+            <div class="n-name">GAP</div>
+            <div class="n-dim">[B,256]</div>
+          </div>
           <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt"><div class="n-icon">⚡</div><div class="n-name">Linear</div><div class="n-dim">[B,2]</div></div>
+          <div class="arch-node-ppt">
+            <div class="n-icon">⚡</div>
+            <div class="n-name">Linear</div>
+            <div class="n-dim">[B,2]</div>
+          </div>
         </div>
         <div class="tech-grid-ppt">
-          <div class="tech-card-ppt"><h4>⚖️ Pérdida ponderada</h4><p>Cross-Entropy con <code>class weights</code> para desbalanceo.</p></div>
-          <div class="tech-card-ppt"><h4>⚡ Optimización</h4><p><code>AdamW</code> + <code>Cosine Annealing</code>, 150 épocas.</p></div>
-          <div class="tech-card-ppt"><h4>🔄 Augmentations</h4><p>Rotaciones, flips, HSV y brillo controlados.</p></div>
-          <div class="tech-card-ppt"><h4>📐 Índice de Youden</h4><p>Threshold calibrado para Sensibilidad + Especificidad.</p></div>
+          <div class="tech-card-ppt">
+            <h4>⚖️ Pérdida ponderada</h4>
+            <p>Cross-Entropy con <code>class weights</code> para desbalanceo.</p>
+          </div>
+          <div class="tech-card-ppt">
+            <h4>⚡ Optimización</h4>
+            <p><code>AdamW</code> + <code>Cosine Annealing</code>, 150 épocas.</p>
+          </div>
+          <div class="tech-card-ppt">
+            <h4>🔄 Augmentations</h4>
+            <p>Rotaciones, flips, HSV y brillo controlados.</p>
+          </div>
+          <div class="tech-card-ppt">
+            <h4>📐 Índice de Youden</h4>
+            <p>Threshold calibrado para Sensibilidad + Especificidad.</p>
+          </div>
         </div>
       </div>
       <div class="slide-footer">
@@ -1998,25 +3163,61 @@
       <div class="slide-inner">
         <div class="section-kicker">Arquitectura 2 / 3 · EfficientNetV2-S</div>
         <h2>EfficientNetV2-S</h2>
-        <p class="fase-subtitle">Diseñado para clasificación con Fused-MBConv en etapas tempranas, SE Attention y Compound Scaling.</p>
+        <p class="fase-subtitle">Diseñado para clasificación con Fused-MBConv en etapas tempranas, SE Attention y
+          Compound Scaling.</p>
         <div class="legend-row-ppt">
-          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#74b9ff"></span> Fused-MBConv</div>
-          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#55efc4"></span> MBConv + SE</div>
-          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#ffeaa7"></span> GAP + Head</div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#74b9ff"></span> Fused-MBConv
+          </div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#55efc4"></span> MBConv + SE
+          </div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#ffeaa7"></span> GAP + Head
+          </div>
         </div>
         <div class="fase-layout">
           <div class="stack-diagram-ppt">
-            <div class="stack-row-ppt"><div class="stage-label">Input</div><div class="stage-bar input-bar"><strong>RGB 224 × 224</strong><small>Tensor [B, 3, 224, 224]</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Stem</div><div class="stage-bar eff-fused"><strong>Conv 3×3 + SiLU</strong><small>24 canales · stride 2</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Stage 1-2</div><div class="stage-bar eff-fused"><strong>Fused-MBConv ×3</strong><small>48 canales · más rápido en CPU</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Stage 3-6</div><div class="stage-bar eff-mbconv"><strong>MBConv + SE Attention</strong><small>64 → 256 canales · recalibra filtros por canal</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Head</div><div class="stage-bar eff-head"><strong>GAP + Dropout → Linear(256 → 2)</strong><small>Softmax · salida binaria</small></div></div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Input</div>
+              <div class="stage-bar input-bar"><strong>RGB 224 × 224</strong><small>Tensor [B, 3, 224, 224]</small>
+              </div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Stem</div>
+              <div class="stage-bar eff-fused"><strong>Conv 3×3 + SiLU</strong><small>24 canales · stride 2</small>
+              </div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Stage 1-2</div>
+              <div class="stage-bar eff-fused"><strong>Fused-MBConv ×3</strong><small>48 canales · más rápido en
+                  CPU</small></div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Stage 3-6</div>
+              <div class="stage-bar eff-mbconv"><strong>MBConv + SE Attention</strong><small>64 → 256 canales ·
+                  recalibra filtros por canal</small></div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Head</div>
+              <div class="stage-bar eff-head"><strong>GAP + Dropout → Linear(256 → 2)</strong><small>Softmax · salida
+                  binaria</small></div>
+            </div>
           </div>
           <div class="tech-grid-ppt vertical">
-            <div class="tech-card-ppt"><h4>🔷 Fused-MBConv</h4><p>Conv 3×3 estándar en etapas tempranas, acelera CPU.</p></div>
-            <div class="tech-card-ppt"><h4>🟠 SE Attention</h4><p>Squeeze-and-Excitation recalibra canales relevantes.</p></div>
-            <div class="tech-card-ppt"><h4>📏 Compound Scaling</h4><p>Escala ancho, profundidad y resolución juntos.</p></div>
-            <div class="tech-card-ppt"><h4>🎯 Cabeza</h4><p>GAP reduce a vector 256, dropout y FC a 2 salidas.</p></div>
+            <div class="tech-card-ppt">
+              <h4>🔷 Fused-MBConv</h4>
+              <p>Conv 3×3 estándar en etapas tempranas, acelera CPU.</p>
+            </div>
+            <div class="tech-card-ppt">
+              <h4>🟠 SE Attention</h4>
+              <p>Squeeze-and-Excitation recalibra canales relevantes.</p>
+            </div>
+            <div class="tech-card-ppt">
+              <h4>📏 Compound Scaling</h4>
+              <p>Escala ancho, profundidad y resolución juntos.</p>
+            </div>
+            <div class="tech-card-ppt">
+              <h4>🎯 Cabeza</h4>
+              <p>GAP reduce a vector 256, dropout y FC a 2 salidas.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -2038,22 +3239,56 @@
         <p class="fase-subtitle">Evolución de MobileNet optimizada para edge: UIB unificado + Mobile MQA ligero.</p>
         <div class="legend-row-ppt">
           <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#74b9ff"></span> UIB Block</div>
-          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#a29bfe"></span> Mobile MQA</div>
-          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#ffeaa7"></span> GAP + Head</div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#a29bfe"></span> Mobile MQA
+          </div>
+          <div class="legend-item-ppt"><span class="legend-color-ppt" style="background:#ffeaa7"></span> GAP + Head
+          </div>
         </div>
         <div class="fase-layout">
           <div class="stack-diagram-ppt">
-            <div class="stack-row-ppt"><div class="stage-label">Input</div><div class="stage-bar input-bar"><strong>RGB 224 × 224</strong><small>Tensor [B, 3, 224, 224]</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Stem</div><div class="stage-bar mb-uib"><strong>Conv 3×3 + BN + ReLU</strong><small>32 canales · stride 2</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Stage 1-3</div><div class="stage-bar mb-uib"><strong>UIB Block</strong><small>32 → 128 canales · depthwise opcional + residual</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Stage 4-5</div><div class="stage-bar mb-mqa"><strong>UIB + Mobile MQA</strong><small>256 → 512 canales · atención ligera en baja resolución</small></div></div>
-            <div class="stack-row-ppt"><div class="stage-label">Head</div><div class="stage-bar eff-head"><strong>GAP → Linear(512 → 2)</strong><small>Softmax · clasificación binaria</small></div></div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Input</div>
+              <div class="stage-bar input-bar"><strong>RGB 224 × 224</strong><small>Tensor [B, 3, 224, 224]</small>
+              </div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Stem</div>
+              <div class="stage-bar mb-uib"><strong>Conv 3×3 + BN + ReLU</strong><small>32 canales · stride 2</small>
+              </div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Stage 1-3</div>
+              <div class="stage-bar mb-uib"><strong>UIB Block</strong><small>32 → 128 canales · depthwise opcional +
+                  residual</small></div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Stage 4-5</div>
+              <div class="stage-bar mb-mqa"><strong>UIB + Mobile MQA</strong><small>256 → 512 canales · atención ligera
+                  en baja resolución</small></div>
+            </div>
+            <div class="stack-row-ppt">
+              <div class="stage-label">Head</div>
+              <div class="stage-bar eff-head"><strong>GAP → Linear(512 → 2)</strong><small>Softmax · clasificación
+                  binaria</small></div>
+            </div>
           </div>
           <div class="tech-grid-ppt vertical">
-            <div class="tech-card-ppt"><h4>🧩 UIB</h4><p>Universal Inverted Bottleneck unifica expansion, DW y projection.</p></div>
-            <div class="tech-card-ppt"><h4>👁️ Mobile MQA</h4><p>Multi-Query Attention ligero solo en resoluciones bajas.</p></div>
-            <div class="tech-card-ppt"><h4>🔄 Residual Skips</h4><p>Conexiones residuales que estabilizan el gradiente.</p></div>
-            <div class="tech-card-ppt"><h4>⚡ Edge-first</h4><p>Menos parámetros, latencia baja en CPU/GPU móviles.</p></div>
+            <div class="tech-card-ppt">
+              <h4>🧩 UIB</h4>
+              <p>Universal Inverted Bottleneck unifica expansion, DW y projection.</p>
+            </div>
+            <div class="tech-card-ppt">
+              <h4>👁️ Mobile MQA</h4>
+              <p>Multi-Query Attention ligero solo en resoluciones bajas.</p>
+            </div>
+            <div class="tech-card-ppt">
+              <h4>🔄 Residual Skips</h4>
+              <p>Conexiones residuales que estabilizan el gradiente.</p>
+            </div>
+            <div class="tech-card-ppt">
+              <h4>⚡ Edge-first</h4>
+              <p>Menos parámetros, latencia baja en CPU/GPU móviles.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -2072,7 +3307,8 @@
       <div class="slide-inner">
         <div class="section-kicker">Fase 2 — Pruning no estructural</div>
         <h2>Fase 2: Poda No Estructural</h2>
-        <p class="fase-subtitle">Identificamos y anulamos los filtros de menor importancia en cada capa Conv2d del modelo entrenado.</p>
+        <p class="fase-subtitle">Identificamos y anulamos los filtros de menor importancia en cada capa Conv2d del
+          modelo entrenado.</p>
         <div class="prune-context-flow">
           <div class="prune-context-card">
             <div class="pc-icon">💾</div>
@@ -2115,9 +3351,18 @@
             <button class="prune-btn-ppt" data-level="70" onclick="applyPrunePpt(70)">70% pruning</button>
           </div>
           <div class="prune-stats-ppt">
-            <div class="prune-stat-ppt"><div class="num" id="activeNodesPpt">38</div><div class="lbl">Nodos activos</div></div>
-            <div class="prune-stat-ppt"><div class="num" id="prunedNodesPpt">0</div><div class="lbl">Nodos apagados</div></div>
-            <div class="prune-stat-ppt"><div class="num" id="activeConnsPpt">—</div><div class="lbl">Conexiones activas</div></div>
+            <div class="prune-stat-ppt">
+              <div class="num" id="activeNodesPpt">38</div>
+              <div class="lbl">Nodos activos</div>
+            </div>
+            <div class="prune-stat-ppt">
+              <div class="num" id="prunedNodesPpt">0</div>
+              <div class="lbl">Nodos apagados</div>
+            </div>
+            <div class="prune-stat-ppt">
+              <div class="num" id="activeConnsPpt">—</div>
+              <div class="lbl">Conexiones activas</div>
+            </div>
           </div>
           <svg viewBox="0 0 900 360" preserveAspectRatio="xMidYMid meet" id="pruneSvgPpt">
             <defs>
@@ -2158,7 +3403,8 @@
       <div class="slide-inner">
         <div class="section-kicker">Fase 3 — Recuperación de capacidad</div>
         <h2>Knowledge Distillation</h2>
-        <p class="fase-subtitle">El modelo base (teacher) guía al modelo podado (student) para recuperar el desempeño perdido.</p>
+        <p class="fase-subtitle">El modelo base (teacher) guía al modelo podado (student) para recuperar el desempeño
+          perdido.</p>
         <div class="kd-flow-ppt">
           <div class="kd-box-ppt teacher">
             <div class="kd-icon">👨‍🏫</div>
@@ -2188,19 +3434,41 @@
       <div class="slide-inner">
         <div class="section-kicker">¿Cómo funciona?</div>
         <h2>Recuperación mediante soft labels</h2>
-        <p class="fase-subtitle">La temperatura T suaviza las probabilidades, revelando información en las colas de la distribución.</p>
+        <p class="fase-subtitle">La temperatura T suaviza las probabilidades, revelando información en las colas de la
+          distribución.</p>
         <div class="formula-box-ppt">
           <div class="formula-title-ppt">KL Divergence con temperatura</div>
           <div class="formula-ppt">
             <span class="var">L</span><sub class="var" style="font-size:.7rem;">KL</sub>
             <span>=</span><span class="var">T</span><sup class="var" style="font-size:.7rem;">2</sup>
-            <span>· KL(</span><span>softmax(</span><span class="var">z<sub style="font-size:.5rem;">S</sub></span><span>/T)</span><span> ‖ </span><span>softmax(</span><span class="var">z<sub style="font-size:.5rem;">T</sub></span><span>/T)</span><span>)</span>
+            <span>· KL(</span><span>softmax(</span><span class="var">z<sub
+                style="font-size:.5rem;">S</sub></span><span>/T)</span><span> ‖ </span><span>softmax(</span><span
+              class="var">z<sub style="font-size:.5rem;">T</sub></span><span>/T)</span><span>)</span>
           </div>
         </div>
         <div class="step-list-ppt">
-          <div class="step-item-ppt"><div class="step-num-ppt">1</div><div><h4>Gradiente desde la pérdida</h4><p>El gradiente fluye hacia atrás desde L<sub>KD</sub> hacia todos los parámetros del student.</p></div></div>
-          <div class="step-item-ppt"><div class="step-num-ppt">2</div><div><h4>Actualización de filtros en cero</h4><p>w<sub>new</sub> = w<sub>old</sub> − η·g. Como w<sub>old</sub> = 0, el filtro despierta con valor útil.</p></div></div>
-          <div class="step-item-ppt"><div class="step-num-ppt">3</div><div><h4>Redistribución del conocimiento</h4><p>Los filtros activos se reorganizan y los apagados vuelven a la vida.</p></div></div>
+          <div class="step-item-ppt">
+            <div class="step-num-ppt">1</div>
+            <div>
+              <h4>Gradiente desde la pérdida</h4>
+              <p>El gradiente fluye hacia atrás desde L<sub>KD</sub> hacia todos los parámetros del student.</p>
+            </div>
+          </div>
+          <div class="step-item-ppt">
+            <div class="step-num-ppt">2</div>
+            <div>
+              <h4>Actualización de filtros en cero</h4>
+              <p>w<sub>new</sub> = w<sub>old</sub> − η·g. Como w<sub>old</sub> = 0, el filtro despierta con valor útil.
+              </p>
+            </div>
+          </div>
+          <div class="step-item-ppt">
+            <div class="step-num-ppt">3</div>
+            <div>
+              <h4>Redistribución del conocimiento</h4>
+              <p>Los filtros activos se reorganizan y los apagados vuelven a la vida.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="slide-footer">
@@ -2218,29 +3486,51 @@
       <div class="slide-inner">
         <div class="section-kicker">Fase 4 — Post-Training Quantization</div>
         <h2>Cuantización INT8</h2>
-        <p class="fase-subtitle">De 32 bits a 8 bits sin perder el diagnóstico. Permite desplegar modelos en smartphones de gama media.</p>
+        <p class="fase-subtitle">De 32 bits a 8 bits sin perder el diagnóstico. Permite desplegar modelos en smartphones
+          de gama media.</p>
         <div class="quant-grid-ppt">
           <div class="quant-card-ppt">
             <h4>🔢 FP32</h4>
             <p>32 bits: 1 signo + 8 exponente + 23 mantisa. Ocupa 4 bytes y alcanza ~7 decimales.</p>
             <div class="bit-row-ppt">
               <div class="bit-ppt sign">0</div>
-              <div class="bit-ppt exp">0</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">0</div><div class="bit-ppt exp">1</div><div class="bit-ppt exp">1</div>
-              <div class="bit-ppt mant">0</div><div class="bit-ppt mant">0</div><div class="bit-ppt mant">1</div><div class="bit-ppt mant">0</div><div class="bit-ppt mant">0</div><div class="bit-ppt mant">1</div><div class="bit-ppt mant">...</div>
+              <div class="bit-ppt exp">0</div>
+              <div class="bit-ppt exp">1</div>
+              <div class="bit-ppt exp">1</div>
+              <div class="bit-ppt exp">1</div>
+              <div class="bit-ppt exp">1</div>
+              <div class="bit-ppt exp">0</div>
+              <div class="bit-ppt exp">1</div>
+              <div class="bit-ppt exp">1</div>
+              <div class="bit-ppt mant">0</div>
+              <div class="bit-ppt mant">0</div>
+              <div class="bit-ppt mant">1</div>
+              <div class="bit-ppt mant">0</div>
+              <div class="bit-ppt mant">0</div>
+              <div class="bit-ppt mant">1</div>
+              <div class="bit-ppt mant">...</div>
             </div>
           </div>
           <div class="quant-card-ppt">
             <h4>🚀 INT8</h4>
             <p>8 bits: 256 valores enteros (−128 a +127). Ocupa 1 byte y permite operaciones enteras rápidas.</p>
             <div class="bit-row-ppt">
-              <div class="bit-ppt int">0</div><div class="bit-ppt int">0</div><div class="bit-ppt int">0</div><div class="bit-ppt int">0</div><div class="bit-ppt int">1</div><div class="bit-ppt int">0</div><div class="bit-ppt int">1</div><div class="bit-ppt int">0</div>
+              <div class="bit-ppt int">0</div>
+              <div class="bit-ppt int">0</div>
+              <div class="bit-ppt int">0</div>
+              <div class="bit-ppt int">0</div>
+              <div class="bit-ppt int">1</div>
+              <div class="bit-ppt int">0</div>
+              <div class="bit-ppt int">1</div>
+              <div class="bit-ppt int">0</div>
             </div>
           </div>
         </div>
         <div class="formula-box-ppt">
           <div class="formula-title-ppt">Fórmula de cuantización</div>
           <div class="formula-ppt">
-            <span class="var">Q</span><span>= round(</span><span class="var">R</span><span>/</span><span class="var">S</span><span> + </span><span class="var">Z</span><span>)</span>
+            <span class="var">Q</span><span>= round(</span><span class="var">R</span><span>/</span><span
+              class="var">S</span><span> + </span><span class="var">Z</span><span>)</span>
           </div>
         </div>
       </div>
@@ -2259,7 +3549,8 @@
       <div class="slide-inner">
         <div class="section-kicker">Visualización · De FP32 a INT8</div>
         <h2>¿Cómo se comprime un peso?</h2>
-        <p class="fase-subtitle">Se calculan escala (S) y punto cero (Z) por capa, y cada peso real se mapea a un entero de 8 bits.</p>
+        <p class="fase-subtitle">Se calculan escala (S) y punto cero (Z) por capa, y cada peso real se mapea a un entero
+          de 8 bits.</p>
         <div class="quant-anim-ppt">
           <div class="quant-step-flow">
             <div class="quant-step-box">
@@ -2304,7 +3595,8 @@
           </div>
         </div>
         <div class="note-box">
-          <strong>Resultado real:</strong> 41.62 MB (FP32) → 10.61 MB (INT8), ~3.9× de compresión, con AUC prácticamente sin cambio (0.8777 → 0.8781).
+          <strong>Resultado real:</strong> 41.62 MB (FP32) → 10.61 MB (INT8), ~3.9× de compresión, con AUC prácticamente
+          sin cambio (0.8777 → 0.8781).
         </div>
       </div>
       <div class="slide-footer">
@@ -2330,118 +3622,118 @@
               </div>
             </div>
             <div class="table-wrap">
-          <table class="results-table">
-            <thead>
-              <tr>
-                <th>Dataset</th>
-                <th>Modelo</th>
-                <th>Tamaño F1</th>
-                <th>Tamaño F4</th>
-                <th>Δ Tamaño</th>
-                <th>AUC F1</th>
-                <th>AUC F4</th>
-                <th>Δ AUC</th>
-                <th>Acc F1</th>
-                <th>Acc F4</th>
-                <th>Δ Acc</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="tag tag-ojo">Retino.</span></td>
-                <td>YOLOv26m</td>
-                <td>41.64 MB</td>
-                <td>10.95 MB</td>
-                <td><span class="size-reduction">↓ 73.7%</span></td>
-                <td>0.9934</td>
-                <td>0.9873</td>
-                <td><span class="delta-neg">−0.006</span></td>
-                <td>95.1%</td>
-                <td>96.2%</td>
-                <td><span class="delta-pos">+1.1%</span></td>
-              </tr>
-              <tr>
-                <td><span class="tag tag-oral">Oral</span></td>
-                <td>YOLOv26m</td>
-                <td>41.64 MB</td>
-                <td>10.95 MB</td>
-                <td><span class="size-reduction">↓ 73.7%</span></td>
-                <td>0.9427</td>
-                <td>0.9323</td>
-                <td><span class="delta-neg">−0.010</span></td>
-                <td>90.9%</td>
-                <td>86.1%</td>
-                <td><span class="delta-neg">−4.9%</span></td>
-              </tr>
-              <tr>
-                <td><span class="tag tag-skin">Melan.</span></td>
-                <td>YOLOv26n</td>
-                <td>6.28 MB</td>
-                <td>1.98 MB</td>
-                <td><span class="size-reduction">↓ 68.5%</span></td>
-                <td>0.8837</td>
-                <td>0.8974</td>
-                <td><span class="delta-pos">+0.014</span></td>
-                <td>89.8%</td>
-                <td>90.0%</td>
-                <td><span class="delta-pos">+0.3%</span></td>
-              </tr>
-              <tr>
-                <td><span class="tag tag-ojo">Retino.</span></td>
-                <td>EffNetV2-S</td>
-                <td>81.57 MB</td>
-                <td>22.11 MB</td>
-                <td><span class="size-reduction">↓ 72.9%</span></td>
-                <td>0.9873</td>
-                <td>0.9575</td>
-                <td><span class="delta-neg">−0.030</span></td>
-                <td>96.2%</td>
-                <td>75.1%</td>
-                <td><span class="delta-neg">−21.1%</span></td>
-              </tr>
-              <tr>
-                <td><span class="tag tag-skin">Melan.</span></td>
-                <td>MobileNetV4-M</td>
-                <td>34.17 MB</td>
-                <td>8.95 MB</td>
-                <td><span class="size-reduction">↓ 73.8%</span></td>
-                <td>0.8896</td>
-                <td>0.4747</td>
-                <td><span class="delta-neg">−0.415</span></td>
-                <td>89.7%</td>
-                <td>88.8%</td>
-                <td><span class="delta-neg">−0.9%</span></td>
-              </tr>
-            </tbody>
-          </table>
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th>Dataset</th>
+                    <th>Modelo</th>
+                    <th>Tamaño F1</th>
+                    <th>Tamaño F4</th>
+                    <th>Δ Tamaño</th>
+                    <th>AUC F1</th>
+                    <th>AUC F4</th>
+                    <th>Δ AUC</th>
+                    <th>Acc F1</th>
+                    <th>Acc F4</th>
+                    <th>Δ Acc</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-ojo">Retino.</span></td>
+                    <td>YOLOv26m</td>
+                    <td>41.64 MB</td>
+                    <td>10.95 MB</td>
+                    <td><span class="size-reduction">↓ 73.7%</span></td>
+                    <td>0.9934</td>
+                    <td>0.9873</td>
+                    <td><span class="delta-neg">−0.006</span></td>
+                    <td>95.1%</td>
+                    <td>96.2%</td>
+                    <td><span class="delta-pos">+1.1%</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-oral">Oral</span></td>
+                    <td>YOLOv26m</td>
+                    <td>41.64 MB</td>
+                    <td>10.95 MB</td>
+                    <td><span class="size-reduction">↓ 73.7%</span></td>
+                    <td>0.9427</td>
+                    <td>0.9323</td>
+                    <td><span class="delta-neg">−0.010</span></td>
+                    <td>90.9%</td>
+                    <td>86.1%</td>
+                    <td><span class="delta-neg">−4.9%</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-skin">Melan.</span></td>
+                    <td>YOLOv26n</td>
+                    <td>6.28 MB</td>
+                    <td>1.98 MB</td>
+                    <td><span class="size-reduction">↓ 68.5%</span></td>
+                    <td>0.8837</td>
+                    <td>0.8974</td>
+                    <td><span class="delta-pos">+0.014</span></td>
+                    <td>89.8%</td>
+                    <td>90.0%</td>
+                    <td><span class="delta-pos">+0.3%</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-ojo">Retino.</span></td>
+                    <td>EffNetV2-S</td>
+                    <td>81.57 MB</td>
+                    <td>22.11 MB</td>
+                    <td><span class="size-reduction">↓ 72.9%</span></td>
+                    <td>0.9873</td>
+                    <td>0.9575</td>
+                    <td><span class="delta-neg">−0.030</span></td>
+                    <td>96.2%</td>
+                    <td>75.1%</td>
+                    <td><span class="delta-neg">−21.1%</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-skin">Melan.</span></td>
+                    <td>MobileNetV4-M</td>
+                    <td>34.17 MB</td>
+                    <td>8.95 MB</td>
+                    <td><span class="size-reduction">↓ 73.8%</span></td>
+                    <td>0.8896</td>
+                    <td>0.4747</td>
+                    <td><span class="delta-neg">−0.415</span></td>
+                    <td>89.7%</td>
+                    <td>88.8%</td>
+                    <td><span class="delta-neg">−0.9%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="results-sidebar">
+            <div class="results-highlight">
+              <div class="result-kpi gold">
+                <div class="kpi-val">~73%</div>
+                <div class="kpi-label">Reducción promedio en tamaño</div>
+                <div class="kpi-sub">41.6 MB → 10.9 MB (YOLOv26m)</div>
+              </div>
+              <div class="result-kpi">
+                <div class="kpi-val">98.7%</div>
+                <div class="kpi-label">AUC en detección de retinopatía</div>
+                <div class="kpi-sub">YOLOv26m · post-optimización</div>
+              </div>
+              <div class="result-kpi">
+                <div class="kpi-val">1.98 MB</div>
+                <div class="kpi-label">Modelo más ligero logrado</div>
+                <div class="kpi-sub">YOLOv26n · melanoma de piel</div>
+              </div>
+              <div class="result-kpi gold">
+                <div class="kpi-val">+1.4%</div>
+                <div class="kpi-label">Mejora real en AUC post-cuantización</div>
+                <div class="kpi-sub">YOLOv26n en skin melanoma</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="results-sidebar">
-        <div class="results-highlight">
-          <div class="result-kpi gold">
-            <div class="kpi-val">~73%</div>
-            <div class="kpi-label">Reducción promedio en tamaño</div>
-            <div class="kpi-sub">41.6 MB → 10.9 MB (YOLOv26m)</div>
-          </div>
-          <div class="result-kpi">
-            <div class="kpi-val">98.7%</div>
-            <div class="kpi-label">AUC en detección de retinopatía</div>
-            <div class="kpi-sub">YOLOv26m · post-optimización</div>
-          </div>
-          <div class="result-kpi">
-            <div class="kpi-val">1.98 MB</div>
-            <div class="kpi-label">Modelo más ligero logrado</div>
-            <div class="kpi-sub">YOLOv26n · melanoma de piel</div>
-          </div>
-          <div class="result-kpi gold">
-            <div class="kpi-val">+1.4%</div>
-            <div class="kpi-label">Mejora real en AUC post-cuantización</div>
-            <div class="kpi-sub">YOLOv26n en skin melanoma</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
       <div class="slide-footer">
         XVII Jornada Científica - EP. Ing. Sistemas
       </div>
@@ -2583,15 +3875,87 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td><span class="tag tag-ojo">Retinopatía</span></td><td>MobileNetV4-M</td><td>23.1 ms</td><td>7.2 ms</td><td>61.4 img/s</td><td>184.6 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
-              <tr><td><span class="tag tag-oral">Cáncer oral</span></td><td>MobileNetV4-M</td><td>23.0 ms</td><td>7.1 ms</td><td>61.9 img/s</td><td>185.7 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
-              <tr><td><span class="tag tag-skin">Melanoma</span></td><td>MobileNetV4-M</td><td>22.0 ms</td><td>7.2 ms</td><td>62.7 img/s</td><td>158.3 img/s</td><td><span class="size-reduction">3.82×</span></td></tr>
-              <tr><td><span class="tag tag-ojo">Retinopatía</span></td><td>EfficientNetV2-S</td><td>65.4 ms</td><td>48.3 ms</td><td>17.3 img/s</td><td>17.4 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
-              <tr><td><span class="tag tag-oral">Cáncer oral</span></td><td>EfficientNetV2-S</td><td>56.9 ms</td><td>50.1 ms</td><td>21.3 img/s</td><td>18.3 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
-              <tr><td><span class="tag tag-skin">Melanoma</span></td><td>EfficientNetV2-S</td><td>56.9 ms</td><td>50.8 ms</td><td>24.9 img/s</td><td>17.4 img/s</td><td><span class="size-reduction">3.69×</span></td></tr>
-              <tr><td><span class="tag tag-skin">Melanoma</span></td><td>YOLOv26n-cls</td><td>8.6 ms</td><td>6.6 ms</td><td>215.8 img/s</td><td>189.0 img/s</td><td><span class="size-reduction">3.16×</span></td></tr>
-              <tr><td><span class="tag tag-ojo">Retinopatía</span></td><td>YOLOv26m-cls</td><td>39.3 ms</td><td>38.2 ms</td><td>25.9 img/s</td><td>23.6 img/s</td><td><span class="size-reduction">3.80×</span></td></tr>
-              <tr><td><span class="tag tag-oral">Cáncer oral</span></td><td>YOLOv26m-cls</td><td>37.6 ms</td><td>38.3 ms</td><td>29.5 img/s</td><td>23.7 img/s</td><td><span class="size-reduction">3.80×</span></td></tr>
+              <tr>
+                <td><span class="tag tag-ojo">Retinopatía</span></td>
+                <td>MobileNetV4-M</td>
+                <td>23.1 ms</td>
+                <td>7.2 ms</td>
+                <td>61.4 img/s</td>
+                <td>184.6 img/s</td>
+                <td><span class="size-reduction">3.82×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-oral">Cáncer oral</span></td>
+                <td>MobileNetV4-M</td>
+                <td>23.0 ms</td>
+                <td>7.1 ms</td>
+                <td>61.9 img/s</td>
+                <td>185.7 img/s</td>
+                <td><span class="size-reduction">3.82×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td>MobileNetV4-M</td>
+                <td>22.0 ms</td>
+                <td>7.2 ms</td>
+                <td>62.7 img/s</td>
+                <td>158.3 img/s</td>
+                <td><span class="size-reduction">3.82×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-ojo">Retinopatía</span></td>
+                <td>EfficientNetV2-S</td>
+                <td>65.4 ms</td>
+                <td>48.3 ms</td>
+                <td>17.3 img/s</td>
+                <td>17.4 img/s</td>
+                <td><span class="size-reduction">3.69×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-oral">Cáncer oral</span></td>
+                <td>EfficientNetV2-S</td>
+                <td>56.9 ms</td>
+                <td>50.1 ms</td>
+                <td>21.3 img/s</td>
+                <td>18.3 img/s</td>
+                <td><span class="size-reduction">3.69×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td>EfficientNetV2-S</td>
+                <td>56.9 ms</td>
+                <td>50.8 ms</td>
+                <td>24.9 img/s</td>
+                <td>17.4 img/s</td>
+                <td><span class="size-reduction">3.69×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-skin">Melanoma</span></td>
+                <td>YOLOv26n-cls</td>
+                <td>8.6 ms</td>
+                <td>6.6 ms</td>
+                <td>215.8 img/s</td>
+                <td>189.0 img/s</td>
+                <td><span class="size-reduction">3.16×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-ojo">Retinopatía</span></td>
+                <td>YOLOv26m-cls</td>
+                <td>39.3 ms</td>
+                <td>38.2 ms</td>
+                <td>25.9 img/s</td>
+                <td>23.6 img/s</td>
+                <td><span class="size-reduction">3.80×</span></td>
+              </tr>
+              <tr>
+                <td><span class="tag tag-oral">Cáncer oral</span></td>
+                <td>YOLOv26m-cls</td>
+                <td>37.6 ms</td>
+                <td>38.3 ms</td>
+                <td>29.5 img/s</td>
+                <td>23.7 img/s</td>
+                <td><span class="size-reduction">3.80×</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -2654,7 +4018,10 @@
           </table>
         </div>
         <div class="note-box">
-          <strong>Conclusión de rendimiento:</strong> La efectividad de la cuantización INT8 depende de la arquitectura. <strong>MobileNetV4</strong> es la opción óptima para edge, <strong>EfficientNetV2</strong> sufre overhead de operaciones no fusionadas, y <strong>YOLOv26n</strong> ya es tan ligero que sus ganancias de velocidad son limitadas.
+          <strong>Conclusión de rendimiento:</strong> La efectividad de la cuantización INT8 depende de la arquitectura.
+          <strong>MobileNetV4</strong> es la opción óptima para edge, <strong>EfficientNetV2</strong> sufre overhead de
+          operaciones no fusionadas, y <strong>YOLOv26n</strong> ya es tan ligero que sus ganancias de velocidad son
+          limitadas.
         </div>
       </div>
       <div class="slide-footer">
@@ -2675,32 +4042,38 @@
           <div class="conclusion-card gold">
             <div class="icon">⚡</div>
             <h4>Reducción promedio del ~73% en tamaño</h4>
-            <p>El pipeline comprime modelos sin sacrificar diagnóstico: YOLOv26m pasa de <strong>41.6 MB a 10.9 MB</strong> y mantiene <strong>AUC 0.987</strong> en retinopatía.</p>
+            <p>El pipeline comprime modelos sin sacrificar diagnóstico: YOLOv26m pasa de <strong>41.6 MB a 10.9
+                MB</strong> y mantiene <strong>AUC 0.987</strong> en retinopatía.</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">🏆</div>
             <h4>YOLOv26 es la arquitectura más robusta</h4>
-            <p>La familia YOLOv26 presenta la menor degradación. YOLOv26n incluso <strong>mejora AUC +1.4%</strong> en melanoma (0.8837 → 0.8974).</p>
+            <p>La familia YOLOv26 presenta la menor degradación. YOLOv26n incluso <strong>mejora AUC +1.4%</strong> en
+              melanoma (0.8837 → 0.8974).</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">📱</div>
             <h4>Modelos de menos de 15 MB</h4>
-            <p>Se alcanzaron <strong>1.98 MB</strong> (YOLOv26n, AUC 0.897) y <strong>10.95 MB</strong> (YOLOv26m, AUC 0.987), ejecutables en móviles de gama media.</p>
+            <p>Se alcanzaron <strong>1.98 MB</strong> (YOLOv26n, AUC 0.897) y <strong>10.95 MB</strong> (YOLOv26m, AUC
+              0.987), ejecutables en móviles de gama media.</p>
           </div>
           <div class="conclusion-card gold">
             <div class="icon">🚀</div>
             <h4>El speedup depende de la arquitectura</h4>
-            <p><strong>MobileNetV4-M</strong> lidera con 3.2× latencia y 2.8× throughput. <strong>EfficientNetV2-S</strong> sufre overhead (0.8× throughput) por operaciones no fusionadas.</p>
+            <p><strong>MobileNetV4-M</strong> lidera con 3.2× latencia y 2.8× throughput.
+              <strong>EfficientNetV2-S</strong> sufre overhead (0.8× throughput) por operaciones no fusionadas.</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">🔁</div>
             <h4>Fine-tuning post-pruning es indispensable</h4>
-            <p>La secuencia completa <strong>Pruning → Fine-tuning → Cuantización</strong> es necesaria para mantener métricas clínicamente aceptables.</p>
+            <p>La secuencia completa <strong>Pruning → Fine-tuning → Cuantización</strong> es necesaria para mantener
+              métricas clínicamente aceptables.</p>
           </div>
           <div class="conclusion-card">
             <div class="icon">🇵🇪</div>
             <h4>Impacto en salud pública peruana</h4>
-            <p>Habilita herramientas de alerta temprana para cáncer de piel, oral y retinopatía en postas rurales <strong>sin internet ni GPU</strong>.</p>
+            <p>Habilita herramientas de alerta temprana para cáncer de piel, oral y retinopatía en postas rurales
+              <strong>sin internet ni GPU</strong>.</p>
           </div>
         </div>
       </div>
@@ -2889,7 +4262,7 @@
               callbacks: {
                 afterBody: (items) => {
                   const base = items[0]?.raw || 0;
-                  const opt  = items[1]?.raw || 0;
+                  const opt = items[1]?.raw || 0;
                   if (opt) {
                     const pct = (((base - opt) / base) * 100).toFixed(1);
                     return [`Reducción: ${pct}%`];
@@ -3122,4 +4495,5 @@
   </script>
 
 </body>
+
 </html>
