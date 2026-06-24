@@ -19,6 +19,18 @@
       --text-secondary: #4A6572;
       --white: #FFFFFF;
       --radius: 18px;
+      /* Variables adicionales (compatibilidad con fase1.html) */
+      --primary:       #003865;
+      --primary-dark:  #00305F;
+      --secondary:     #F8A900;
+      --secondary-dark:#E39B00;
+      --bg:            #F7F7F7;
+      --surface:       #FFFFFF;
+      --text-on-primary: #FFFFFF;
+      --border:        rgba(0,56,101,.12);
+      --info-bg:       #EAF3FB;
+      --warning-bg:    #FFF5DE;
+      --shadow:        0 8px 30px rgba(0,56,101,.12);
     }
 
     * {
@@ -1807,6 +1819,37 @@
       color: var(--blue-dark);
       text-transform: uppercase;
     }
+    
+    /* Visualización CNN (copiado de fase1.html) */
+    .cnn-viz {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 1.5rem; box-shadow: var(--shadow);
+      width: 100%; overflow-x: auto; margin-bottom: 1.5rem;
+    }
+    .cnn-viz svg { min-width: 820px; display: block; margin: 0 auto; }
+    .cnn-viz .layer-label {
+      font-size: 11px; fill: var(--primary); font-weight: 800;
+      text-anchor: middle; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .cnn-viz .node { fill: var(--surface); stroke: var(--primary); stroke-width: 2; }
+    .cnn-viz .node.input-pixel { fill: var(--info-bg); stroke-width: 1; }
+    .cnn-viz .node.output-melanoma { stroke: #C62828; }
+    .cnn-viz .node.output-benign { stroke: #2E7D32; }
+    .cnn-viz .connection { stroke: rgba(0,56,101,.18); stroke-width: 1.2; fill: none; }
+    .cnn-viz .connection.flow {
+      stroke: url(#connGradient); stroke-width: 1.8;
+      stroke-dasharray: 8 8; animation: dashFlow 1.8s linear infinite;
+    }
+    .cnn-viz .traveler { fill: var(--secondary); }
+    @keyframes dashFlow { to { stroke-dashoffset: -16; } }
+    @keyframes pulseLayer {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: .85; }
+    }
+    .cnn-viz .layer-group {
+      animation: pulseLayer 3s ease-in-out infinite;
+      transform-origin: center; transform-box: fill-box;
+    }
 
     .arch-node-ppt .n-dim {
       font-size: .6rem;
@@ -3297,42 +3340,108 @@
         <h2>YOLOv26-cls</h2>
         <p class="fase-subtitle">Rama de clasificación de YOLOv26: backbone de detección reutilizado como extractor de
           características.</p>
-        <div class="arch-flow-ppt">
-          <div class="arch-node-ppt">
-            <div class="n-icon">🖼️</div>
-            <div class="n-name">Input</div>
-            <div class="n-dim">[B,3,224,224]</div>
-          </div>
-          <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt">
-            <div class="n-icon">🔲</div>
-            <div class="n-name">Conv</div>
-            <div class="n-dim">[B,32,112,112]</div>
-          </div>
-          <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt">
-            <div class="n-icon">🧱</div>
-            <div class="n-name">C3 × N</div>
-            <div class="n-dim">[B,256,14,14]</div>
-          </div>
-          <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt">
-            <div class="n-icon">🔺</div>
-            <div class="n-name">SPPF</div>
-            <div class="n-dim">[B,256,14,14]</div>
-          </div>
-          <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt">
-            <div class="n-icon">📊</div>
-            <div class="n-name">GAP</div>
-            <div class="n-dim">[B,256]</div>
-          </div>
-          <div class="arch-arrow-ppt">→</div>
-          <div class="arch-node-ppt">
-            <div class="n-icon">⚡</div>
-            <div class="n-name">Linear</div>
-            <div class="n-dim">[B,2]</div>
-          </div>
+        <div class="cnn-viz">
+          <svg viewBox="0 0 880 320" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="connGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(0,56,101,0.05)" />
+                <stop offset="50%" stop-color="#F8A900" />
+                <stop offset="100%" stop-color="rgba(0,56,101,0.05)" />
+              </linearGradient>
+            </defs>
+            <g class="layer-group input-pixel layer-0">
+              <circle cx="50" cy="120" r="5" class="node" />
+              <circle cx="70" cy="120" r="5" class="node" />
+              <circle cx="90" cy="120" r="5" class="node" />
+              <circle cx="110" cy="120" r="5" class="node" />
+              <circle cx="50" cy="140" r="5" class="node" />
+              <circle cx="70" cy="140" r="5" class="node" />
+              <circle cx="90" cy="140" r="5" class="node" />
+              <circle cx="110" cy="140" r="5" class="node" />
+              <circle cx="50" cy="160" r="5" class="node" />
+              <circle cx="70" cy="160" r="5" class="node" />
+              <circle cx="90" cy="160" r="5" class="node" />
+              <circle cx="110" cy="160" r="5" class="node" />
+              <circle cx="50" cy="180" r="5" class="node" />
+              <circle cx="70" cy="180" r="5" class="node" />
+              <circle cx="90" cy="180" r="5" class="node" />
+              <circle cx="110" cy="180" r="5" class="node" />
+            </g>
+            <g class="layer-group layer-1">
+              <circle cx="230" cy="95" r="10" class="node" />
+              <circle cx="230" cy="130" r="10" class="node" />
+              <circle cx="230" cy="165" r="10" class="node" />
+              <circle cx="230" cy="200" r="10" class="node" />
+              <circle cx="230" cy="235" r="10" class="node" />
+            </g>
+            <g class="layer-group layer-2">
+              <circle cx="370" cy="95" r="10" class="node" />
+              <circle cx="370" cy="130" r="10" class="node" />
+              <circle cx="370" cy="165" r="10" class="node" />
+              <circle cx="370" cy="200" r="10" class="node" />
+              <circle cx="370" cy="235" r="10" class="node" />
+            </g>
+            <g class="layer-group layer-3">
+              <circle cx="510" cy="120" r="12" class="node" />
+              <circle cx="510" cy="160" r="12" class="node" />
+              <circle cx="510" cy="200" r="12" class="node" />
+            </g>
+            <g class="layer-group layer-4">
+              <circle cx="650" cy="120" r="12" class="node" />
+              <circle cx="650" cy="160" r="12" class="node" />
+              <circle cx="650" cy="200" r="12" class="node" />
+            </g>
+            <g class="layer-group layer-5">
+              <circle cx="790" cy="130" r="14" class="node output-melanoma" />
+              <circle cx="790" cy="170" r="14" class="node output-benign" />
+            </g>
+            <g stroke="rgba(0,56,101,.18)" stroke-width="1.2" fill="none">
+              <path d="M 50 120 Q 140 107 230 95" />
+              <path d="M 50 140 Q 140 130 230 130" />
+              <path d="M 50 160 Q 140 153 230 165" />
+              <path d="M 50 180 Q 140 173 230 200" />
+              <path d="M 110 120 Q 170 120 230 130" />
+              <path d="M 110 160 Q 170 160 230 165" />
+              <path d="M 110 180 Q 170 187 230 200" />
+              <path d="M 230 95 Q 300 95 370 95" />
+              <path d="M 230 130 Q 300 130 370 130" />
+              <path d="M 230 165 Q 300 165 370 165" />
+              <path d="M 230 200 Q 300 200 370 200" />
+              <path d="M 230 235 Q 300 235 370 235" />
+              <path d="M 370 95 Q 440 95 510 120" />
+              <path d="M 370 130 Q 440 130 510 120" />
+              <path d="M 370 165 Q 440 165 510 160" />
+              <path d="M 370 200 Q 440 200 510 200" />
+              <path d="M 370 235 Q 440 235 510 200" />
+              <path d="M 510 120 Q 580 120 650 120" />
+              <path d="M 510 160 Q 580 160 650 160" />
+              <path d="M 510 200 Q 580 200 650 200" />
+              <path d="M 650 120 Q 720 125 790 130" />
+              <path d="M 650 160 Q 720 155 790 150" />
+              <path d="M 650 200 Q 720 175 790 170" />
+            </g>
+            <path class="connection flow" d="M 50 120 Q 140 107 230 95" style="animation-delay:0s" />
+            <path class="connection flow" d="M 90 180 Q 160 207 230 235" style="animation-delay:0.3s" />
+            <path class="connection flow" d="M 230 165 Q 300 165 370 165" style="animation-delay:0.6s" />
+            <path class="connection flow" d="M 370 95 Q 440 107 510 120" style="animation-delay:0.9s" />
+            <path class="connection flow" d="M 370 235 Q 440 197 510 200" style="animation-delay:1.2s" />
+            <path class="connection flow" d="M 510 160 Q 580 160 650 160" style="animation-delay:1.5s" />
+            <path class="connection flow" d="M 650 120 Q 720 125 790 130" style="animation-delay:1.8s" />
+            <circle r="4" class="traveler"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 50 120 Q 140 107 230 95" /></circle>
+            <circle r="4" class="traveler"><animateMotion dur="2.8s" repeatCount="indefinite" path="M 90 180 Q 160 207 230 235" /></circle>
+            <circle r="4" class="traveler"><animateMotion dur="3.1s" repeatCount="indefinite" path="M 230 165 Q 300 165 370 165" /></circle>
+            <circle r="4" class="traveler"><animateMotion dur="3.4s" repeatCount="indefinite" path="M 370 95 Q 440 107 510 120" /></circle>
+            <circle r="4" class="traveler"><animateMotion dur="3.7s" repeatCount="indefinite" path="M 510 160 Q 580 160 650 160" /></circle>
+            <circle r="4" class="traveler"><animateMotion dur="4.0s" repeatCount="indefinite" path="M 650 120 Q 720 125 790 130" /></circle>
+            <text x="80" y="230" class="layer-label">Input RGB</text>
+            <text x="230" y="285" class="layer-label">Conv + BN + SiLU</text>
+            <text x="370" y="285" class="layer-label">C3 Blocks</text>
+            <text x="510" y="285" class="layer-label">SPPF / Pool</text>
+            <text x="650" y="285" class="layer-label">FC 256</text>
+            <text x="790" y="285" class="layer-label">Output</text>
+            <text x="790" y="230" class="layer-label" style="fill:#C62828">Melanoma</text>
+            <text x="790" y="115" class="layer-label" style="fill:#2E7D32">Benigno</text>
+          </svg>
         </div>
         <div class="tech-grid-ppt">
           <div class="tech-card-ppt">
