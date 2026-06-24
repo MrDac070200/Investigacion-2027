@@ -1601,6 +1601,7 @@
     /* ════════════════════════════════════════
        SECCIONES IMPORTANTES · Mayor impacto visual
     ════════════════════════════════════════ */
+    /* Oculta la línea decorativa dorada sobre las secciones */
     #slide-2 .slide-inner::before,
     #slide-3 .slide-inner::before,
     #slide-4 .slide-inner::before,
@@ -1610,20 +1611,32 @@
     #slide-22 .slide-inner::before,
     #slide-23 .slide-inner::before,
     #slide-24 .slide-inner::before {
-      content: '';
-      position: absolute;
-      top: -14px;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      border-radius: 3px;
-      opacity: .9;
+      display: none;
     }
+    /* Slides 2-5: títulos de sección centrados, grandes y sin texto posterior */
     #slide-2 .section-kicker,
     #slide-3 .section-kicker,
     #slide-4 .section-kicker,
-    #slide-5 .section-kicker,
+    #slide-5 .section-kicker {
+      display: flex;
+      justify-content: center;
+      width: fit-content;
+      margin: 0 auto 1.8rem auto;
+      background: var(--blue-dark);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(0,56,101,.22);
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      padding: 1rem 2.4rem;
+      text-align: center;
+    }
+    #slide-2 .section-kicker::before,
+    #slide-3 .section-kicker::before,
+    #slide-4 .section-kicker::before,
+    #slide-5 .section-kicker::before {
+      display: none;
+    }
+
+    /* Slides 20-24: mantienen el estilo original de sección */
     #slide-20 .section-kicker,
     #slide-21 .section-kicker,
     #slide-22 .section-kicker,
@@ -1635,18 +1648,12 @@
       font-size: 1.05rem;
       padding: .75rem 1.6rem;
     }
-    #slide-2 .section-kicker::before,
-    #slide-3 .section-kicker::before,
-    #slide-4 .section-kicker::before,
-    #slide-5 .section-kicker::before,
     #slide-20 .section-kicker::before,
     #slide-21 .section-kicker::before,
     #slide-22 .section-kicker::before,
     #slide-23 .section-kicker::before,
     #slide-24 .section-kicker::before {
-      background: var(--gold);
-      width: 12px;
-      height: 12px;
+      display: none;
     }
 
     /* ════════════════════════════════════════
@@ -1733,7 +1740,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Equipo de Investigación · Quienes conducen esta investigación</div>
+        <div class="section-kicker">Equipo de Investigación</div>
         <div class="team-photos-row">
           <div class="team-member">
             <div class="team-photo">
@@ -1781,7 +1788,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">El Problema · Tres brechas en salud rural del Perú</div>
+        <div class="section-kicker">El Problema</div>
         <p class="problem-intro-text">
           En las zonas rurales del Perú, <strong>tres brechas simultáneas</strong> impiden que el personal de
           salud diagnostique a tiempo enfermedades identificables por imagen. Los modelos de IA actuales
@@ -1929,7 +1936,7 @@
         <div class="shape-diamond-tr"></div>
       </div>
       <div class="slide-inner">
-        <div class="section-kicker">Metodología · Pipeline de 5 fases</div>
+        <div class="section-kicker">Metodología</div>
         <div class="fases-row">
           <div class="fase-card">
             <div class="fase-header">
@@ -2179,8 +2186,6 @@
       </div>
       <div class="slide-inner">
         <div class="fase-big-label">Fase 1 · Resultados</div>
-        <h2>Métricas de referencia</h2>
-        <p class="fase-subtitle">9 checkpoints base (3 modelos × 3 datasets). Son el punto de comparación para pruning, Knowledge Distillation y cuantización.</p>
         <div class="results-highlight">
           <div class="result-kpi gold">
             <div class="kpi-val">0.9934</div>
@@ -2412,8 +2417,6 @@
       </div>
       <div class="slide-inner">
         <div class="fase-big-label">Fase 2 · Resultados</div>
-        <h2>Impacto del pruning no estructural</h2>
-        <p class="fase-subtitle">Comparación Fase 1 → Fase 2. Los filtros se apagan, pero el grafo computacional y el tamaño no cambian.</p>
         <div class="results-highlight">
           <div class="result-kpi gold">
             <div class="kpi-val">-0.442</div>
@@ -2592,8 +2595,6 @@
       </div>
       <div class="slide-inner">
         <div class="fase-big-label">Fase 3 · Resultados</div>
-        <h2>Recuperación con Knowledge Distillation</h2>
-        <p class="fase-subtitle">Comparación Fase 2 → Fase 3. El teacher guía al student para recuperar el desempeño perdido por el pruning.</p>
         <div class="results-highlight">
           <div class="result-kpi gold">
             <div class="kpi-val">99.2%</div>
@@ -2836,8 +2837,6 @@
       </div>
       <div class="slide-inner">
         <div class="fase-big-label">Fase 4 · Resultados</div>
-        <h2>Compresión con cuantización INT8</h2>
-        <p class="fase-subtitle">Post-Training Static Quantization: de FP32 a INT8 sin reentrenamiento, con 480 imágenes de calibración.</p>
         <div class="compression-banner-ppt">
           <div class="compression-item-ppt">
             <span class="big">41.62 MB</span>
